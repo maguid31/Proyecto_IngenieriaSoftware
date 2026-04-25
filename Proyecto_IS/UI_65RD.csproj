@@ -103,5 +103,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BLL\BLL_65RD.csproj">
+      <Project>{d979b86b-199c-4329-888c-786c38e94f21}</Project>
+      <Name>BLL_65RD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Servicios\Servicios_65RD.csproj">
+      <Project>{7d5e1d3f-c1e0-404d-8c41-9ccb5b5b2081}</Project>
+      <Name>Servicios_65RD</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
