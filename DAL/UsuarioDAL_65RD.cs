@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Servicios_65RD;
+
+namespace DAL_65RD
+{
+    public class UsuarioDAL_65RD
+    {
+        private string connectionString = @"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+
+        public Usuario_65RD Login(string usuarioConcatenado, string hashContraseña)
+        {
+            Usuario_65RD usuarioEncontrado = null;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id, Apellido, DNI, Contraseña, PerfilId, Activo FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@usuario", usuarioConcatenado);
+                    cmd.Parameters.AddWithValue("@contraseña", hashContraseña);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            usuarioEncontrado = new Usuario_65RD
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Apellido = reader["Apellido"].ToString(),
+                                DNI = reader["DNI"].ToString(),
+                                Contraseña = reader["Contraseña"].ToString(),
+                                Perfil = (RolUsuario)Convert.ToInt32(reader["PerfilId"]),
+                                Activo = Convert.ToBoolean(reader["Activo"])
+                            };
+                        }
+                    }
+                }
+            }
+            return usuarioEncontrado;
+        }
+
+        public bool RegistrarUsuario(Usuario_65RD nuevoUsuario)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO Usuarios (Apellido, DNI, Contraseña, PerfilId, Activo) VALUES (@apellido, @dni, @contraseña, @perfilId, 1)";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@apellido", nuevoUsuario.Apellido);
+                    cmd.Parameters.AddWithValue("@dni", nuevoUsuario.DNI);
+                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña);
+                    cmd.Parameters.AddWithValue("@perfilId", (int)nuevoUsuario.Perfil);
+
+                    con.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
+        public bool ActualizarContraseña(int idUsuario, string nuevaContraseñaHash)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET Contraseña = @nuevaContraseña WHERE Id = @idUsuario";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@nuevaContraseña", nuevaContraseñaHash);
+                    cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                    con.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+    }
+}

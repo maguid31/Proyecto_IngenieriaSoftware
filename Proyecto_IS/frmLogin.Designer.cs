@@ -51,6 +51,7 @@
             this.btnRegistrarme.TabIndex = 31;
             this.btnRegistrarme.Text = "REGISTRARME";
             this.btnRegistrarme.UseVisualStyleBackColor = false;
+            this.btnRegistrarme.Click += new System.EventHandler(this.btnRegistrarme_Click);
             // 
             // label4
             // 
@@ -73,6 +74,7 @@
             this.btnLogin.TabIndex = 27;
             this.btnLogin.Text = "INICIAR SESIÓN";
             this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // cbShowPassword
             // 
@@ -85,6 +87,7 @@
             this.cbShowPassword.TabIndex = 26;
             this.cbShowPassword.Text = "Mostrar contraseña";
             this.cbShowPassword.UseVisualStyleBackColor = true;
+            this.cbShowPassword.CheckedChanged += new System.EventHandler(this.cbShowPassword_CheckedChanged);
             // 
             // txtContraseña
             // 
@@ -156,6 +159,7 @@
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.frmLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
