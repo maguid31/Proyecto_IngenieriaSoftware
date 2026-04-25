@@ -62,6 +62,36 @@ namespace DAL_65RD
             }
         }
 
+        public void ActualizarIntentos(int usuarioId, int intentos)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET IntentosFallidos = @i WHERE Id = @id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@i", intentos);
+                    cmd.Parameters.AddWithValue("@id", usuarioId);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void BloquearUsuario(int usuarioId)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET Activo = 0 WHERE Id = @id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", usuarioId);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
         public bool ActualizarContraseña(int idUsuario, string nuevaContraseñaHash)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
