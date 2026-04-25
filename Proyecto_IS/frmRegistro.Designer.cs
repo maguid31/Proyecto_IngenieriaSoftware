@@ -66,7 +66,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(86, 393);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(107, 17);
+            this.label4.Size = new System.Drawing.Size(137, 23);
             this.label4.TabIndex = 28;
             this.label4.Text = "Ya tengo cuenta";
             // 
@@ -128,13 +128,13 @@
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label1.Location = new System.Drawing.Point(100, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 17);
+            this.label1.Size = new System.Drawing.Size(135, 23);
             this.label1.TabIndex = 21;
             this.label1.Text = "CREAR CUENTA";
             // 
             // frmRegistro
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(289, 489);
