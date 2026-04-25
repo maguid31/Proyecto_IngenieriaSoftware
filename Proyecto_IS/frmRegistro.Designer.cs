@@ -29,14 +29,12 @@
         private void InitializeComponent()
         {
             this.btnIniciarSesion = new System.Windows.Forms.Button();
-            this.txtConfirmContraseña = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnRegistrar = new System.Windows.Forms.Button();
-            this.cbShowPassword = new System.Windows.Forms.CheckBox();
-            this.txtContraseña = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.txtDNI = new System.Windows.Forms.TextBox();
+            this.label = new System.Windows.Forms.Label();
+            this.txtApellido = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -53,25 +51,15 @@
             this.btnIniciarSesion.TabIndex = 31;
             this.btnIniciarSesion.Text = "INICIAR SESIÓN";
             this.btnIniciarSesion.UseVisualStyleBackColor = false;
-            // 
-            // txtConfirmContraseña
-            // 
-            this.txtConfirmContraseña.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.txtConfirmContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtConfirmContraseña.Location = new System.Drawing.Point(41, 251);
-            this.txtConfirmContraseña.Multiline = true;
-            this.txtConfirmContraseña.Name = "txtConfirmContraseña";
-            this.txtConfirmContraseña.Size = new System.Drawing.Size(216, 28);
-            this.txtConfirmContraseña.TabIndex = 30;
+            this.btnIniciarSesion.Click += new System.EventHandler(this.btnIniciarSesion_Click);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(38, 231);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(141, 17);
+            this.label6.Size = new System.Drawing.Size(0, 17);
             this.label6.TabIndex = 29;
-            this.label6.Text = "Confirmar contraseña";
             // 
             // label4
             // 
@@ -94,56 +82,45 @@
             this.btnRegistrar.TabIndex = 27;
             this.btnRegistrar.Text = "REGISTRARME";
             this.btnRegistrar.UseVisualStyleBackColor = false;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
-            // cbShowPassword
+            // txtDNI
             // 
-            this.cbShowPassword.AutoSize = true;
-            this.cbShowPassword.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cbShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbShowPassword.Location = new System.Drawing.Point(107, 285);
-            this.cbShowPassword.Name = "cbShowPassword";
-            this.cbShowPassword.Size = new System.Drawing.Size(143, 21);
-            this.cbShowPassword.TabIndex = 26;
-            this.cbShowPassword.Text = "Mostrar contraseña";
-            this.cbShowPassword.UseVisualStyleBackColor = true;
+            this.txtDNI.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txtDNI.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtDNI.Location = new System.Drawing.Point(41, 177);
+            this.txtDNI.Multiline = true;
+            this.txtDNI.Name = "txtDNI";
+            this.txtDNI.Size = new System.Drawing.Size(216, 28);
+            this.txtDNI.TabIndex = 25;
             // 
-            // txtContraseña
+            // label
             // 
-            this.txtContraseña.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.txtContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtContraseña.Location = new System.Drawing.Point(41, 177);
-            this.txtContraseña.Multiline = true;
-            this.txtContraseña.Name = "txtContraseña";
-            this.txtContraseña.Size = new System.Drawing.Size(216, 28);
-            this.txtContraseña.TabIndex = 25;
+            this.label.AutoSize = true;
+            this.label.Location = new System.Drawing.Point(38, 157);
+            this.label.Name = "label";
+            this.label.Size = new System.Drawing.Size(32, 17);
+            this.label.TabIndex = 24;
+            this.label.Text = "DNI";
             // 
-            // label3
+            // txtApellido
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 157);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 17);
-            this.label3.TabIndex = 24;
-            this.label3.Text = "Contraseña";
-            // 
-            // txtUsuario
-            // 
-            this.txtUsuario.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.txtUsuario.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUsuario.Location = new System.Drawing.Point(41, 105);
-            this.txtUsuario.Multiline = true;
-            this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(216, 28);
-            this.txtUsuario.TabIndex = 23;
+            this.txtApellido.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txtApellido.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtApellido.Location = new System.Drawing.Point(41, 105);
+            this.txtApellido.Multiline = true;
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(216, 28);
+            this.txtApellido.TabIndex = 23;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(38, 85);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 17);
+            this.label2.Size = new System.Drawing.Size(60, 17);
             this.label2.TabIndex = 22;
-            this.label2.Text = "Usuario";
+            this.label2.Text = "Apellido";
             // 
             // label1
             // 
@@ -162,23 +139,21 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(289, 489);
             this.Controls.Add(this.btnIniciarSesion);
-            this.Controls.Add(this.txtConfirmContraseña);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnRegistrar);
-            this.Controls.Add(this.cbShowPassword);
-            this.Controls.Add(this.txtContraseña);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtUsuario);
+            this.Controls.Add(this.txtDNI);
+            this.Controls.Add(this.label);
+            this.Controls.Add(this.txtApellido);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmRegistro";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmRegistro";
+            this.Load += new System.EventHandler(this.frmRegistro_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,14 +162,12 @@
         #endregion
 
         private System.Windows.Forms.Button btnIniciarSesion;
-        private System.Windows.Forms.TextBox txtConfirmContraseña;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnRegistrar;
-        private System.Windows.Forms.CheckBox cbShowPassword;
-        private System.Windows.Forms.TextBox txtContraseña;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtUsuario;
+        private System.Windows.Forms.TextBox txtDNI;
+        private System.Windows.Forms.Label label;
+        private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

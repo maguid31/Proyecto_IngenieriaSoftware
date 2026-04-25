@@ -70,6 +70,7 @@
             this.btnRegistrar.TabIndex = 37;
             this.btnRegistrar.Text = "CAMBIAR CONTRASEÑA";
             this.btnRegistrar.UseVisualStyleBackColor = false;
+            this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
             // cbShowPassword
             // 
@@ -82,6 +83,7 @@
             this.cbShowPassword.TabIndex = 36;
             this.cbShowPassword.Text = "Mostrar contraseña";
             this.cbShowPassword.UseVisualStyleBackColor = true;
+            this.cbShowPassword.CheckedChanged += new System.EventHandler(this.cbShowPassword_CheckedChanged);
             // 
             // txtContraseña
             // 
@@ -153,6 +155,7 @@
             this.Name = "frmCambioContraseña";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmCambioContraseña";
+            this.Load += new System.EventHandler(this.frmCambioContraseña_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
