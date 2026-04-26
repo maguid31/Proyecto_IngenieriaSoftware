@@ -17,7 +17,8 @@ namespace DAL_65RD
             Usuario_65RD usuarioEncontrado = null;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Apellido, DNI, Contraseña, PerfilId, Activo FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
+                // CORRECCIÓN: Se cambió PerfilId por Rol para que coincida con tu nueva tabla
+                string query = "SELECT Id, Apellido, DNI, Contraseña, Rol, Activo, PrimerLogin FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@usuario", usuarioConcatenado);
@@ -34,8 +35,10 @@ namespace DAL_65RD
                                 Apellido = reader["Apellido"].ToString(),
                                 DNI = reader["DNI"].ToString(),
                                 Contraseña = reader["Contraseña"].ToString(),
-                                Perfil = (RolUsuario)Convert.ToInt32(reader["PerfilId"]),
-                                Activo = Convert.ToBoolean(reader["Activo"])
+                                // CORRECCIÓN: Leemos de la columna "Rol" y convertimos al Enum
+                                Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), reader["Rol"].ToString()),
+                                Activo = Convert.ToBoolean(reader["Activo"]),
+                                PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"])
                             };
                         }
                     }
@@ -48,13 +51,17 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Usuarios (Apellido, DNI, Contraseña, PerfilId, Activo) VALUES (@apellido, @dni, @contraseña, @perfilId, 1)";
+                string query = "INSERT INTO Usuarios (Apellido, DNI, Contraseña, Rol, Activo, Email) " +
+                               "VALUES (@apellido, @dni, @contraseña, @rol, @activo, @email)";
+
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@apellido", nuevoUsuario.Apellido);
                     cmd.Parameters.AddWithValue("@dni", nuevoUsuario.DNI);
                     cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña);
-                    cmd.Parameters.AddWithValue("@perfilId", (int)nuevoUsuario.Perfil);
+                    cmd.Parameters.AddWithValue("@rol", nuevoUsuario.Perfil.ToString());
+                    cmd.Parameters.AddWithValue("@activo", nuevoUsuario.Activo);
+                    cmd.Parameters.AddWithValue("@email", (object)nuevoUsuario.Email ?? DBNull.Value);
 
                     con.Open();
                     return cmd.ExecuteNonQuery() > 0;
@@ -96,12 +103,12 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Usuarios SET Contraseña = @nuevaContraseña WHERE Id = @idUsuario";
+                
+                string query = "UPDATE Usuarios SET Contraseña = @nueva, PrimerLogin = 0 WHERE Id = @id";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@nuevaContraseña", nuevaContraseñaHash);
-                    cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
-
+                    cmd.Parameters.AddWithValue("@nueva", nuevaContraseñaHash);
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
                     con.Open();
                     return cmd.ExecuteNonQuery() > 0;
                 }

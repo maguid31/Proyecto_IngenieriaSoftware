@@ -28,29 +28,15 @@ namespace BLL_65RD
 
             if (usuarioEncontrado != null && usuarioEncontrado.Activo)
             {
-                if (usuarioEncontrado.Contraseña == hashIngresado)
-                {
-                    _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, 0); // reset
-                    SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
-                    _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Login", "Usuario inició sesión");
+                _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, 0);
+                SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
+                _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Login", "Usuario inició sesión");
 
-                    if (contraseñaIngresada == usuarioEncontrado.DNI)
-                        return ResultadoLogin.RequiereCambioContrasena;
+                // CAMBIO CLAVE: Usamos la propiedad de la base de datos
+                if (usuarioEncontrado.PrimerLogin)
+                    return ResultadoLogin.RequiereCambioContrasena;
 
-                    return ResultadoLogin.Exitoso;
-                }
-                else
-                {
-                    usuarioEncontrado.IntentosFallidos++;
-                    _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, usuarioEncontrado.IntentosFallidos);
-                    _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Login fallido", "Contraseña incorrecta");
-
-                    if (usuarioEncontrado.IntentosFallidos >= 3)
-                    {
-                        _usuarioDAL.BloquearUsuario(usuarioEncontrado.Id);
-                        _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuario bloqueado", "Se bloqueó por 3 intentos fallidos");
-                    }
-                }
+                return ResultadoLogin.Exitoso;
             }
             return ResultadoLogin.CredencialesInvalidas;
         }
@@ -62,7 +48,8 @@ namespace BLL_65RD
                 Apellido = apellido,
                 DNI = dni,
                 Contraseña = Seguridad_65RD.Encriptar(dni), // Se guarda encriptada
-                Perfil = RolUsuario.Basico
+                Perfil = RolUsuario.Basico,
+                Activo=true
             };
 
             return _usuarioDAL.RegistrarUsuario(nuevoUsuario);

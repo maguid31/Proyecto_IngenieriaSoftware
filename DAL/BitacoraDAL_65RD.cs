@@ -16,13 +16,18 @@ namespace DAL
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                string query = "INSERT INTO Bitacora (UsuarioId, FechaHora, Accion, Descripcion) VALUES (@u, GETDATE(), @a, @d)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@u", usuarioId);
-                cmd.Parameters.AddWithValue("@a", accion);
-                cmd.Parameters.AddWithValue("@d", descripcion);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                string query = "INSERT INTO Bitacora (UsuarioId, FechaHora, Accion, Descripcion) " +
+                               "VALUES (@u, GETDATE(), @a, @d)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@u", usuarioId);
+                    cmd.Parameters.AddWithValue("@a", accion);
+                    cmd.Parameters.AddWithValue("@d", descripcion);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }

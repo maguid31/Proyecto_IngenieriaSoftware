@@ -21,7 +21,9 @@ namespace Servicios_65RD
         public string Contraseña { get; set; }
         public RolUsuario Perfil { get; set; }
         public bool Activo { get; set; }
+        public string Email { get; set; }
         public int IntentosFallidos { get; set; }
+        public bool PrimerLogin { get; set; }
 
 
         // Propiedad de solo lectura: Une Apellido y DNI dinámicamente
