@@ -8,8 +8,9 @@ namespace Servicios_65RD
 {
     public enum RolUsuario
     {
-        Administrador = 1,
-        Basico = 2
+        SinAsignar = 0,
+        Basico = 1,
+        Administrador = 2
     }
 
     public class Usuario_65RD

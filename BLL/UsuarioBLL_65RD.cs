@@ -69,5 +69,10 @@ namespace BLL_65RD
             return resultado;
 
         }
+
+        public List<Usuario_65RD> ObtenerUsuarios()
+        {
+            return _usuarioDAL.ObtenerUsuarios();
+        }
     }
 }

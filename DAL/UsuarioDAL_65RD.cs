@@ -103,7 +103,7 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                
+
                 string query = "UPDATE Usuarios SET Contraseña = @nueva, PrimerLogin = 0 WHERE Id = @id";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -113,6 +113,32 @@ namespace DAL_65RD
                     return cmd.ExecuteNonQuery() > 0;
                 }
             }
+        }
+
+        public List<Usuario_65RD> ObtenerUsuarios()
+        {
+            List<Usuario_65RD> usuarios = new List<Usuario_65RD>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id, Apellido, DNI, Activo FROM Usuarios";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    usuarios.Add(new Usuario_65RD
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Apellido = reader["Apellido"].ToString(),
+                        DNI = reader["DNI"].ToString(),
+                        Activo = Convert.ToBoolean(reader["Activo"])
+                    });
+                }
+            }
+
+            return usuarios;
         }
     }
 }
