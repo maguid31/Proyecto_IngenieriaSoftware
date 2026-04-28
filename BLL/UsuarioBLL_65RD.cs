@@ -55,6 +55,21 @@ namespace BLL_65RD
             return _usuarioDAL.RegistrarUsuario(nuevoUsuario);
         }
 
+        public bool RegistrarUsuario(Usuario_65RD nuevoUsuario)
+        {
+            return _usuarioDAL.RegistrarUsuario(nuevoUsuario);
+        }
+
+        public bool ActualizarUsuario(Usuario_65RD usuario)
+        {
+            return _usuarioDAL.ActualizarUsuario(usuario);
+        }
+        public void DeshabilitarUsuario(int id)
+        {
+            _usuarioDAL.ActualizarEstado(id, false);
+        }
+
+
         public bool CambiarContraseña(int usuarioId, string nuevaContraseña)
         {
             string nuevaContraseñaHash = Seguridad_65RD.Encriptar(nuevaContraseña);

@@ -68,6 +68,22 @@ namespace DAL_65RD
                 }
             }
         }
+        public bool ActualizarUsuario(Usuario_65RD usuario)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET Email=@email, Rol=@rol WHERE Id=@id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@email", (object)usuario.Email ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@rol", usuario.Perfil.ToString());
+                    cmd.Parameters.AddWithValue("@id", usuario.Id);
+
+                    con.Open();
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
 
         public void ActualizarIntentos(int usuarioId, int intentos)
         {
@@ -121,7 +137,7 @@ namespace DAL_65RD
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Apellido, DNI, Activo FROM Usuarios";
+                string query = "SELECT Id, Nombre, Apellido, DNI, Email, Rol, Activo, IntentosFallidos, PrimerLogin FROM Usuarios";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
 
@@ -131,14 +147,34 @@ namespace DAL_65RD
                     usuarios.Add(new Usuario_65RD
                     {
                         Id = Convert.ToInt32(reader["Id"]),
+                        Nombre = reader["Nombre"].ToString(),
                         Apellido = reader["Apellido"].ToString(),
                         DNI = reader["DNI"].ToString(),
-                        Activo = Convert.ToBoolean(reader["Activo"])
+                        Email = reader["Email"].ToString(),
+                        Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), reader["Rol"].ToString()),
+                        Activo = Convert.ToBoolean(reader["Activo"]),
+                        IntentosFallidos = Convert.ToInt32(reader["IntentosFallidos"]),
+                        PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"])
                     });
                 }
             }
 
             return usuarios;
         }
+        public void ActualizarEstado(int idUsuario, bool activo)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET Activo=@activo WHERE Id=@id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@activo", activo);
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
