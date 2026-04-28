@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL_65RD;
+using Servicios_65RD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL_65RD;
 
 namespace Proyecto_IS
 {
@@ -21,7 +22,11 @@ namespace Proyecto_IS
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-
+            // Cargar roles en el ComboBox
+            comboBoxRol.Items.Clear();
+            comboBoxRol.Items.Add("Administrador");
+            comboBoxRol.Items.Add("Usuario");
+            comboBoxRol.SelectedIndex = 0; // por defecto Administrador
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -38,10 +43,27 @@ namespace Proyecto_IS
             switch (resultado)
             {
                 case ResultadoLogin.Exitoso:
-                    mainForm principal = new mainForm();
-                    principal.Show();
-                    this.Hide();
-                    principal.FormClosed += (s, args) => this.Close();
+                    Usuario_65RD usuarioLogueado = SessionManager_65RD.Instancia.UsuarioLogueado;
+                    string rolSeleccionado = comboBoxRol.SelectedItem.ToString();
+
+                    if (usuarioLogueado.Perfil == RolUsuario.Administrador && rolSeleccionado == "Administrador")
+                    {
+                        frmGestionUsuarios gestion = new frmGestionUsuarios();
+                        gestion.Show();
+                        this.Hide();
+                        gestion.FormClosed += (s, args) => this.Close();
+                    }
+                    else if (usuarioLogueado.Perfil == RolUsuario.Basico && rolSeleccionado == "Usuario")
+                    {
+                        frmCambioContraseña cambio = new frmCambioContraseña();
+                        cambio.Show();
+                        this.Hide();
+                        cambio.FormClosed += (s, args) => this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("El rol seleccionado no coincide con el rol asignado al usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     break;
 
                 case ResultadoLogin.RequiereCambioContrasena:
@@ -58,14 +80,6 @@ namespace Proyecto_IS
                     txtContraseña.Focus();
                     break;
             }
-        }
-
-        private void btnRegistrarme_Click(object sender, EventArgs e)
-        {
-            frmRegistro registro = new frmRegistro();
-            registro.Show();
-            this.Hide();
-            registro.FormClosed += (s, args) => this.Show();
         }
 
         private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
