@@ -37,6 +37,13 @@
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
+            this.NombreUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnaplicar = new System.Windows.Forms.Button();
             this.btncancelar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -49,13 +56,6 @@
             this.deshabilitar = new System.Windows.Forms.Button();
             this.cbtodos = new System.Windows.Forms.CheckBox();
             this.cbactivos = new System.Windows.Forms.CheckBox();
-            this.NombreUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
@@ -172,6 +172,62 @@
             this.dgvUsuarios.Size = new System.Drawing.Size(928, 239);
             this.dgvUsuarios.TabIndex = 52;
             this.dgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellContentClick);
+            // 
+            // NombreUsuario
+            // 
+            this.NombreUsuario.DataPropertyName = "NombreUsuario";
+            this.NombreUsuario.HeaderText = "NombreUsuario";
+            this.NombreUsuario.MinimumWidth = 6;
+            this.NombreUsuario.Name = "NombreUsuario";
+            this.NombreUsuario.Width = 125;
+            // 
+            // Nombre
+            // 
+            this.Nombre.DataPropertyName = "Nombre";
+            this.Nombre.HeaderText = "Nombre";
+            this.Nombre.MinimumWidth = 6;
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Width = 125;
+            // 
+            // Apellido
+            // 
+            this.Apellido.DataPropertyName = "Apellido";
+            this.Apellido.HeaderText = "Apellido";
+            this.Apellido.MinimumWidth = 6;
+            this.Apellido.Name = "Apellido";
+            this.Apellido.Width = 125;
+            // 
+            // DNI
+            // 
+            this.DNI.DataPropertyName = "DNI";
+            this.DNI.HeaderText = "DNI";
+            this.DNI.MinimumWidth = 6;
+            this.DNI.Name = "DNI";
+            this.DNI.Width = 125;
+            // 
+            // Rol
+            // 
+            this.Rol.DataPropertyName = "Perfil";
+            this.Rol.HeaderText = "Rol";
+            this.Rol.MinimumWidth = 6;
+            this.Rol.Name = "Rol";
+            this.Rol.Width = 125;
+            // 
+            // Email
+            // 
+            this.Email.DataPropertyName = "Email";
+            this.Email.HeaderText = "Email";
+            this.Email.MinimumWidth = 6;
+            this.Email.Name = "Email";
+            this.Email.Width = 125;
+            // 
+            // Bloqueado
+            // 
+            this.Bloqueado.DataPropertyName = "EstadoBloqueado";
+            this.Bloqueado.HeaderText = "Bloqueado";
+            this.Bloqueado.MinimumWidth = 6;
+            this.Bloqueado.Name = "Bloqueado";
+            this.Bloqueado.Width = 125;
             // 
             // btnaplicar
             // 
@@ -306,62 +362,6 @@
             this.cbactivos.Text = "ACTIVOS";
             this.cbactivos.UseVisualStyleBackColor = true;
             this.cbactivos.CheckedChanged += new System.EventHandler(this.cbactivos_CheckedChanged);
-            // 
-            // NombreUsuario
-            // 
-            this.NombreUsuario.DataPropertyName = "NombreUsuario";
-            this.NombreUsuario.HeaderText = "NombreUsuario";
-            this.NombreUsuario.MinimumWidth = 6;
-            this.NombreUsuario.Name = "NombreUsuario";
-            this.NombreUsuario.Width = 125;
-            // 
-            // Nombre
-            // 
-            this.Nombre.DataPropertyName = "Nombre";
-            this.Nombre.HeaderText = "Nombre";
-            this.Nombre.MinimumWidth = 6;
-            this.Nombre.Name = "Nombre";
-            this.Nombre.Width = 125;
-            // 
-            // Apellido
-            // 
-            this.Apellido.DataPropertyName = "Apellido";
-            this.Apellido.HeaderText = "Apellido";
-            this.Apellido.MinimumWidth = 6;
-            this.Apellido.Name = "Apellido";
-            this.Apellido.Width = 125;
-            // 
-            // DNI
-            // 
-            this.DNI.DataPropertyName = "DNI";
-            this.DNI.HeaderText = "DNI";
-            this.DNI.MinimumWidth = 6;
-            this.DNI.Name = "DNI";
-            this.DNI.Width = 125;
-            // 
-            // Rol
-            // 
-            this.Rol.DataPropertyName = "Perfil";
-            this.Rol.HeaderText = "Rol";
-            this.Rol.MinimumWidth = 6;
-            this.Rol.Name = "Rol";
-            this.Rol.Width = 125;
-            // 
-            // Email
-            // 
-            this.Email.DataPropertyName = "Email";
-            this.Email.HeaderText = "Email";
-            this.Email.MinimumWidth = 6;
-            this.Email.Name = "Email";
-            this.Email.Width = 125;
-            // 
-            // Bloqueado
-            // 
-            this.Bloqueado.DataPropertyName = "EstadoBloqueado";
-            this.Bloqueado.HeaderText = "Bloqueado";
-            this.Bloqueado.MinimumWidth = 6;
-            this.Bloqueado.Name = "Bloqueado";
-            this.Bloqueado.Width = 125;
             // 
             // cmbRol
             // 

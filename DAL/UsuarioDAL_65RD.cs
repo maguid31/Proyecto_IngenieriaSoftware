@@ -10,7 +10,8 @@ namespace DAL_65RD
 {
     public class UsuarioDAL_65RD
     {
-        private string connectionString = @"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+            //@"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
 
         public Usuario_65RD Login(string usuarioConcatenado, string hashContraseña)
         {

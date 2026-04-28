@@ -10,7 +10,8 @@ namespace DAL
     public class BitacoraDAL_65RD
     {
 
-        private string _connectionString = "Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string _connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+            //"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
 
         public void RegistrarEvento(int usuarioId, string accion, string descripcion)
         {
