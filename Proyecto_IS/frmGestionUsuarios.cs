@@ -232,5 +232,35 @@ namespace Proyecto_IS
                 MessageBox.Show("Seleccione un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            DialogResult confirmacion = MessageBox.Show(
+            "¿Está seguro de que desea cerrar la sesión?",
+            "Confirmar salida",
+            MessageBoxButtons.OKCancel,
+            MessageBoxIcon.Question
+            );
+
+            if (confirmacion == DialogResult.OK)
+            {
+                // Obtener ID del usuario logueado
+                int idUsuarioActual = 0;
+                if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
+                {
+                    idUsuarioActual = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
+                }
+
+                // Registrar en bitácora
+                BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
+                bitacora.RegistrarEvento(idUsuarioActual, "Cierre de sesión", "El usuario cerró sesión y salió del sistema");
+
+                // Limpiar la sesión
+                SessionManager_65RD.Instancia.CerrarSesion();
+
+                // Cerrar  la aplicación 
+                Application.Exit();
+            }
+        }
     }
 }

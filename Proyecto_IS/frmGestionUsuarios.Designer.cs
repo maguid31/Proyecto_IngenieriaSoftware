@@ -58,6 +58,7 @@
             this.cbactivos = new System.Windows.Forms.CheckBox();
             this.cmbRol = new System.Windows.Forms.ComboBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnCerrarSesion = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -372,12 +373,27 @@
             this.cmbRol.Size = new System.Drawing.Size(216, 25);
             this.cmbRol.TabIndex = 66;
             // 
+            // btnCerrarSesion
+            // 
+            this.btnCerrarSesion.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCerrarSesion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
+            this.btnCerrarSesion.Location = new System.Drawing.Point(966, 27);
+            this.btnCerrarSesion.Name = "btnCerrarSesion";
+            this.btnCerrarSesion.Size = new System.Drawing.Size(115, 35);
+            this.btnCerrarSesion.TabIndex = 67;
+            this.btnCerrarSesion.Text = "CERRAR SESIÓN";
+            this.btnCerrarSesion.UseVisualStyleBackColor = false;
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
+            // 
             // frmGestionUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1109, 726);
+            this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.cmbRol);
             this.Controls.Add(this.cbactivos);
             this.Controls.Add(this.cbtodos);
@@ -444,5 +460,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Bloqueado;
         private System.Windows.Forms.ComboBox cmbRol;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button btnCerrarSesion;
     }
 }
