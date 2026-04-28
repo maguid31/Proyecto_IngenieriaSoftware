@@ -27,6 +27,29 @@ namespace Proyecto_IS
             comboBoxRol.Items.Add("Administrador");
             comboBoxRol.Items.Add("Usuario");
             comboBoxRol.SelectedIndex = 0; // por defecto Administrador
+
+         /*   // CÓDIGO TEMPORAL PARA CREAR ADMIN 
+            UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
+
+            // Verificamos si la base de datos está vacía
+            if (gestorUsuario.ObtenerUsuarios().Count == 0)
+            {
+                Usuario_65RD adminDefault = new Usuario_65RD
+                {
+                    Apellido = "Admin",
+                    DNI = "12345678",
+                    Contraseña = Seguridad_65RD.Encriptar("12345678"),
+                    Perfil = RolUsuario.Administrador,
+                    Activo = true,
+                    Email = "admin@autopremium.com",
+                    PrimerLogin = true
+                };
+
+                if (gestorUsuario.RegistrarUsuario(adminDefault))
+                {
+                    MessageBox.Show("Se autogeneró un administrador.\n\nUsuario: Admin12345678\nContraseña: 12345678", "Rescate de Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            } */
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

@@ -18,6 +18,9 @@ namespace Proyecto_IS
         public frmGestionUsuarios()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ControlBox = true; 
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
         }
         private int usuarioSeleccionadoId = -1;
 
@@ -30,14 +33,16 @@ namespace Proyecto_IS
             txtApellido.Text = "";
             txtDNI.Text = "";
             txtemail.Text = "";
-            txtrol.Text = "";
+            cmbRol.Text = "";
+            txtnombreUsuario.Text = ""; 
 
             // Habilitar campos
             txtnombre.Enabled = true;
             txtApellido.Enabled = true;
             txtDNI.Enabled = true;
             txtemail.Enabled = true;
-            txtrol.Enabled = true;
+            cmbRol.SelectedIndex = -1;
+            cmbRol.Enabled = true;
 
             txtnombre.Focus();
         }
@@ -53,14 +58,19 @@ namespace Proyecto_IS
             dgvUsuarios.DataSource = null;
             dgvUsuarios.DataSource = listaUsuarios;
 
-            dgvUsuarios.Columns["Contraseña"].Visible = false;
-            dgvUsuarios.Columns["IntentosFallidos"].Visible = false;
-            dgvUsuarios.Columns["PrimerLogin"].Visible = false;
+            
         }
 
         private void frmGestionUsuarios_Load(object sender, EventArgs e)
         {
+            dgvUsuarios.AutoGenerateColumns = false;
+
+            cmbRol.Items.Clear();
+            cmbRol.Items.Add("Basico");
+            cmbRol.Items.Add("Administrador");
+
             CargarUsuarios();
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -71,6 +81,16 @@ namespace Proyecto_IS
         private void btnaplicar_Click(object sender, EventArgs e)
         {
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
+
+            // --- VALIDACIÓN DE CAMPOS ---
+            if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                string.IsNullOrWhiteSpace(txtDNI.Text) ||
+                cmbRol.SelectedIndex == -1) 
+            {
+                MessageBox.Show("Por favor, complete todos los datos y seleccione un rol.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Corta la ejecución para que no guarde nada
+            }
 
             if (usuarioSeleccionadoId == -1) // CREAR
             {
@@ -96,7 +116,7 @@ namespace Proyecto_IS
                 {
                     Id = usuarioSeleccionadoId,
                     Email = txtemail.Text.Trim(),
-                    Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), txtrol.Text),
+                    Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), cmbRol.Text),
                     Activo = true
                 };
 
@@ -112,15 +132,19 @@ namespace Proyecto_IS
         {
             if (e.RowIndex >= 0)
             {
-                DataGridViewRow fila = dgvUsuarios.Rows[e.RowIndex];
+                // Extraemos el usuario completo a
+                Usuario_65RD usuarioFila = (Usuario_65RD)dgvUsuarios.Rows[e.RowIndex].DataBoundItem;
 
-                usuarioSeleccionadoId = Convert.ToInt32(fila.Cells["Id"].Value);
+                // Guardamos el ID real
+                usuarioSeleccionadoId = usuarioFila.Id;
 
-                txtnombre.Text = fila.Cells["Nombre"].Value?.ToString();
-                txtApellido.Text = fila.Cells["Apellido"].Value?.ToString();
-                txtDNI.Text = fila.Cells["DNI"].Value?.ToString();
-                txtemail.Text = fila.Cells["Email"].Value?.ToString();
-                txtrol.Text = fila.Cells["Rol"].Value?.ToString();
+                // Bajamos los datos a los casilleros
+                txtnombre.Text = usuarioFila.Nombre;
+                txtApellido.Text = usuarioFila.Apellido;
+                txtDNI.Text = usuarioFila.DNI;
+                txtemail.Text = usuarioFila.Email;
+                cmbRol.Text = usuarioFila.Perfil.ToString();
+                txtnombreUsuario.Text = usuarioFila.NombreUsuario;
             }
         }
 
@@ -128,7 +152,7 @@ namespace Proyecto_IS
         {
             // Solo habilitar Email y Rol
             txtemail.Enabled = true;
-            txtrol.Enabled = true;
+            cmbRol.Enabled = true;
 
             // Bloquear los demás campos
             txtnombre.Enabled = false;
@@ -172,6 +196,40 @@ namespace Proyecto_IS
             {
                 cbtodos.Checked = false; // desmarcar el otro
                 CargarUsuarios(true); // traer solo activos
+            }
+        }
+
+        private void btnDeshabilitar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtnombreUsario_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtrol_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnHabilitar_Click(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionadoId != -1)
+            {
+                UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
+                gestorUsuario.ActualizarEstado(usuarioSeleccionadoId, true);
+
+                BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
+                bitacora.RegistrarEvento(usuarioSeleccionadoId, "Usuario habilitado", "El usuario fue marcado como activo nuevamente");
+
+                MessageBox.Show("Usuario habilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarUsuarios();
+            }
+            else
+            {
+                MessageBox.Show("Seleccione un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

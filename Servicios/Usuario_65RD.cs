@@ -33,5 +33,17 @@ namespace Servicios_65RD
         {
             get { return $"{Apellido}{DNI}"; }
         }
+
+        // Propiedad de solo lectura: Devuelve si o no según el estado del usuario
+        public string EstadoBloqueado
+        {
+            get
+            {
+                if (Activo == true)
+                    return "No";
+                else
+                    return "Sí";
+            }
+        }
     }
 }

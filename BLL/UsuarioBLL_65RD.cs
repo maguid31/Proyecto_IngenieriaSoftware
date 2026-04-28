@@ -32,7 +32,7 @@ namespace BLL_65RD
                 SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
                 _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Login", "Usuario inició sesión");
 
-                // CAMBIO CLAVE: Usamos la propiedad de la base de datos
+                // Usamos la propiedad de la base de datos
                 if (usuarioEncontrado.PrimerLogin)
                     return ResultadoLogin.RequiereCambioContrasena;
 
@@ -63,10 +63,15 @@ namespace BLL_65RD
         public bool ActualizarUsuario(Usuario_65RD usuario)
         {
             return _usuarioDAL.ActualizarUsuario(usuario);
+            
         }
         public void DeshabilitarUsuario(int id)
         {
             _usuarioDAL.ActualizarEstado(id, false);
+        }
+        public void ActualizarEstado(int id, bool activo)
+        {
+            _usuarioDAL.ActualizarEstado(id, activo);
         }
 
 

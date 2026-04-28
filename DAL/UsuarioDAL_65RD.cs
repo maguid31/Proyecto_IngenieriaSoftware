@@ -17,7 +17,7 @@ namespace DAL_65RD
             Usuario_65RD usuarioEncontrado = null;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // CORRECCIÓN: Se cambió PerfilId por Rol para que coincida con tu nueva tabla
+                
                 string query = "SELECT Id, Apellido, DNI, Contraseña, Rol, Activo, PrimerLogin FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -35,7 +35,6 @@ namespace DAL_65RD
                                 Apellido = reader["Apellido"].ToString(),
                                 DNI = reader["DNI"].ToString(),
                                 Contraseña = reader["Contraseña"].ToString(),
-                                // CORRECCIÓN: Leemos de la columna "Rol" y convertimos al Enum
                                 Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), reader["Rol"].ToString()),
                                 Activo = Convert.ToBoolean(reader["Activo"]),
                                 PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"])
@@ -51,11 +50,12 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Usuarios (Apellido, DNI, Contraseña, Rol, Activo, Email) " +
-                               "VALUES (@apellido, @dni, @contraseña, @rol, @activo, @email)";
+                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, Rol, Activo, Email) " +
+                               "VALUES (@nombre, @apellido, @dni, @contraseña, @rol, @activo, @email)";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
+                    cmd.Parameters.AddWithValue("@nombre", (object)nuevoUsuario.Nombre ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@apellido", nuevoUsuario.Apellido);
                     cmd.Parameters.AddWithValue("@dni", nuevoUsuario.DNI);
                     cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña);
