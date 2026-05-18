@@ -28,28 +28,7 @@ namespace Proyecto_IS
             comboBoxRol.Items.Add("Usuario");
             comboBoxRol.SelectedIndex = 0; // por defecto Administrador
 
-         /*   // CÓDIGO TEMPORAL PARA CREAR ADMIN 
-            UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
-
-            // Verificamos si la base de datos está vacía
-            if (gestorUsuario.ObtenerUsuarios().Count == 0)
-            {
-                Usuario_65RD adminDefault = new Usuario_65RD
-                {
-                    Apellido = "Admin",
-                    DNI = "12345678",
-                    Contraseña = Seguridad_65RD.Encriptar("12345678"),
-                    Perfil = RolUsuario.Administrador,
-                    Activo = true,
-                    Email = "admin@autopremium.com",
-                    PrimerLogin = true
-                };
-
-                if (gestorUsuario.RegistrarUsuario(adminDefault))
-                {
-                    MessageBox.Show("Se autogeneró un administrador.\n\nUsuario: Admin12345678\nContraseña: 12345678", "Rescate de Sistema", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            } */
+         
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -67,21 +46,26 @@ namespace Proyecto_IS
             {
                 case ResultadoLogin.Exitoso:
                     Usuario_65RD usuarioLogueado = SessionManager_65RD.Instancia.UsuarioLogueado;
-                    string rolSeleccionado = comboBoxRol.SelectedItem.ToString();
+                    string rolSeleccionado = comboBoxRol.SelectedItem.ToString(); // "Administrador" o "Usuario"
 
-                    if (usuarioLogueado.Perfil == RolUsuario.Administrador && rolSeleccionado == "Administrador")
+                    // Validamos que el rol coincida
+                    if ((usuarioLogueado.Perfil == RolUsuario.Administrador && rolSeleccionado == "Administrador") ||
+                        (usuarioLogueado.Perfil == RolUsuario.Basico && rolSeleccionado == "Usuario"))
                     {
-                        frmGestionUsuarios gestion = new frmGestionUsuarios();
-                        gestion.Show();
+                        // Acá capturamos "Administrador" o "Basico" para mandarlo al menú
+                        string stringRolParaMenu = usuarioLogueado.Perfil.ToString();
+
+                        // SOLO instanciamos y abrimos el Menú Principal, nada de Gestión de Usuarios acá
+                        MainForm menuPrincipal = new MainForm(
+                            usuarioLogueado.Id,
+                            usuarioLogueado.Nombre,
+                            stringRolParaMenu
+                        );
+
+                        menuPrincipal.Show();
                         this.Hide();
-                        gestion.FormClosed += (s, args) => this.Close();
-                    }
-                    else if (usuarioLogueado.Perfil == RolUsuario.Basico && rolSeleccionado == "Usuario")
-                    {
-                        frmCambioContraseña cambio = new frmCambioContraseña();
-                        cambio.Show();
-                        this.Hide();
-                        cambio.FormClosed += (s, args) => this.Close();
+
+                        menuPrincipal.FormClosed += (s, args) => this.Close();
                     }
                     else
                     {
@@ -108,6 +92,11 @@ namespace Proyecto_IS
         private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtContraseña.PasswordChar = cbShowPassword.Checked ? '\0' : '•';
+        }
+
+        private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

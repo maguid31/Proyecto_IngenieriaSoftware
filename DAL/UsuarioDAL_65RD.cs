@@ -19,7 +19,8 @@ namespace DAL_65RD
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 
-                string query = "SELECT Id, Apellido, DNI, Contraseña, Rol, Activo, PrimerLogin FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
+                string query = "SELECT Id, Nombre, Apellido, DNI, Contraseña, Rol, Activo, PrimerLogin FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
+
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@usuario", usuarioConcatenado);
@@ -33,6 +34,7 @@ namespace DAL_65RD
                             usuarioEncontrado = new Usuario_65RD
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
+                                Nombre = reader["Nombre"].ToString(),
                                 Apellido = reader["Apellido"].ToString(),
                                 DNI = reader["DNI"].ToString(),
                                 Contraseña = reader["Contraseña"].ToString(),
