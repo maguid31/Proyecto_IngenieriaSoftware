@@ -46,6 +46,7 @@ namespace Proyecto_IS
                 "Alta Usuario",
                 "Modificar Usuario",
                 "Bloquear Usuario",
+                "Bloqueo por Intentos",
                 "Cambio Contraseña"
             });
             cmbEvento.SelectedIndex = 0;

@@ -69,7 +69,6 @@ namespace Proyecto_IS
                     Usuario_65RD usuarioLogueado = SessionManager_65RD.Instancia.UsuarioLogueado;
                     string rolSeleccionado = comboBoxRol.SelectedItem.ToString();
 
-                    
                     if ((usuarioLogueado.Perfil != null && usuarioLogueado.Perfil.Nombre == "Administrador" && rolSeleccionado == "Administrador") ||
                         (usuarioLogueado.Perfil != null && usuarioLogueado.Perfil.Nombre == "Basico" && rolSeleccionado == "Usuario"))
                     {
@@ -101,7 +100,15 @@ namespace Proyecto_IS
                     break;
 
                 case ResultadoLogin.CredencialesInvalidas:
-                    MessageBox.Show("Credenciales incorrectas o cuenta inactiva.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // Mensaje actualizado
+                    MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtContraseña.Text = "";
+                    txtContraseña.Focus();
+                    break;
+
+                // AGREGAMOS EL NUEVO CASO ACÁ
+                case ResultadoLogin.CuentaBloqueada:
+                    MessageBox.Show("Su cuenta ha sido bloqueada por seguridad tras múltiples intentos fallidos. Por favor, comuníquese con el administrador.", "Cuenta Bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     txtContraseña.Text = "";
                     txtContraseña.Focus();
                     break;

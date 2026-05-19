@@ -12,25 +12,24 @@ namespace DAL_65RD
     public class UsuarioDAL_65RD
     {
         private string connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
-            //@"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        //@"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
 
-        public Usuario_65RD Login(string usuarioConcatenado, string hashContraseña)
+        public Usuario_65RD ObtenerUsuarioPorLogin(string usuarioConcatenado)
         {
             Usuario_65RD usuarioEncontrado = null;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // Se agrega el INNER JOIN para traer los datos del Perfil
+                
                 string query = @"
-                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin,
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin, u.IntentosFallidos,
                     p.Id AS PerfilId, p.Nombre AS PerfilNombre
                     FROM Usuarios u
                     INNER JOIN Perfiles p ON u.PerfilId = p.Id
-                    WHERE CONCAT(u.Apellido, u.DNI) = @usuario AND u.Contraseña = @contraseña";
+                    WHERE CONCAT(u.Apellido, u.DNI) = @usuario";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@usuario", usuarioConcatenado);
-                    cmd.Parameters.AddWithValue("@contraseña", hashContraseña);
 
                     con.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -46,6 +45,7 @@ namespace DAL_65RD
                                 Contraseña = reader["Contraseña"].ToString(),
                                 Activo = Convert.ToBoolean(reader["Activo"]),
                                 PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
+                                IntentosFallidos = Convert.ToInt32(reader["IntentosFallidos"]), // <-- Esto es clave para los bloqueos
                                 // Instanciamos el objeto Perfil
                                 Perfil = new Perfil_65RD
                                 {
