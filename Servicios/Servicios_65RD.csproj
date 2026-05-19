@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora_65RD.cs" />
+    <Compile Include="Perfil_65RD.cs" />
     <Compile Include="Seguridad_65RD.cs" />
     <Compile Include="SessionManager_65RD.cs" />
     <Compile Include="Usuario_65RD.cs" />

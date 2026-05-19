@@ -1,5 +1,6 @@
 ﻿using BLL;
 using DAL_65RD;
+using Servicios;
 using Servicios_65RD;
 using System;
 using System.Collections.Generic;
@@ -47,9 +48,9 @@ namespace BLL_65RD
             {
                 Apellido = apellido,
                 DNI = dni,
-                Contraseña = Seguridad_65RD.Encriptar(dni), // Se guarda encriptada
-                Perfil = RolUsuario.Basico,
-                Activo=true
+                Contraseña = Seguridad_65RD.Encriptar(dni), // Se guarda el hash irreversible
+                Perfil = new Perfil_65RD { Id = 1, Nombre = "Basico" }, // <-- EL CAMBIO ESTÁ ACÁ
+                Activo = true
             };
 
             return _usuarioDAL.RegistrarUsuario(nuevoUsuario);
@@ -93,6 +94,13 @@ namespace BLL_65RD
         public List<Usuario_65RD> ObtenerUsuarios()
         {
             return _usuarioDAL.ObtenerUsuarios();
+        }
+
+        // Método nuevo para llenar el ComboBox de la UI
+        public List<Perfil_65RD> ObtenerPerfiles()
+        {
+            // Llama al método que creamos en la capa DAL
+            return _usuarioDAL.ObtenerPerfiles();
         }
     }
 }

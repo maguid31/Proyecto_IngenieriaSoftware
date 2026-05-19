@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Servicios;
+using Servicios_65RD;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Servicios_65RD;
 
 namespace DAL_65RD
 {
@@ -18,8 +19,13 @@ namespace DAL_65RD
             Usuario_65RD usuarioEncontrado = null;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                
-                string query = "SELECT Id, Nombre, Apellido, DNI, Contraseña, Rol, Activo, PrimerLogin FROM Usuarios WHERE CONCAT(Apellido, DNI) = @usuario AND Contraseña = @contraseña";
+                // Se agrega el INNER JOIN para traer los datos del Perfil
+                string query = @"
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin,
+                    p.Id AS PerfilId, p.Nombre AS PerfilNombre
+                    FROM Usuarios u
+                    INNER JOIN Perfiles p ON u.PerfilId = p.Id
+                    WHERE CONCAT(u.Apellido, u.DNI) = @usuario AND u.Contraseña = @contraseña";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -38,9 +44,14 @@ namespace DAL_65RD
                                 Apellido = reader["Apellido"].ToString(),
                                 DNI = reader["DNI"].ToString(),
                                 Contraseña = reader["Contraseña"].ToString(),
-                                Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), reader["Rol"].ToString()),
                                 Activo = Convert.ToBoolean(reader["Activo"]),
-                                PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"])
+                                PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
+                                // Instanciamos el objeto Perfil
+                                Perfil = new Perfil_65RD
+                                {
+                                    Id = Convert.ToInt32(reader["PerfilId"]),
+                                    Nombre = reader["PerfilNombre"].ToString()
+                                }
                             };
                         }
                     }
@@ -53,19 +64,18 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, Rol, Activo, Email) " +
-                               "VALUES (@nombre, @apellido, @dni, @contraseña, @rol, @activo, @email)";
-
+                // Cambiamos Rol por PerfilId
+                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, PerfilId, Activo, Email) " +
+                               "VALUES (@nombre, @apellido, @dni, @contraseña, @perfilId, @activo, @email)";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@nombre", (object)nuevoUsuario.Nombre ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@apellido", nuevoUsuario.Apellido);
                     cmd.Parameters.AddWithValue("@dni", nuevoUsuario.DNI);
-                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña);
-                    cmd.Parameters.AddWithValue("@rol", nuevoUsuario.Perfil.ToString());
+                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña); // Sigue siendo hash
+                    cmd.Parameters.AddWithValue("@perfilId", nuevoUsuario.Perfil.Id); // Obtenemos el Id del objeto Perfil
                     cmd.Parameters.AddWithValue("@activo", nuevoUsuario.Activo);
                     cmd.Parameters.AddWithValue("@email", (object)nuevoUsuario.Email ?? DBNull.Value);
-
                     con.Open();
                     return cmd.ExecuteNonQuery() > 0;
                 }
@@ -75,13 +85,12 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Usuarios SET Email=@email, Rol=@rol WHERE Id=@id";
+                string query = "UPDATE Usuarios SET Email=@email, PerfilId=@perfilId WHERE Id=@id";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@email", (object)usuario.Email ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@rol", usuario.Perfil.ToString());
+                    cmd.Parameters.AddWithValue("@perfilId", usuario.Perfil.Id);
                     cmd.Parameters.AddWithValue("@id", usuario.Id);
-
                     con.Open();
                     return cmd.ExecuteNonQuery() > 0;
                 }
@@ -137,14 +146,18 @@ namespace DAL_65RD
         public List<Usuario_65RD> ObtenerUsuarios()
         {
             List<Usuario_65RD> usuarios = new List<Usuario_65RD>();
-
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT Id, Nombre, Apellido, DNI, Email, Rol, Activo, IntentosFallidos, PrimerLogin FROM Usuarios";
+                string query = @"
+            SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.IntentosFallidos, u.PrimerLogin,
+                   p.Id AS PerfilId, p.Nombre AS PerfilNombre
+            FROM Usuarios u
+            INNER JOIN Perfiles p ON u.PerfilId = p.Id";
+
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
-
                 SqlDataReader reader = cmd.ExecuteReader();
+
                 while (reader.Read())
                 {
                     usuarios.Add(new Usuario_65RD
@@ -154,14 +167,17 @@ namespace DAL_65RD
                         Apellido = reader["Apellido"].ToString(),
                         DNI = reader["DNI"].ToString(),
                         Email = reader["Email"].ToString(),
-                        Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), reader["Rol"].ToString()),
                         Activo = Convert.ToBoolean(reader["Activo"]),
                         IntentosFallidos = Convert.ToInt32(reader["IntentosFallidos"]),
-                        PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"])
+                        PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
+                        Perfil = new Perfil_65RD
+                        {
+                            Id = Convert.ToInt32(reader["PerfilId"]),
+                            Nombre = reader["PerfilNombre"].ToString()
+                        }
                     });
                 }
             }
-
             return usuarios;
         }
         public void ActualizarEstado(int idUsuario, bool activo)
@@ -177,6 +193,27 @@ namespace DAL_65RD
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public List<Perfil_65RD> ObtenerPerfiles()
+        {
+            List<Perfil_65RD> perfiles = new List<Perfil_65RD>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id, Nombre FROM Perfiles";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    perfiles.Add(new Perfil_65RD
+                    {
+                        Id = Convert.ToInt32(reader["Id"]),
+                        Nombre = reader["Nombre"].ToString()
+                    });
+                }
+            }
+            return perfiles;
         }
 
     }

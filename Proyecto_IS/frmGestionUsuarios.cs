@@ -1,5 +1,6 @@
 ﻿using BLL;
 using BLL_65RD;
+using Servicios;
 using Servicios_65RD;
 using System;
 using System.Collections.Generic;
@@ -66,12 +67,15 @@ namespace Proyecto_IS
         {
             dgvUsuarios.AutoGenerateColumns = false;
 
-            cmbRol.Items.Clear();
-            cmbRol.Items.Add("Basico");
-            cmbRol.Items.Add("Administrador");
+            // Cargar el ComboBox de forma dinámica desde BLL
+            UsuarioBLL_65RD gestor = new UsuarioBLL_65RD();
+            cmbRol.DataSource = gestor.ObtenerPerfiles();
+            cmbRol.DisplayMember = "Nombre"; // Lo que ve el usuario
+            cmbRol.ValueMember = "Id";       // El dato interno que se guarda
+            cmbRol.SelectedIndex = -1;
 
             CargarUsuarios();
-            
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -101,8 +105,8 @@ namespace Proyecto_IS
                     Apellido = txtApellido.Text.Trim(),
                     DNI = txtDNI.Text.Trim(),
                     Email = txtemail.Text.Trim(),
-                    Contraseña = Seguridad_65RD.Encriptar(txtDNI.Text.Trim()),
-                    Perfil = RolUsuario.Basico,
+                    Contraseña = Seguridad_65RD.Encriptar(txtDNI.Text.Trim()), // Hash intacto
+                    Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, // Tomamos el ID del combo
                     Activo = true,
                     IntentosFallidos = 0,
                     PrimerLogin = true
@@ -125,7 +129,7 @@ namespace Proyecto_IS
                 {
                     Id = usuarioSeleccionadoId,
                     Email = txtemail.Text.Trim(),
-                    Perfil = (RolUsuario)Enum.Parse(typeof(RolUsuario), cmbRol.Text),
+                    Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, // Tomamos el ID del combo
                     Activo = true
                 };
 
@@ -158,7 +162,7 @@ namespace Proyecto_IS
                 txtApellido.Text = usuarioFila.Apellido;
                 txtDNI.Text = usuarioFila.DNI;
                 txtemail.Text = usuarioFila.Email;
-                cmbRol.Text = usuarioFila.Perfil.ToString();
+                cmbRol.SelectedValue = usuarioFila.Perfil.Id;
                 txtnombreUsuario.Text = usuarioFila.NombreUsuario;
             }
         }

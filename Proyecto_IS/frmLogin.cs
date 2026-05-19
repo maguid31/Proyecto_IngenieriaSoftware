@@ -1,4 +1,5 @@
 ﻿using BLL_65RD;
+using Servicios;
 using Servicios_65RD;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,27 @@ namespace Proyecto_IS
             comboBoxRol.Items.Add("Usuario");
             comboBoxRol.SelectedIndex = 0; // por defecto Administrador
 
-         
+            // --- CÓDIGO TEMPORAL PARA CREAR ADMIN INICIAL ---
+            UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
+
+            // Si no hay usuarios en la base de datos, creamos uno
+            if (gestorUsuario.ObtenerUsuarios().Count == 0)
+            {
+                Usuario_65RD adminInicial = new Usuario_65RD
+                {
+                    Nombre = "Admin",
+                    Apellido = "Sistema",
+                    DNI = "1234",
+                    Contraseña = Seguridad_65RD.Encriptar("1234"), // Tu sistema genera el Hash acá
+                    Perfil = new Perfil_65RD { Id = 2, Nombre = "Administrador" }, // El ID 2 es Admin en SQL
+                    Activo = true,
+                    IntentosFallidos = 0,
+                    PrimerLogin = false // Lo ponemos en false para que no te pida cambiarla de entrada
+                };
+
+                gestorUsuario.RegistrarUsuario(adminInicial);
+                MessageBox.Show("Usuario administrador creado con éxito.\n\nUsuario: Sistema1234\nClave: 1234", "Admin Inicial");
+            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -46,16 +67,14 @@ namespace Proyecto_IS
             {
                 case ResultadoLogin.Exitoso:
                     Usuario_65RD usuarioLogueado = SessionManager_65RD.Instancia.UsuarioLogueado;
-                    string rolSeleccionado = comboBoxRol.SelectedItem.ToString(); // "Administrador" o "Usuario"
+                    string rolSeleccionado = comboBoxRol.SelectedItem.ToString();
 
-                    // Validamos que el rol coincida
-                    if ((usuarioLogueado.Perfil == RolUsuario.Administrador && rolSeleccionado == "Administrador") ||
-                        (usuarioLogueado.Perfil == RolUsuario.Basico && rolSeleccionado == "Usuario"))
+                    
+                    if ((usuarioLogueado.Perfil != null && usuarioLogueado.Perfil.Nombre == "Administrador" && rolSeleccionado == "Administrador") ||
+                        (usuarioLogueado.Perfil != null && usuarioLogueado.Perfil.Nombre == "Basico" && rolSeleccionado == "Usuario"))
                     {
-                        // Acá capturamos "Administrador" o "Basico" para mandarlo al menú
-                        string stringRolParaMenu = usuarioLogueado.Perfil.ToString();
+                        string stringRolParaMenu = usuarioLogueado.Perfil.Nombre;
 
-                        // SOLO instanciamos y abrimos el Menú Principal, nada de Gestión de Usuarios acá
                         MainForm menuPrincipal = new MainForm(
                             usuarioLogueado.Id,
                             usuarioLogueado.Nombre,
