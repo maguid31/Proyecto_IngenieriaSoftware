@@ -1,4 +1,5 @@
-﻿using Servicios_65RD;
+﻿using BLL;
+using Servicios_65RD;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -174,10 +175,11 @@ namespace Proyecto_IS
 
         private void AbrirBitacora(object sender, EventArgs e)
         {
-            // frmBitacoraEventos frmBitacora = new frmBitacoraEventos();
-            // frmBitacora.Show();
+            // Instanciamos el formulario
+            frmBitacoraEventos formBitacora = new frmBitacoraEventos();
 
-            MessageBox.Show("Acá se abrirá la ventana de Bitácora de Eventos.", "Menú", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Lo mostramos en pantalla 
+            formBitacora.ShowDialog();
         }
 
         private void AbrirCambiarIdioma(object sender, EventArgs e)
@@ -190,6 +192,15 @@ namespace Proyecto_IS
             var res = MessageBox.Show("¿Estás seguro que querés cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes)
             {
+                // 1. REGISTRAMOS EL LOGOUT EN LA BITÁCORA ANTES DE BORRAR LA SESIÓN
+                if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
+                {
+                    int idUsuarioActual = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
+                    BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
+                    bitacora.RegistrarEvento(idUsuarioActual, "Usuarios", "Logout", 1, "El usuario cerró sesión desde el menú principal");
+                }
+
+                // 2. CERRAMOS SESIÓN NORMALMENTE
                 SessionManager_65RD.Instancia.CerrarSesion();
                 this.Hide();
                 frmLogin login = new frmLogin();

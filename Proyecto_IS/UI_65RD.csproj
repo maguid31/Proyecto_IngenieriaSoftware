@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmBitacoraEventos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBitacoraEventos.Designer.cs">
+      <DependentUpon>frmBitacoraEventos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCambioContraseña.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmBitacoraEventos.resx">
+      <DependentUpon>frmBitacoraEventos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCambioContraseña.resx">
       <DependentUpon>frmCambioContraseña.cs</DependentUpon>
     </EmbeddedResource>

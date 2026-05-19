@@ -23,6 +23,7 @@ namespace Proyecto_IS
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
         }
         private int usuarioSeleccionadoId = -1;
+        private string usuarioSeleccionadoNombre = ""; 
 
         private void btnCrear_Click(object sender, EventArgs e)
         {
@@ -108,7 +109,15 @@ namespace Proyecto_IS
                 };
 
                 bool registrado = gestorUsuario.RegistrarUsuario(nuevoUsuario);
-                if (registrado) MessageBox.Show("Usuario creado correctamente.");
+                if (registrado)
+                {
+                    // ACÁ AGREGAMOS EL REGISTRO DE LA BITÁCORA 
+                    int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
+                    BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
+                    bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Alta Usuario", 3, $"Se registró un nuevo usuario: {nuevoUsuario.Apellido}{nuevoUsuario.DNI}");
+
+                    //MessageBox.Show("Usuario creado correctamente.");
+                }
             }
             else // MODIFICAR
             {
@@ -121,7 +130,12 @@ namespace Proyecto_IS
                 };
 
                 bool actualizado = gestorUsuario.ActualizarUsuario(usuarioModificado);
-                if (actualizado) MessageBox.Show("Usuario modificado correctamente.");
+                if (actualizado)
+                {
+                    int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
+                    new BitacoraBLL_65RD().RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se modificó al usuario: {usuarioSeleccionadoNombre}");
+                    //MessageBox.Show("Usuario modificado correctamente.");
+                }
             }
 
             usuarioSeleccionadoId = -1; // reset
@@ -137,6 +151,7 @@ namespace Proyecto_IS
 
                 // Guardamos el ID real
                 usuarioSeleccionadoId = usuarioFila.Id;
+                usuarioSeleccionadoNombre = usuarioFila.NombreUsuario;
 
                 // Bajamos los datos a los casilleros
                 txtnombre.Text = usuarioFila.Nombre;
@@ -168,8 +183,9 @@ namespace Proyecto_IS
                 gestorUsuario.DeshabilitarUsuario(usuarioSeleccionadoId);
 
                 // Registrar en bitácora
+                int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
-                bitacora.RegistrarEvento(usuarioSeleccionadoId, "Usuario deshabilitado", "El usuario fue marcado como inactivo");
+                bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Bloquear Usuario", 3, $"Se deshabilitó al usuario: {usuarioSeleccionadoNombre}");
 
                 MessageBox.Show("Usuario deshabilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
@@ -221,8 +237,9 @@ namespace Proyecto_IS
                 UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
                 gestorUsuario.ActualizarEstado(usuarioSeleccionadoId, true);
 
+                int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
-                bitacora.RegistrarEvento(usuarioSeleccionadoId, "Usuario habilitado", "El usuario fue marcado como activo nuevamente");
+                bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se habilitó al usuario: {usuarioSeleccionadoNombre}");
 
                 MessageBox.Show("Usuario habilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
@@ -253,7 +270,7 @@ namespace Proyecto_IS
 
                 // Registrar en bitácora
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
-                bitacora.RegistrarEvento(idUsuarioActual, "Cierre de sesión", "El usuario cerró sesión y salió del sistema");
+                bitacora.RegistrarEvento(idUsuarioActual, "Usuarios", "Logout", 1, "El usuario cerró sesión y salió del sistema");
 
                 // Limpiar la sesión
                 SessionManager_65RD.Instancia.CerrarSesion();

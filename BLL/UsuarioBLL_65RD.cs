@@ -30,7 +30,7 @@ namespace BLL_65RD
             {
                 _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, 0);
                 SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
-                _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Login", "Usuario inició sesión");
+                _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login", 1, "Usuario inició sesión");
 
                 // Usamos la propiedad de la base de datos
                 if (usuarioEncontrado.PrimerLogin)
@@ -83,7 +83,7 @@ namespace BLL_65RD
             if (resultado)
             {
                 // Registrar en bitácora
-                new BitacoraBLL_65RD().RegistrarEvento(usuarioId, "Cambio Contraseña", "El usuario cambió su contraseña");
+                new BitacoraBLL_65RD().RegistrarEvento(usuarioId, "Usuarios", "Cambio Contraseña", 2, "El usuario cambió su contraseña");
             }
 
             return resultado;
