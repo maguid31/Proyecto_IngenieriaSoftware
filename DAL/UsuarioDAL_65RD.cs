@@ -112,7 +112,7 @@ namespace DAL_65RD
             }
         }
 
-        public void BloquearUsuario(int usuarioId)
+       /* public void BloquearUsuario(int usuarioId)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -124,7 +124,7 @@ namespace DAL_65RD
                     cmd.ExecuteNonQuery();
                 }
             }
-        }
+        }*/
 
 
         public bool ActualizarContraseña(int idUsuario, string nuevaContraseñaHash)

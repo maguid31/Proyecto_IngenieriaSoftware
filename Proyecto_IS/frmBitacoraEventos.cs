@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Proyecto_IS
 {
@@ -93,6 +96,93 @@ namespace Proyecto_IS
             cmbEvento.SelectedIndex = 0;
             cmbCriticidad.SelectedIndex = 0;
             dgvBitacora.DataSource = null;
+        }
+
+        private void btnImprimir_Click(object sender, EventArgs e)
+        {
+            // Verificamos que haya datos en la grilla antes de intentar imprimir
+            if (dgvBitacora.Rows.Count > 0)
+            {
+                SaveFileDialog guardar = new SaveFileDialog();
+                guardar.Filter = "Archivo PDF (*.pdf)|*.pdf";
+                guardar.FileName = "Reporte_Bitacora.pdf"; // Nombre por defecto
+
+                if (guardar.ShowDialog() == DialogResult.OK)
+                {
+                    bool errorArchivo = false;
+                    // Chequeamos si el archivo ya existe y está abierto por otro programa
+                    if (File.Exists(guardar.FileName))
+                    {
+                        try
+                        {
+                            File.Delete(guardar.FileName);
+                        }
+                        catch (IOException)
+                        {
+                            errorArchivo = true;
+                            MessageBox.Show("No se puede sobreescribir el archivo. Asegurate de que no esté abierto en otro programa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
+                    if (!errorArchivo)
+                    {
+                        try
+                        {
+                            // Creamos la tabla para el PDF con la misma cantidad de columnas que la grilla
+                            PdfPTable tablaPdf = new PdfPTable(dgvBitacora.Columns.Count);
+                            tablaPdf.DefaultCell.Padding = 3;
+                            tablaPdf.WidthPercentage = 100;
+                            tablaPdf.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                            // 1. Agregamos los encabezados de las columnas
+                            foreach (DataGridViewColumn columna in dgvBitacora.Columns)
+                            {
+                                PdfPCell celda = new PdfPCell(new Phrase(columna.HeaderText));
+                                celda.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240); // Un gris clarito para el encabezado
+                                tablaPdf.AddCell(celda);
+                            }
+
+                            // 2. Agregamos las filas con los datos de los eventos
+                            foreach (DataGridViewRow fila in dgvBitacora.Rows)
+                            {
+                                foreach (DataGridViewCell celda in fila.Cells)
+                                {
+                                    // Validamos nulos por las dudas
+                                    tablaPdf.AddCell(celda.Value?.ToString() ?? "");
+                                }
+                            }
+
+                            // 3. Generamos el documento físico
+                            using (FileStream stream = new FileStream(guardar.FileName, FileMode.Create))
+                            {
+                                // Configuramos tamaño de hoja y márgenes
+                                Document pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
+                                PdfWriter.GetInstance(pdfDoc, stream);
+                                pdfDoc.Open();
+
+                                // Opcional: Agregar un título al documento
+                                Paragraph titulo = new Paragraph("Reporte de Bitácora de Eventos\n\n");
+                                titulo.Alignment = Element.ALIGN_CENTER;
+                                pdfDoc.Add(titulo);
+
+                                pdfDoc.Add(tablaPdf);
+                                pdfDoc.Close();
+                                stream.Close();
+                            }
+
+                            MessageBox.Show("El reporte PDF se generó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Ocurrió un error al generar el PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay eventos en la grilla para exportar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

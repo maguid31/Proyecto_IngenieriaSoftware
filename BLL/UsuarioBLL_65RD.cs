@@ -42,20 +42,6 @@ namespace BLL_65RD
             return ResultadoLogin.CredencialesInvalidas;
         }
 
-        public bool RegistrarNuevoUsuario(string apellido, string dni)
-        {
-            Usuario_65RD nuevoUsuario = new Usuario_65RD
-            {
-                Apellido = apellido,
-                DNI = dni,
-                Contraseña = Seguridad_65RD.Encriptar(dni), // Se guarda el hash irreversible
-                Perfil = new Perfil_65RD { Id = 1, Nombre = "Basico" }, // <-- EL CAMBIO ESTÁ ACÁ
-                Activo = true
-            };
-
-            return _usuarioDAL.RegistrarUsuario(nuevoUsuario);
-        }
-
         public bool RegistrarUsuario(Usuario_65RD nuevoUsuario)
         {
             return _usuarioDAL.RegistrarUsuario(nuevoUsuario);
