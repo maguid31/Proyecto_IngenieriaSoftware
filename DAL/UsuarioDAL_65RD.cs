@@ -154,7 +154,12 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Usuarios SET Activo=@activo WHERE Id=@id";
+                // Si activo es true, ponemos PrimerLogin = 1. Si es false, dejamos el valor que ya tenía.
+                string query = @"UPDATE Usuarios 
+                         SET Activo = @activo, 
+                             PrimerLogin = CASE WHEN @activo = 1 THEN 1 ELSE PrimerLogin END 
+                         WHERE Id = @id";
+
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@activo", activo);

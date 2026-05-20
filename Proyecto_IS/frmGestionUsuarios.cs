@@ -97,6 +97,19 @@ namespace Proyecto_IS
                 return; 
             }
 
+            // Validar que el DNI no exista antes de crear
+            if (usuarioSeleccionadoId == -1)
+            {
+                var usuariosExistentes = gestorUsuario.ObtenerUsuarios();
+                bool dniDuplicado = usuariosExistentes.Any(u => u.DNI == txtDNI.Text.Trim());
+
+                if (dniDuplicado)
+                {
+                    MessageBox.Show("Ya existe un usuario registrado con este DNI.", "DNI Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             if (usuarioSeleccionadoId == -1) 
             {
                 Usuario_65RD nuevoUsuario = new Usuario_65RD
@@ -124,6 +137,7 @@ namespace Proyecto_IS
             }
             else // MODIFICAR
             {
+               
                 Usuario_65RD usuarioModificado = new Usuario_65RD
                 {
                     Id = usuarioSeleccionadoId,
@@ -168,6 +182,11 @@ namespace Proyecto_IS
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            if (usuarioSeleccionadoId == SessionManager_65RD.Instancia.UsuarioLogueado.Id)
+            {
+                MessageBox.Show("Por cuestiones de seguridad, no podés modificar ni deshabilitar tu propio usuario.", "Operación denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             // Solo habilitar email y rol
             txtemail.Enabled = true;
             cmbRol.Enabled = true;
@@ -180,17 +199,23 @@ namespace Proyecto_IS
 
         private void deshabilitar_Click(object sender, EventArgs e)
         {
+            if (usuarioSeleccionadoId == SessionManager_65RD.Instancia.UsuarioLogueado.Id)
+            {
+                MessageBox.Show("Por cuestiones de seguridad, no podés modificar ni deshabilitar tu propio usuario.", "Operación denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (usuarioSeleccionadoId != -1)
             {
                 UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
-                gestorUsuario.DeshabilitarUsuario(usuarioSeleccionadoId);
 
-                // Registrar en bitácora
+                
+                gestorUsuario.ActualizarEstado(usuarioSeleccionadoId, true);
+
                 int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
-                bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Bloquear Usuario", 3, $"Se deshabilitó al usuario: {usuarioSeleccionadoNombre}");
+                bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se habilitó al usuario: {usuarioSeleccionadoNombre}");
 
-                MessageBox.Show("Usuario deshabilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Usuario habilitado correctamente. Se le solicitará cambio de contraseña en su próximo ingreso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
             else
