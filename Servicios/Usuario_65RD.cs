@@ -21,7 +21,6 @@ namespace Servicios_65RD
 
         public bool Activo { get; set; }
         public string Email { get; set; }
-        public int IntentosFallidos { get; set; }
         public bool PrimerLogin { get; set; }
 
         // Propiedad de ayuda para que el DataGridView muestre el nombre del rol fácilmente

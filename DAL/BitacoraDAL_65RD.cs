@@ -93,5 +93,37 @@ namespace DAL
             }
             return lista;
         }
+
+        public int ContarIntentosFallidos(int usuarioId)
+        {
+            int cantidad = 0;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                // Cuenta los 'Login Fallido' que ocurrieron DESPUÉS del último evento que reinicia el contador
+                // (Login exitoso, Alta de Usuario, o Modificar/Habilitar Usuario).
+                // Si no hay eventos previos, ISNULL asigna una fecha muy antigua para contar todos los fallos.
+                string query = @"
+                    SELECT COUNT(*) 
+                    FROM Bitacora 
+                    WHERE UsuarioId = @usuarioId 
+                      AND Accion = 'Login Fallido'
+                      AND FechaHora > ISNULL(
+                          (SELECT MAX(FechaHora) 
+                           FROM Bitacora 
+                           WHERE UsuarioId = @usuarioId 
+                             AND Accion IN ('Login', 'Alta Usuario', 'Modificar Usuario', 'Cambio Contraseña')), 
+                          '1900-01-01')";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@usuarioId", usuarioId);
+                    conn.Open();
+                    cantidad = (int)cmd.ExecuteScalar();
+                }
+            }
+            return cantidad;
+        }
+
+
     }
 }

@@ -28,5 +28,10 @@ namespace BLL
             return _bitacoraDAL.ObtenerEventos(fechaDesde, fechaHasta, modulo, evento, criticidad);
         }
 
+        public int ContarIntentosFallidos(int usuarioId)
+        {
+            return _bitacoraDAL.ContarIntentosFallidos(usuarioId);
+        }
+
     }
 }

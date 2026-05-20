@@ -108,7 +108,6 @@ namespace Proyecto_IS
                     Contraseña = Seguridad_65RD.Encriptar(txtDNI.Text.Trim()), // Hash intacto
                     Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, // Tomamos el ID del combo
                     Activo = true,
-                    IntentosFallidos = 0,
                     PrimerLogin = true
                 };
 

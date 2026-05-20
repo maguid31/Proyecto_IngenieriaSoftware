@@ -25,29 +25,23 @@ namespace BLL_65RD
 
         public ResultadoLogin IniciarSesion(string nombreUsuarioIngresado, string contraseñaIngresada)
         {
-            // 1. Buscamos al usuario en la BD SOLO por su nombre (Apellido+DNI)
             Usuario_65RD usuarioEncontrado = _usuarioDAL.ObtenerUsuarioPorLogin(nombreUsuarioIngresado);
 
-            // 2. Si no existe, devolvemos error genérico (no le decimos al atacante que el usuario no existe)
             if (usuarioEncontrado == null)
             {
                 return ResultadoLogin.CredencialesInvalidas;
             }
 
-            // 3. Verificamos si la cuenta ya está inactiva/bloqueada ANTES de probar la clave
             if (!usuarioEncontrado.Activo)
             {
                 return ResultadoLogin.CuentaBloqueada;
             }
 
-            // 4. Recién ahora aplicamos el hash irreversible a lo que escribió el usuario en la UI
             string hashIngresado = Seguridad_65RD.Encriptar(contraseñaIngresada);
 
-            // 5. Comparamos el hash generado contra el que trajimos de la BD
             if (usuarioEncontrado.Contraseña == hashIngresado)
             {
                 // === LOGIN EXITOSO ===
-                _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, 0); // Limpiamos el historial de errores
                 SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
                 _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login", 1, "Usuario inició sesión");
 
@@ -59,24 +53,22 @@ namespace BLL_65RD
             else
             {
                 // === CONTRASEÑA INCORRECTA ===
-                int nuevosIntentos = usuarioEncontrado.IntentosFallidos + 1;
+                // 1. Registramos el fallo en la bitácora
+                _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login Fallido", 2, "Intento de inicio de sesión fallido");
 
-                if (nuevosIntentos >= 3)
+                // 2. Consultamos cuántos fallos consecutivos lleva
+                int intentosFallidos = _bitacoraBLL.ContarIntentosFallidos(usuarioEncontrado.Id);
+
+                if (intentosFallidos >= 3)
                 {
-                    // Superó el límite: Lo bloqueamos y lo dejamos en 0 para cuando un Admin lo habilite de nuevo
+                    // 3. Superó el límite: Lo bloqueamos en la base de datos
                     _usuarioDAL.ActualizarEstado(usuarioEncontrado.Id, false);
-                    _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, 0);
-
                     _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Bloqueo por Intentos", 4, "Cuenta bloqueada por superar intentos fallidos");
 
                     return ResultadoLogin.CuentaBloqueada;
                 }
-                else
-                {
-                    // Aún le quedan intentos, solo actualizamos el contador en la BD
-                    _usuarioDAL.ActualizarIntentos(usuarioEncontrado.Id, nuevosIntentos);
-                    return ResultadoLogin.CredencialesInvalidas;
-                }
+
+                return ResultadoLogin.CredencialesInvalidas;
             }
         }
 

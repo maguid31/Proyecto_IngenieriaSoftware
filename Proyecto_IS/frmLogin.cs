@@ -40,11 +40,10 @@ namespace Proyecto_IS
                     Nombre = "Admin",
                     Apellido = "Sistema",
                     DNI = "1234",
-                    Contraseña = Seguridad_65RD.Encriptar("1234"), // Tu sistema genera el Hash acá
+                    Contraseña = Seguridad_65RD.Encriptar("1234"), // genera el Hash acá
                     Perfil = new Perfil_65RD { Id = 2, Nombre = "Administrador" }, // El ID 2 es Admin en SQL
                     Activo = true,
-                    IntentosFallidos = 0,
-                    PrimerLogin = false // Lo ponemos en false para que no te pida cambiarla de entrada
+                    PrimerLogin = false // Lo ponemos en false para que no pida cambiarla de entrada
                 };
 
                 gestorUsuario.RegistrarUsuario(adminInicial);

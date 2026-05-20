@@ -21,7 +21,7 @@ namespace DAL_65RD
             {
                 
                 string query = @"
-                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin, u.IntentosFallidos,
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin,
                     p.Id AS PerfilId, p.Nombre AS PerfilNombre
                     FROM Usuarios u
                     INNER JOIN Perfiles p ON u.PerfilId = p.Id
@@ -45,7 +45,7 @@ namespace DAL_65RD
                                 Contraseña = reader["Contraseña"].ToString(),
                                 Activo = Convert.ToBoolean(reader["Activo"]),
                                 PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
-                                IntentosFallidos = Convert.ToInt32(reader["IntentosFallidos"]), // <-- Esto es clave para los bloqueos
+                               
                                 // Instanciamos el objeto Perfil
                                 Perfil = new Perfil_65RD
                                 {
@@ -97,35 +97,6 @@ namespace DAL_65RD
             }
         }
 
-        public void ActualizarIntentos(int usuarioId, int intentos)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string query = "UPDATE Usuarios SET IntentosFallidos = @i WHERE Id = @id";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@i", intentos);
-                    cmd.Parameters.AddWithValue("@id", usuarioId);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
-
-       /* public void BloquearUsuario(int usuarioId)
-        {
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string query = "UPDATE Usuarios SET Activo = 0 WHERE Id = @id";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@id", usuarioId);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }*/
-
 
         public bool ActualizarContraseña(int idUsuario, string nuevaContraseñaHash)
         {
@@ -149,10 +120,10 @@ namespace DAL_65RD
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string query = @"
-            SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.IntentosFallidos, u.PrimerLogin,
-                   p.Id AS PerfilId, p.Nombre AS PerfilNombre
-            FROM Usuarios u
-            INNER JOIN Perfiles p ON u.PerfilId = p.Id";
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.PrimerLogin,
+                    p.Id AS PerfilId, p.Nombre AS PerfilNombre
+                    FROM Usuarios u
+                    INNER JOIN Perfiles p ON u.PerfilId = p.Id";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
@@ -168,7 +139,6 @@ namespace DAL_65RD
                         DNI = reader["DNI"].ToString(),
                         Email = reader["Email"].ToString(),
                         Activo = Convert.ToBoolean(reader["Activo"]),
-                        IntentosFallidos = Convert.ToInt32(reader["IntentosFallidos"]),
                         PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
                         Perfil = new Perfil_65RD
                         {

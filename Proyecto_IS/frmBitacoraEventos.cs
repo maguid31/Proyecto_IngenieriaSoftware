@@ -34,7 +34,6 @@ namespace Proyecto_IS
 
         private void CargarCombos()
         {
-            // Módulos actuales del sistema
             cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios" });
             cmbModulo.SelectedIndex = 0;
 
@@ -42,6 +41,7 @@ namespace Proyecto_IS
             cmbEvento.Items.AddRange(new string[] {
                 "Todos",
                 "Login",
+                "Login Fallido", 
                 "Logout",
                 "Alta Usuario",
                 "Modificar Usuario",
