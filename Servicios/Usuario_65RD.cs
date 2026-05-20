@@ -16,14 +16,14 @@ namespace Servicios_65RD
         public string DNI { get; set; }
         public string Contraseña { get; set; }
 
-        // Aplicamos composición
+        
         public Perfil_65RD Perfil { get; set; }
 
         public bool Activo { get; set; }
         public string Email { get; set; }
         public bool PrimerLogin { get; set; }
 
-        // Propiedad de ayuda para que el DataGridView muestre el nombre del rol fácilmente
+        
         public string NombrePerfil
         {
             get
@@ -35,13 +35,13 @@ namespace Servicios_65RD
             }
         }
 
-        // Propiedad de solo lectura: Une Apellido y DNI dinámicamente
+        
         public string NombreUsuario
         {
             get { return $"{Apellido}{DNI}"; }
         }
 
-        // Propiedad de solo lectura: Devuelve si o no según el estado del usuario
+        
         public string EstadoBloqueado
         {
             get

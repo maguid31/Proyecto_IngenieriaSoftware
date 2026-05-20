@@ -46,7 +46,7 @@ namespace DAL_65RD
                                 Activo = Convert.ToBoolean(reader["Activo"]),
                                 PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
                                
-                                // Instanciamos el objeto Perfil
+                                
                                 Perfil = new Perfil_65RD
                                 {
                                     Id = Convert.ToInt32(reader["PerfilId"]),
@@ -64,7 +64,7 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // Cambiamos Rol por PerfilId
+                
                 string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, PerfilId, Activo, Email) " +
                                "VALUES (@nombre, @apellido, @dni, @contraseña, @perfilId, @activo, @email)";
                 using (SqlCommand cmd = new SqlCommand(query, con))

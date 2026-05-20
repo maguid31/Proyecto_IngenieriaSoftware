@@ -30,7 +30,7 @@ namespace Proyecto_IS
         {
        
 
-            // Limpiar campos
+            
             txtnombre.Text = "";
             txtApellido.Text = "";
             txtDNI.Text = "";
@@ -38,7 +38,7 @@ namespace Proyecto_IS
             cmbRol.Text = "";
             txtnombreUsuario.Text = ""; 
 
-            // Habilitar campos
+            
             txtnombre.Enabled = true;
             txtApellido.Enabled = true;
             txtDNI.Enabled = true;
@@ -67,11 +67,11 @@ namespace Proyecto_IS
         {
             dgvUsuarios.AutoGenerateColumns = false;
 
-            // Cargar el ComboBox de forma dinámica desde BLL
+            
             UsuarioBLL_65RD gestor = new UsuarioBLL_65RD();
             cmbRol.DataSource = gestor.ObtenerPerfiles();
-            cmbRol.DisplayMember = "Nombre"; // Lo que ve el usuario
-            cmbRol.ValueMember = "Id";       // El dato interno que se guarda
+            cmbRol.DisplayMember = "Nombre"; 
+            cmbRol.ValueMember = "Id";       
             cmbRol.SelectedIndex = -1;
 
             CargarUsuarios();
@@ -87,17 +87,17 @@ namespace Proyecto_IS
         {
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
 
-            // --- VALIDACIÓN DE CAMPOS ---
+            
             if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtDNI.Text) ||
                 cmbRol.SelectedIndex == -1) 
             {
                 MessageBox.Show("Por favor, complete todos los datos y seleccione un rol.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; // Corta la ejecución para que no guarde nada
+                return; 
             }
 
-            if (usuarioSeleccionadoId == -1) // CREAR
+            if (usuarioSeleccionadoId == -1) 
             {
                 Usuario_65RD nuevoUsuario = new Usuario_65RD
                 {
@@ -105,8 +105,8 @@ namespace Proyecto_IS
                     Apellido = txtApellido.Text.Trim(),
                     DNI = txtDNI.Text.Trim(),
                     Email = txtemail.Text.Trim(),
-                    Contraseña = Seguridad_65RD.Encriptar(txtDNI.Text.Trim()), // Hash intacto
-                    Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, // Tomamos el ID del combo
+                    Contraseña = Seguridad_65RD.Encriptar(txtDNI.Text.Trim()), // Hash 
+                    Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, 
                     Activo = true,
                     PrimerLogin = true
                 };
@@ -114,12 +114,12 @@ namespace Proyecto_IS
                 bool registrado = gestorUsuario.RegistrarUsuario(nuevoUsuario);
                 if (registrado)
                 {
-                    // ACÁ AGREGAMOS EL REGISTRO DE LA BITÁCORA 
+                    //  REGISTRO DE LA BITÁCORA 
                     int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                     BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
                     bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Alta Usuario", 3, $"Se registró un nuevo usuario: {nuevoUsuario.Apellido}{nuevoUsuario.DNI}");
 
-                    //MessageBox.Show("Usuario creado correctamente.");
+                    
                 }
             }
             else // MODIFICAR
@@ -128,7 +128,7 @@ namespace Proyecto_IS
                 {
                     Id = usuarioSeleccionadoId,
                     Email = txtemail.Text.Trim(),
-                    Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, // Tomamos el ID del combo
+                    Perfil = new Perfil_65RD { Id = (int)cmbRol.SelectedValue }, 
                     Activo = true
                 };
 
@@ -137,11 +137,11 @@ namespace Proyecto_IS
                 {
                     int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                     new BitacoraBLL_65RD().RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se modificó al usuario: {usuarioSeleccionadoNombre}");
-                    //MessageBox.Show("Usuario modificado correctamente.");
+                    
                 }
             }
 
-            usuarioSeleccionadoId = -1; // reset
+            usuarioSeleccionadoId = -1; 
             CargarUsuarios();
         }
 
@@ -149,14 +149,14 @@ namespace Proyecto_IS
         {
             if (e.RowIndex >= 0)
             {
-                // Extraemos el usuario completo a
+                
                 Usuario_65RD usuarioFila = (Usuario_65RD)dgvUsuarios.Rows[e.RowIndex].DataBoundItem;
 
-                // Guardamos el ID real
+                
                 usuarioSeleccionadoId = usuarioFila.Id;
                 usuarioSeleccionadoNombre = usuarioFila.NombreUsuario;
 
-                // Bajamos los datos a los casilleros
+                
                 txtnombre.Text = usuarioFila.Nombre;
                 txtApellido.Text = usuarioFila.Apellido;
                 txtDNI.Text = usuarioFila.DNI;
@@ -168,11 +168,11 @@ namespace Proyecto_IS
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            // Solo habilitar Email y Rol
+            // Solo habilitar email y rol
             txtemail.Enabled = true;
             cmbRol.Enabled = true;
 
-            // Bloquear los demás campos
+            // Bloquear lo demás
             txtnombre.Enabled = false;
             txtApellido.Enabled = false;
             txtDNI.Enabled = false;
@@ -203,8 +203,8 @@ namespace Proyecto_IS
         {
             if (cbtodos.Checked)
             {
-                cbactivos.Checked = false; // desmarcar el otro
-                CargarUsuarios(false); // traer todos
+                cbactivos.Checked = false; 
+                CargarUsuarios(false); 
             }
         }
 
@@ -213,8 +213,8 @@ namespace Proyecto_IS
 
             if (cbactivos.Checked)
             {
-                cbtodos.Checked = false; // desmarcar el otro
-                CargarUsuarios(true); // traer solo activos
+                cbtodos.Checked = false; 
+                CargarUsuarios(true); 
             }
         }
 
@@ -264,21 +264,21 @@ namespace Proyecto_IS
 
             if (confirmacion == DialogResult.OK)
             {
-                // Obtener ID del usuario logueado
+                
                 int idUsuarioActual = 0;
                 if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
                 {
                     idUsuarioActual = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 }
 
-                // Registrar en bitácora
+                
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
                 bitacora.RegistrarEvento(idUsuarioActual, "Usuarios", "Logout", 1, "El usuario cerró sesión y salió del sistema");
 
-                // Limpiar la sesión
+                
                 SessionManager_65RD.Instancia.CerrarSesion();
 
-                // Cerrar  la aplicación 
+                
                 Application.Exit();
             }
         }

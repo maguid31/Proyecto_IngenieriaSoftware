@@ -16,7 +16,7 @@ namespace BLL_65RD
         Exitoso,
         RequiereCambioContrasena,
         CredencialesInvalidas,
-        CuentaBloqueada //  para avisarle a la UI
+        CuentaBloqueada 
     }
     public class UsuarioBLL_65RD
     {
@@ -41,7 +41,7 @@ namespace BLL_65RD
 
             if (usuarioEncontrado.Contraseña == hashIngresado)
             {
-                // === LOGIN EXITOSO ===
+                // LOGIN EXITOSO 
                 SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
                 _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login", 1, "Usuario inició sesión");
 
@@ -52,16 +52,15 @@ namespace BLL_65RD
             }
             else
             {
-                // === CONTRASEÑA INCORRECTA ===
-                // 1. Registramos el fallo en la bitácora
+                
                 _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login Fallido", 2, "Intento de inicio de sesión fallido");
 
-                // 2. Consultamos cuántos fallos consecutivos lleva
+                
                 int intentosFallidos = _bitacoraBLL.ContarIntentosFallidos(usuarioEncontrado.Id);
 
                 if (intentosFallidos >= 3)
                 {
-                    // 3. Superó el límite: Lo bloqueamos en la base de datos
+                    
                     _usuarioDAL.ActualizarEstado(usuarioEncontrado.Id, false);
                     _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Bloqueo por Intentos", 4, "Cuenta bloqueada por superar intentos fallidos");
 
@@ -99,7 +98,7 @@ namespace BLL_65RD
 
             if (resultado)
             {
-                // Registrar en bitácora
+                
                 new BitacoraBLL_65RD().RegistrarEvento(usuarioId, "Usuarios", "Cambio Contraseña", 2, "El usuario cambió su contraseña");
             }
 
@@ -112,10 +111,10 @@ namespace BLL_65RD
             return _usuarioDAL.ObtenerUsuarios();
         }
 
-        // Método nuevo para llenar el ComboBox de la UI
+        
         public List<Perfil_65RD> ObtenerPerfiles()
         {
-            // Llama al método que creamos en la capa DAL
+            
             return _usuarioDAL.ObtenerPerfiles();
         }
     }
