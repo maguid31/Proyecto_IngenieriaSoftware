@@ -58,8 +58,17 @@ namespace Proyecto_IS
                 txtContraseña.Focus();
                 return;
             }
-
             
+            string hashNuevaContraseña = Seguridad_65RD.Encriptar(txtContraseña.Text);
+            if (hashNuevaContraseña == SessionManager_65RD.Instancia.UsuarioLogueado.Contraseña)
+            {
+                MessageBox.Show("La nueva contraseña no puede ser igual a la que tenías anteriormente.", "Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtContraseña.Text = "";
+                txtConfirmContraseña.Text = "";
+                txtContraseña.Focus();
+                return;
+            }
+
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
             bool actualizado = gestorUsuario.CambiarContraseña(SessionManager_65RD.Instancia.UsuarioLogueado.Id, txtContraseña.Text);
 
