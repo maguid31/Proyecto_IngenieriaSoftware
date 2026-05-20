@@ -42,7 +42,7 @@ namespace DAL
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                // Hacemos un JOIN para traer el Apellido+DNI del usuario (Login)
+                // JOIN para traer el Apellido+DNI del usuario
                 string query = @"
                     SELECT b.Id, b.UsuarioId, CONCAT(u.Apellido, u.DNI) AS LoginUsuario, 
                            b.FechaHora, b.Modulo, b.Accion, b.Criticidad, b.Descripcion 
@@ -63,7 +63,7 @@ namespace DAL
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    // Ajustamos las fechas para que cubran todo el día
+                    
                     cmd.Parameters.AddWithValue("@fechaDesde", fechaDesde.Date);
                     cmd.Parameters.AddWithValue("@fechaHasta", fechaHasta.Date.AddDays(1).AddTicks(-1));
 
@@ -99,9 +99,7 @@ namespace DAL
             int cantidad = 0;
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                // Cuenta los 'Login Fallido' que ocurrieron DESPUÉS del último evento que reinicia el contador
-                // (Login exitoso, Alta de Usuario, o Modificar/Habilitar Usuario).
-                // Si no hay eventos previos, ISNULL asigna una fecha muy antigua para contar todos los fallos.
+                
                 string query = @"
                     SELECT COUNT(*) 
                     FROM Bitacora 

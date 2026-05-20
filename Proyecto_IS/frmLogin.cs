@@ -23,16 +23,16 @@ namespace Proyecto_IS
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            // Cargar roles en el ComboBox
+            
             comboBoxRol.Items.Clear();
             comboBoxRol.Items.Add("Administrador");
             comboBoxRol.Items.Add("Usuario");
-            comboBoxRol.SelectedIndex = 0; // por defecto Administrador
+            comboBoxRol.SelectedIndex = 0; 
 
-            // --- CÓDIGO TEMPORAL PARA CREAR ADMIN INICIAL ---
+            
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
 
-            // Si no hay usuarios en la base de datos, creamos uno
+            
             if (gestorUsuario.ObtenerUsuarios().Count == 0)
             {
                 Usuario_65RD adminInicial = new Usuario_65RD
@@ -40,10 +40,10 @@ namespace Proyecto_IS
                     Nombre = "Admin",
                     Apellido = "Sistema",
                     DNI = "1234",
-                    Contraseña = Seguridad_65RD.Encriptar("1234"), // genera el Hash acá
+                    Contraseña = Seguridad_65RD.Encriptar("1234"), // Hash 
                     Perfil = new Perfil_65RD { Id = 2, Nombre = "Administrador" }, // El ID 2 es Admin en SQL
                     Activo = true,
-                    PrimerLogin = false // Lo ponemos en false para que no pida cambiarla de entrada
+                    PrimerLogin = false 
                 };
 
                 gestorUsuario.RegistrarUsuario(adminInicial);
@@ -99,13 +99,13 @@ namespace Proyecto_IS
                     break;
 
                 case ResultadoLogin.CredencialesInvalidas:
-                    // Mensaje actualizado
+                    
                     MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtContraseña.Text = "";
                     txtContraseña.Focus();
                     break;
 
-                // AGREGAMOS EL NUEVO CASO ACÁ
+                
                 case ResultadoLogin.CuentaBloqueada:
                     MessageBox.Show("Su cuenta ha sido bloqueada por seguridad tras múltiples intentos fallidos. Por favor, comuníquese con el administrador.", "Cuenta Bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     txtContraseña.Text = "";

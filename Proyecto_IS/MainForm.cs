@@ -25,20 +25,20 @@ namespace Proyecto_IS
 
         }
 
-        // ── Estado ──────────────────────────────────────────────────────────────
-        private readonly string _rol;          // "Administrador" | "Usuario"
+        
+        private readonly string _rol;          
         private readonly string _nombre;
         private readonly int _usuarioId;
 
-        // ── Colores del tema (Blanco y Violeta) ─────────────────────────────────
-        private static readonly Color ColorHeader = Color.FromArgb(255, 255, 255);      // Blanco puro
-        private static readonly Color ColorMenu = Color.FromArgb(248, 249, 250);        // Gris muy claro (para distinguir el lateral)
-        private static readonly Color ColorFondoContenido = Color.FromArgb(235, 238, 245); // Gris azulado (fondo central)
-        private static readonly Color ColorAccent = Color.FromArgb(123, 97, 255);       // Violeta principal
-        private static readonly Color ColorHover = Color.FromArgb(220, 215, 255);       // Violeta claro para hover
-        private static readonly Color ColorTextoPrincipal = Color.FromArgb(40, 40, 40); // Gris oscuro casi negro
+        // ── Colores del tema (Blanco y Violeta) 
+        private static readonly Color ColorHeader = Color.FromArgb(255, 255, 255);      
+        private static readonly Color ColorMenu = Color.FromArgb(248, 249, 250);        
+        private static readonly Color ColorFondoContenido = Color.FromArgb(235, 238, 245); 
+        private static readonly Color ColorAccent = Color.FromArgb(123, 97, 255);       
+        private static readonly Color ColorHover = Color.FromArgb(220, 215, 255);       
+        private static readonly Color ColorTextoPrincipal = Color.FromArgb(40, 40, 40); 
 
-        // ── Constructor ─────────────────────────────────────────────────────────
+        
         public MainForm(int usuarioId, string nombre, string rol)
         {
             _usuarioId = usuarioId;
@@ -51,9 +51,7 @@ namespace Proyecto_IS
             ActualizarBienvenida();
         }
 
-        // ────────────────────────────────────────────────────────────────────────
-        //  CONFIGURACIÓN GENERAL
-        // ────────────────────────────────────────────────────────────────────────
+        
         private void ConfigurarVentana()
         {
             this.Text = "Menú Principal";
@@ -71,18 +69,18 @@ namespace Proyecto_IS
             lblAppNombre.ForeColor = ColorAccent;
         }
 
-        // ────────────────────────────────────────────────────────────────────────
+        
         //  CONSTRUCCIÓN DEL MENÚ LATERAL (Control de Roles)
-        // ────────────────────────────────────────────────────────────────────────
+        
         private void ConstruirMenu()
         {
             panelMenu.Controls.Clear();
 
-            // Volvemos a agregar los labels de bienvenida que se limpian con el Clear()
+            
             panelMenu.Controls.Add(lblRol);
             panelMenu.Controls.Add(lblBienvenida);
 
-            int y = 20; // Margen superior para el primer botón
+            int y = 20; 
 
             if (_rol == "Administrador")
             {
@@ -96,14 +94,12 @@ namespace Proyecto_IS
                 AgregarBoton("🌐  Cambiar Idioma", ref y, AbrirCambiarIdioma);
             }
 
-            // Opción común para todos
+            
             AgregarSeparador("SESIÓN", ref y);
             AgregarBoton("CERRAR SESIÓN", ref y, CerrarSesion, esLogout: true);
         }
 
-        // ────────────────────────────────────────────────────────────────────────
-        //  HELPERS PARA CONSTRUIR ITEMS DEL MENÚ
-        // ────────────────────────────────────────────────────────────────────────
+        
         private void AgregarSeparador(string titulo, ref int y)
         {
             y += 10;
@@ -146,7 +142,7 @@ namespace Proyecto_IS
             btn.FlatAppearance.BorderSize = esLogout ? 0 : 1;
             btn.FlatAppearance.BorderColor = esLogout ? ColorAccent : Color.LightGray;
 
-            // Efectos visuales al pasar el mouse
+            
             btn.MouseEnter += (s, e) => btn.BackColor = esLogout ? Color.FromArgb(100, 75, 230) : ColorHover;
             btn.MouseLeave += (s, e) => btn.BackColor = esLogout ? ColorAccent : ColorMenu;
 
@@ -155,30 +151,26 @@ namespace Proyecto_IS
             y += btn.Height + 8;
         }
 
-        // ────────────────────────────────────────────────────────────────────────
-        //  BIENVENIDA
-        // ────────────────────────────────────────────────────────────────────────
+        
         private void ActualizarBienvenida()
         {
             lblBienvenida.Text = $"Hola, {_nombre}";
             lblRol.Text = _rol == "Administrador" ? "🛡  Administrador" : "👤  Usuario Básico";
         }
 
-        // ────────────────────────────────────────────────────────────────────────
-        //  ACCIONES DEL MENÚ
-        // ────────────────────────────────────────────────────────────────────────
+        
         private void AbrirGestionUsuarios(object sender, EventArgs e)
         {
             frmGestionUsuarios frmGestion = new frmGestionUsuarios();
-            frmGestion.ShowDialog(); // ShowDialog evita que toquen el menú mientras gestionan usuarios
+            frmGestion.ShowDialog(); 
         }
 
         private void AbrirBitacora(object sender, EventArgs e)
         {
-            // Instanciamos el formulario
+            
             frmBitacoraEventos formBitacora = new frmBitacoraEventos();
 
-            // Lo mostramos en pantalla 
+            
             formBitacora.ShowDialog();
         }
 
@@ -192,7 +184,7 @@ namespace Proyecto_IS
             var res = MessageBox.Show("¿Estás seguro que querés cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes)
             {
-                // 1. REGISTRAMOS EL LOGOUT EN LA BITÁCORA ANTES DE BORRAR LA SESIÓN
+                // REGISTRAMOS LOGOUT EN BITÁCORA ANTES DE BORRAR LA SESIÓN
                 if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
                 {
                     int idUsuarioActual = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
@@ -200,7 +192,7 @@ namespace Proyecto_IS
                     bitacora.RegistrarEvento(idUsuarioActual, "Usuarios", "Logout", 1, "El usuario cerró sesión desde el menú principal");
                 }
 
-                // 2. CERRAMOS SESIÓN NORMALMENTE
+                
                 SessionManager_65RD.Instancia.CerrarSesion();
                 this.Hide();
                 frmLogin login = new frmLogin();
@@ -208,9 +200,7 @@ namespace Proyecto_IS
             }
         }
 
-        // ────────────────────────────────────────────────────────────────────────
-        //  ÁREA DE CONTENIDO CENTRAL
-        // ────────────────────────────────────────────────────────────────────────
+        
         private void MostrarContenido(string titulo, string descripcion)
         {
             lblContenidoTitulo.Text = titulo;

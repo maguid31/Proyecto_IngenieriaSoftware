@@ -28,7 +28,7 @@ namespace Proyecto_IS
         {
             CargarCombos();
             ConfigurarGrilla();
-            dtpFechaIni.Value = DateTime.Now.AddDays(-7); // Por defecto busca la última semana
+            dtpFechaIni.Value = DateTime.Now.AddDays(-7); 
             dtpFechaFin.Value = DateTime.Now;
         }
 
@@ -37,7 +37,7 @@ namespace Proyecto_IS
             cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios" });
             cmbModulo.SelectedIndex = 0;
 
-            // Eventos reales que tenés hasta ahora en tu BLL
+            
             cmbEvento.Items.AddRange(new string[] {
                 "Todos",
                 "Login",
@@ -51,7 +51,6 @@ namespace Proyecto_IS
             });
             cmbEvento.SelectedIndex = 0;
 
-            // Criticidad: 0 = Todos, 1 a 5 = Niveles
             cmbCriticidad.Items.AddRange(new string[] { "0", "1", "2", "3", "4", "5" });
             cmbCriticidad.SelectedIndex = 0;
         }
@@ -101,17 +100,17 @@ namespace Proyecto_IS
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            // Verificamos que haya datos en la grilla antes de intentar imprimir
+            
             if (dgvBitacora.Rows.Count > 0)
             {
                 SaveFileDialog guardar = new SaveFileDialog();
                 guardar.Filter = "Archivo PDF (*.pdf)|*.pdf";
-                guardar.FileName = "Reporte_Bitacora.pdf"; // Nombre por defecto
+                guardar.FileName = "Reporte_Bitacora.pdf"; 
 
                 if (guardar.ShowDialog() == DialogResult.OK)
                 {
                     bool errorArchivo = false;
-                    // Chequeamos si el archivo ya existe y está abierto por otro programa
+                    
                     if (File.Exists(guardar.FileName))
                     {
                         try
@@ -129,39 +128,39 @@ namespace Proyecto_IS
                     {
                         try
                         {
-                            // Creamos la tabla para el PDF con la misma cantidad de columnas que la grilla
+                            
                             PdfPTable tablaPdf = new PdfPTable(dgvBitacora.Columns.Count);
                             tablaPdf.DefaultCell.Padding = 3;
                             tablaPdf.WidthPercentage = 100;
                             tablaPdf.HorizontalAlignment = Element.ALIGN_LEFT;
 
-                            // 1. Agregamos los encabezados de las columnas
+                            
                             foreach (DataGridViewColumn columna in dgvBitacora.Columns)
                             {
                                 PdfPCell celda = new PdfPCell(new Phrase(columna.HeaderText));
-                                celda.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240); // Un gris clarito para el encabezado
+                                celda.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240); 
                                 tablaPdf.AddCell(celda);
                             }
 
-                            // 2. Agregamos las filas con los datos de los eventos
+                           
                             foreach (DataGridViewRow fila in dgvBitacora.Rows)
                             {
                                 foreach (DataGridViewCell celda in fila.Cells)
                                 {
-                                    // Validamos nulos por las dudas
+                                    
                                     tablaPdf.AddCell(celda.Value?.ToString() ?? "");
                                 }
                             }
 
-                            // 3. Generamos el documento físico
+                            
                             using (FileStream stream = new FileStream(guardar.FileName, FileMode.Create))
                             {
-                                // Configuramos tamaño de hoja y márgenes
+                                
                                 Document pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
                                 PdfWriter.GetInstance(pdfDoc, stream);
                                 pdfDoc.Open();
 
-                                // Opcional: Agregar un título al documento
+                                
                                 Paragraph titulo = new Paragraph("Reporte de Bitácora de Eventos\n\n");
                                 titulo.Alignment = Element.ALIGN_CENTER;
                                 pdfDoc.Add(titulo);

@@ -13,7 +13,7 @@ namespace Servicios_65RD
 
         public Usuario_65RD UsuarioLogueado { get; private set; }
 
-        // Constructor privado para evitar instanciación externa
+        
         private SessionManager_65RD() { }
 
         public static SessionManager_65RD Instancia
