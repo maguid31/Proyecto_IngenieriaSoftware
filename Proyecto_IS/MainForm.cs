@@ -97,9 +97,21 @@ namespace Proyecto_IS
             
             AgregarSeparador("SESIÓN", ref y);
             AgregarBoton("CERRAR SESIÓN", ref y, CerrarSesion, esLogout: true);
+            AgregarBoton("🔄  Iniciar Sesión", ref y, ReLogin);
+
         }
 
-        
+
+        private void ReLogin(object sender, EventArgs e)
+        {
+            frmLogin login = new frmLogin();
+            login.EsReLogin = true; // 🚨 marcamos que es un relogin
+            login.Show();
+            this.Hide();
+            login.FormClosed += (s, args) => this.Show();
+        }
+
+
         private void AgregarSeparador(string titulo, ref int y)
         {
             y += 10;

@@ -36,7 +36,6 @@ namespace Proyecto_IS
             txtDNI.Text = "";
             txtemail.Text = "";
             cmbRol.Text = "";
-            txtnombreUsuario.Text = ""; 
 
             
             txtnombre.Enabled = true;
@@ -176,7 +175,7 @@ namespace Proyecto_IS
                 txtDNI.Text = usuarioFila.DNI;
                 txtemail.Text = usuarioFila.Email;
                 cmbRol.SelectedValue = usuarioFila.Perfil.Id;
-                txtnombreUsuario.Text = usuarioFila.NombreUsuario;
+               
             }
         }
 
