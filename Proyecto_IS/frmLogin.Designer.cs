@@ -35,7 +35,6 @@
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBoxRol = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -59,7 +58,7 @@
             this.cbShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbShowPassword.Location = new System.Drawing.Point(114, 220);
             this.cbShowPassword.Name = "cbShowPassword";
-            this.cbShowPassword.Size = new System.Drawing.Size(143, 21);
+            this.cbShowPassword.Size = new System.Drawing.Size(182, 27);
             this.cbShowPassword.TabIndex = 26;
             this.cbShowPassword.Text = "Mostrar contraseña";
             this.cbShowPassword.UseVisualStyleBackColor = true;
@@ -80,7 +79,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(38, 157);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 17);
+            this.label3.Size = new System.Drawing.Size(99, 23);
             this.label3.TabIndex = 24;
             this.label3.Text = "Contraseña";
             // 
@@ -99,7 +98,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(38, 85);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 17);
+            this.label2.Size = new System.Drawing.Size(70, 23);
             this.label2.TabIndex = 22;
             this.label2.Text = "Usuario";
             // 
@@ -109,25 +108,16 @@
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label1.Location = new System.Drawing.Point(100, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 17);
+            this.label1.Size = new System.Drawing.Size(137, 23);
             this.label1.TabIndex = 21;
             this.label1.Text = "INICIAR SESIÓN";
             // 
-            // comboBoxRol
-            // 
-            this.comboBoxRol.FormattingEnabled = true;
-            this.comboBoxRol.Location = new System.Drawing.Point(64, 288);
-            this.comboBoxRol.Name = "comboBoxRol";
-            this.comboBoxRol.Size = new System.Drawing.Size(121, 25);
-            this.comboBoxRol.TabIndex = 28;
-            // 
             // frmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(304, 475);
-            this.Controls.Add(this.comboBoxRol);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.txtContraseña);
@@ -157,7 +147,6 @@
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBoxRol;
     }
 }
 

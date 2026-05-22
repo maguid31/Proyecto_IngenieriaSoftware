@@ -49,8 +49,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtnombre = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtnombreUsuario = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtemail = new System.Windows.Forms.TextBox();
             this.deshabilitar = new System.Windows.Forms.Button();
@@ -287,32 +285,11 @@
             this.label5.TabIndex = 57;
             this.label5.Text = "Rol";
             // 
-            // txtnombreUsuario
-            // 
-            this.txtnombreUsuario.BackColor = System.Drawing.Color.LightGray;
-            this.txtnombreUsuario.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtnombreUsuario.Location = new System.Drawing.Point(238, 596);
-            this.txtnombreUsuario.Multiline = true;
-            this.txtnombreUsuario.Name = "txtnombreUsuario";
-            this.txtnombreUsuario.Size = new System.Drawing.Size(216, 28);
-            this.txtnombreUsuario.TabIndex = 59;
-            this.txtnombreUsuario.TextChanged += new System.EventHandler(this.txtnombreUsario_TextChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(50, 599);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(201, 32);
-            this.label7.TabIndex = 60;
-            this.label7.Text = "Nombre usuario";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(142, 644);
+            this.label8.Location = new System.Drawing.Point(144, 601);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(76, 32);
             this.label8.TabIndex = 61;
@@ -322,7 +299,7 @@
             // 
             this.txtemail.BackColor = System.Drawing.Color.LightGray;
             this.txtemail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtemail.Location = new System.Drawing.Point(238, 641);
+            this.txtemail.Location = new System.Drawing.Point(238, 605);
             this.txtemail.Multiline = true;
             this.txtemail.Name = "txtemail";
             this.txtemail.Size = new System.Drawing.Size(216, 28);
@@ -400,8 +377,6 @@
             this.Controls.Add(this.deshabilitar);
             this.Controls.Add(this.txtemail);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtnombreUsuario);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtnombre);
             this.Controls.Add(this.label4);
@@ -444,8 +419,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtnombre;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox txtnombreUsuario;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtemail;
         private System.Windows.Forms.Button deshabilitar;

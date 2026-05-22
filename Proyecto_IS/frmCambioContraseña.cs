@@ -49,7 +49,24 @@ namespace Proyecto_IS
                 return;
             }
 
-             
+            if (string.IsNullOrWhiteSpace(txtactual.Text))
+            {
+                MessageBox.Show("Por favor, ingrese su contraseña actual.", "Campo requerido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+          
+            string hashActualIngresada = Seguridad_65RD.Encriptar(txtactual.Text);
+
+            
+            if (hashActualIngresada != SessionManager_65RD.Instancia.UsuarioLogueado.Contraseña)
+            {
+                MessageBox.Show("La contraseña actual ingresada es incorrecta.", "Error de autenticación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtactual.Text = "";
+                txtactual.Focus();
+                return;
+            }
+
             if (txtContraseña.Text == SessionManager_65RD.Instancia.UsuarioLogueado.DNI)
             {
                 MessageBox.Show("La nueva contraseña no puede ser igual a su DNI. Por favor, elija una diferente.", "Seguridad", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -100,6 +117,16 @@ namespace Proyecto_IS
                 txtContraseña.PasswordChar = '•';
                 txtConfirmContraseña.PasswordChar = '•';
             }
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtactual_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

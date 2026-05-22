@@ -20,14 +20,13 @@ namespace Proyecto_IS
             InitializeComponent();
             txtContraseña.PasswordChar = '•';
         }
+        public bool EsReLogin { get; set; } = false;
+
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
             
-            comboBoxRol.Items.Clear();
-            comboBoxRol.Items.Add("Administrador");
-            comboBoxRol.Items.Add("Usuario");
-            comboBoxRol.SelectedIndex = 0; 
+           
 
             
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
@@ -66,27 +65,38 @@ namespace Proyecto_IS
             {
                 case ResultadoLogin.Exitoso:
                     Usuario_65RD usuarioLogueado = SessionManager_65RD.Instancia.UsuarioLogueado;
-                    string rolSeleccionado = comboBoxRol.SelectedItem.ToString();
 
-                    if ((usuarioLogueado.Perfil != null && usuarioLogueado.Perfil.Nombre == "Administrador" && rolSeleccionado == "Administrador") ||
-                        (usuarioLogueado.Perfil != null && usuarioLogueado.Perfil.Nombre == "Basico" && rolSeleccionado == "Usuario"))
+                    if (Application.OpenForms.OfType<MainForm>().Any() &&
+                    SessionManager_65RD.Instancia.UsuarioLogueado != null &&
+                    SessionManager_65RD.Instancia.UsuarioLogueado.NombreUsuario == txtUsuario.Text && this.EsReLogin) // 🚨 solo bloquea si es relogin
                     {
-                        string stringRolParaMenu = usuarioLogueado.Perfil.Nombre;
+                        MessageBox.Show("Este usuario ya tiene una sesión activa. No puede iniciar sesión nuevamente.",
+                                        "Sesión activa",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Warning);
 
+                        // Mantener frmLogin abierto y MainForm detrás
+                        this.BringToFront();
+                        return;
+                    }
+                    if (usuarioLogueado.Perfil != null)
+                    {
                         MainForm menuPrincipal = new MainForm(
                             usuarioLogueado.Id,
                             usuarioLogueado.Nombre,
-                            stringRolParaMenu
+                            usuarioLogueado.Perfil.Nombre
                         );
 
                         menuPrincipal.Show();
                         this.Hide();
 
-                        menuPrincipal.FormClosed += (s, args) => this.Close();
+                        // 🚨 solo cerramos login junto con MainForm si es login inicial
+                        if (!this.EsReLogin)
+                            menuPrincipal.FormClosed += (s, args) => this.Close();
                     }
                     else
                     {
-                        MessageBox.Show("El rol seleccionado no coincide con el rol asignado al usuario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("El usuario no tiene un perfil asignado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     break;
 
@@ -99,13 +109,11 @@ namespace Proyecto_IS
                     break;
 
                 case ResultadoLogin.CredencialesInvalidas:
-                    
                     MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtContraseña.Text = "";
                     txtContraseña.Focus();
                     break;
 
-                
                 case ResultadoLogin.CuentaBloqueada:
                     MessageBox.Show("Su cuenta ha sido bloqueada por seguridad tras múltiples intentos fallidos. Por favor, comuníquese con el administrador.", "Cuenta Bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     txtContraseña.Text = "";
@@ -113,6 +121,8 @@ namespace Proyecto_IS
                     break;
             }
         }
+        
+        
 
         private void cbShowPassword_CheckedChanged(object sender, EventArgs e)
         {
@@ -121,7 +131,20 @@ namespace Proyecto_IS
 
         private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            if (!this.EsReLogin)
+            {
+                // 🚨 Solo cerrar la aplicación si era el login inicial
+                Application.Exit();
+            }
+            else
+            {
+                // 🚨 Si era relogin, simplemente mostrar el MainForm que ya estaba abierto
+                var main = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+                if (main != null)
+                {
+                    main.Show();
+                }
+            }
         }
     }
 }

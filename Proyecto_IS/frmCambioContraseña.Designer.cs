@@ -37,13 +37,15 @@
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtactual = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtConfirmContraseña
             // 
             this.txtConfirmContraseña.BackColor = System.Drawing.SystemColors.ControlLight;
             this.txtConfirmContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtConfirmContraseña.Location = new System.Drawing.Point(38, 272);
+            this.txtConfirmContraseña.Location = new System.Drawing.Point(38, 356);
             this.txtConfirmContraseña.Multiline = true;
             this.txtConfirmContraseña.Name = "txtConfirmContraseña";
             this.txtConfirmContraseña.Size = new System.Drawing.Size(216, 28);
@@ -52,11 +54,12 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 252);
+            this.label6.Location = new System.Drawing.Point(35, 330);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(141, 17);
+            this.label6.Size = new System.Drawing.Size(183, 23);
             this.label6.TabIndex = 38;
             this.label6.Text = "Confirmar contraseña";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // btnRegistrar
             // 
@@ -64,7 +67,7 @@
             this.btnRegistrar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRegistrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegistrar.ForeColor = System.Drawing.Color.White;
-            this.btnRegistrar.Location = new System.Drawing.Point(38, 381);
+            this.btnRegistrar.Location = new System.Drawing.Point(38, 446);
             this.btnRegistrar.Name = "btnRegistrar";
             this.btnRegistrar.Size = new System.Drawing.Size(216, 35);
             this.btnRegistrar.TabIndex = 37;
@@ -77,9 +80,9 @@
             this.cbShowPassword.AutoSize = true;
             this.cbShowPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cbShowPassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbShowPassword.Location = new System.Drawing.Point(104, 306);
+            this.cbShowPassword.Location = new System.Drawing.Point(95, 403);
             this.cbShowPassword.Name = "cbShowPassword";
-            this.cbShowPassword.Size = new System.Drawing.Size(143, 21);
+            this.cbShowPassword.Size = new System.Drawing.Size(182, 27);
             this.cbShowPassword.TabIndex = 36;
             this.cbShowPassword.Text = "Mostrar contraseña";
             this.cbShowPassword.UseVisualStyleBackColor = true;
@@ -89,7 +92,7 @@
             // 
             this.txtContraseña.BackColor = System.Drawing.SystemColors.ControlLight;
             this.txtContraseña.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtContraseña.Location = new System.Drawing.Point(38, 198);
+            this.txtContraseña.Location = new System.Drawing.Point(38, 277);
             this.txtContraseña.Multiline = true;
             this.txtContraseña.Name = "txtContraseña";
             this.txtContraseña.Size = new System.Drawing.Size(216, 28);
@@ -98,9 +101,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 178);
+            this.label3.Location = new System.Drawing.Point(34, 251);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 17);
+            this.label3.Size = new System.Drawing.Size(99, 23);
             this.label3.TabIndex = 34;
             this.label3.Text = "Contraseña";
             // 
@@ -119,7 +122,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(35, 106);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 17);
+            this.label2.Size = new System.Drawing.Size(70, 23);
             this.label2.TabIndex = 32;
             this.label2.Text = "Usuario";
             // 
@@ -127,18 +130,40 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            this.label1.Location = new System.Drawing.Point(70, 62);
+            this.label1.Location = new System.Drawing.Point(35, 42);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 17);
+            this.label1.Size = new System.Drawing.Size(207, 23);
             this.label1.TabIndex = 31;
             this.label1.Text = "CAMBIAR CONTRASEÑA";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(34, 182);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(152, 23);
+            this.label4.TabIndex = 40;
+            this.label4.Text = "Contraseña actual";
+            // 
+            // txtactual
+            // 
+            this.txtactual.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txtactual.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtactual.Location = new System.Drawing.Point(39, 208);
+            this.txtactual.Multiline = true;
+            this.txtactual.Name = "txtactual";
+            this.txtactual.Size = new System.Drawing.Size(216, 28);
+            this.txtactual.TabIndex = 41;
+            this.txtactual.TextChanged += new System.EventHandler(this.txtactual_TextChanged);
+            // 
             // frmCambioContraseña
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(289, 489);
+            this.ClientSize = new System.Drawing.Size(289, 504);
+            this.Controls.Add(this.txtactual);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtConfirmContraseña);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnRegistrar);
@@ -172,5 +197,7 @@
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtactual;
     }
 }
