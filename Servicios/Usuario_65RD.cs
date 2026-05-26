@@ -22,8 +22,9 @@ namespace Servicios_65RD
         public bool Activo { get; set; }
         public string Email { get; set; }
         public bool PrimerLogin { get; set; }
+        public bool Bloqueado { get; set; }
 
-        
+
         public string NombrePerfil
         {
             get
@@ -41,16 +42,16 @@ namespace Servicios_65RD
             get { return $"{Apellido}{DNI}"; }
         }
 
-        
+
         public string EstadoBloqueado
         {
-            get
-            {
-                if (Activo == true)
-                    return "No";
-                else
-                    return "Sí";
-            }
+            get { return Bloqueado ? "Sí" : "No"; }
+        }
+
+        
+        public string EstadoActivo
+        {
+            get { return Activo ? "Sí" : "No"; }
         }
     }
 }

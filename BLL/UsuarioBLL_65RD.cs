@@ -16,7 +16,8 @@ namespace BLL_65RD
         Exitoso,
         RequiereCambioContrasena,
         CredencialesInvalidas,
-        CuentaBloqueada 
+        CuentaBloqueada,
+        CuentaDeshabilitada
     }
     public class UsuarioBLL_65RD
     {
@@ -32,7 +33,14 @@ namespace BLL_65RD
                 return ResultadoLogin.CredencialesInvalidas;
             }
 
+            
             if (!usuarioEncontrado.Activo)
+            {
+                return ResultadoLogin.CuentaDeshabilitada;
+            }
+
+            
+            if (usuarioEncontrado.Bloqueado)
             {
                 return ResultadoLogin.CuentaBloqueada;
             }
@@ -52,16 +60,14 @@ namespace BLL_65RD
             }
             else
             {
-                
                 _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login Fallido", 2, "Intento de inicio de sesión fallido");
 
-                
                 int intentosFallidos = _bitacoraBLL.ContarIntentosFallidos(usuarioEncontrado.Id);
 
+                
                 if (intentosFallidos >= 3)
                 {
-                    
-                    _usuarioDAL.ActualizarEstado(usuarioEncontrado.Id, false);
+                    _usuarioDAL.ActualizarBloqueo(usuarioEncontrado.Id, true);
                     _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Bloqueo por Intentos", 4, "Cuenta bloqueada por superar intentos fallidos");
 
                     return ResultadoLogin.CuentaBloqueada;
@@ -90,6 +96,10 @@ namespace BLL_65RD
             _usuarioDAL.ActualizarEstado(id, activo);
         }
 
+        public void ActualizarBloqueo(int id, bool bloqueado)
+        {
+            _usuarioDAL.ActualizarBloqueo(id, bloqueado);
+        }
 
         public bool CambiarContraseña(int usuarioId, string nuevaContraseña)
         {

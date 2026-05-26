@@ -21,7 +21,7 @@ namespace DAL_65RD
             {
                 
                 string query = @"
-                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin,
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin, u.Bloqueado,
                     p.Id AS PerfilId, p.Nombre AS PerfilNombre
                     FROM Usuarios u
                     INNER JOIN Perfiles p ON u.PerfilId = p.Id
@@ -45,8 +45,9 @@ namespace DAL_65RD
                                 Contraseña = reader["Contraseña"].ToString(),
                                 Activo = Convert.ToBoolean(reader["Activo"]),
                                 PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
-                               
-                                
+                                Bloqueado = Convert.ToBoolean(reader["Bloqueado"]),
+
+
                                 Perfil = new Perfil_65RD
                                 {
                                     Id = Convert.ToInt32(reader["PerfilId"]),
@@ -120,7 +121,7 @@ namespace DAL_65RD
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string query = @"
-                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.PrimerLogin,
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.PrimerLogin,u.Bloqueado,
                     p.Id AS PerfilId, p.Nombre AS PerfilNombre
                     FROM Usuarios u
                     INNER JOIN Perfiles p ON u.PerfilId = p.Id";
@@ -140,6 +141,8 @@ namespace DAL_65RD
                         Email = reader["Email"].ToString(),
                         Activo = Convert.ToBoolean(reader["Activo"]),
                         PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
+                        Bloqueado = Convert.ToBoolean(reader["Bloqueado"]),
+
                         Perfil = new Perfil_65RD
                         {
                             Id = Convert.ToInt32(reader["PerfilId"]),
@@ -154,16 +157,16 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // Si activo es true, ponemos PrimerLogin = 1. Si es false, dejamos el valor que ya tenía.
                 string query = @"UPDATE Usuarios 
                          SET Activo = @activo, 
-                             PrimerLogin = CASE WHEN @activo = 1 THEN 1 ELSE PrimerLogin END 
+                             PrimerLogin = CASE WHEN @activo = 1 THEN 1 ELSE PrimerLogin END
                          WHERE Id = @id";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@activo", activo);
                     cmd.Parameters.AddWithValue("@id", idUsuario);
+
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -189,6 +192,26 @@ namespace DAL_65RD
                 }
             }
             return perfiles;
+        }
+
+        public void ActualizarBloqueo(int idUsuario, bool estaBloqueado)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                // Si estaBloqueado es false, forzamos PrimerLogin = 1
+                string query = @"UPDATE Usuarios 
+                         SET Bloqueado = @bloqueado, 
+                             PrimerLogin = CASE WHEN @bloqueado = 0 THEN 1 ELSE PrimerLogin END
+                         WHERE Id = @id";
+
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@bloqueado", estaBloqueado);
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
     }

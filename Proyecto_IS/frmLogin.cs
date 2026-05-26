@@ -90,7 +90,7 @@ namespace Proyecto_IS
                         menuPrincipal.Show();
                         this.Hide();
 
-                        // 🚨 solo cerramos login junto con MainForm si es login inicial
+                        // solo cerramos login junto con MainForm si es login inicial
                         if (!this.EsReLogin)
                             menuPrincipal.FormClosed += (s, args) => this.Close();
                     }
@@ -115,7 +115,13 @@ namespace Proyecto_IS
                     break;
 
                 case ResultadoLogin.CuentaBloqueada:
-                    MessageBox.Show("Su cuenta ha sido bloqueada por seguridad tras múltiples intentos fallidos. Por favor, comuníquese con el administrador.", "Cuenta Bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("Su cuenta ha sido bloqueada por seguridad tras múltiples intentos fallidos. Por favor, comuníquese con el administrador para desbloquearla.", "Cuenta Bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    txtContraseña.Text = "";
+                    txtContraseña.Focus();
+                    break;
+
+                case ResultadoLogin.CuentaDeshabilitada:
+                    MessageBox.Show("Su cuenta se encuentra deshabilitada. Por favor, comuníquese con la administración.", "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtContraseña.Text = "";
                     txtContraseña.Focus();
                     break;

@@ -30,6 +30,8 @@ namespace Proyecto_IS
             ConfigurarGrilla();
             dtpFechaIni.Value = DateTime.Now.AddDays(-7); 
             dtpFechaFin.Value = DateTime.Now;
+
+            BuscarEventos();
         }
 
         private void CargarCombos()
@@ -47,6 +49,7 @@ namespace Proyecto_IS
                 "Modificar Usuario",
                 "Bloquear Usuario",
                 "Bloqueo por Intentos",
+                "Desbloquear Usuario",
                 "Cambio Contraseña"
             });
             cmbEvento.SelectedIndex = 0;
@@ -69,7 +72,7 @@ namespace Proyecto_IS
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Descripcion", HeaderText = "Descripción del Evento", Width = 300 });
         }
 
-        private void btnAplicar_Click(object sender, EventArgs e)
+        private void BuscarEventos()
         {
             try
             {
@@ -86,6 +89,11 @@ namespace Proyecto_IS
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnAplicar_Click(object sender, EventArgs e)
+        {
+            BuscarEventos();
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)

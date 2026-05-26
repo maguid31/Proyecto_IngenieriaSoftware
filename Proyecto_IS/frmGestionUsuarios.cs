@@ -203,18 +203,21 @@ namespace Proyecto_IS
                 MessageBox.Show("Por cuestiones de seguridad, no podés modificar ni deshabilitar tu propio usuario.", "Operación denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             if (usuarioSeleccionadoId != -1)
             {
                 UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
 
                 
-                gestorUsuario.ActualizarEstado(usuarioSeleccionadoId, true);
+                gestorUsuario.ActualizarEstado(usuarioSeleccionadoId, false);
 
                 int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
-                bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se habilitó al usuario: {usuarioSeleccionadoNombre}");
 
-                MessageBox.Show("Usuario habilitado correctamente. Se le solicitará cambio de contraseña en su próximo ingreso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Bloquear Usuario", 3, $"Se deshabilitó al usuario: {usuarioSeleccionadoNombre}");
+
+                MessageBox.Show("Usuario deshabilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
             else
@@ -268,7 +271,7 @@ namespace Proyecto_IS
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
                 bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se habilitó al usuario: {usuarioSeleccionadoNombre}");
 
-                MessageBox.Show("Usuario habilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Usuario habilitado correctamente. Se le solicitará cambio de contraseña en su próximo ingreso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
             else
@@ -304,6 +307,23 @@ namespace Proyecto_IS
 
                 
                 Application.Exit();
+            }
+        }
+
+        private void btnDesbloquear_Click(object sender, EventArgs e)
+        {
+            if (usuarioSeleccionadoId != -1)
+            {
+                UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
+
+                
+                gestorUsuario.ActualizarBloqueo(usuarioSeleccionadoId, false);
+
+                int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
+                new BitacoraBLL_65RD().RegistrarEvento(idAdminLogueado, "Usuarios", "Desbloquear Usuario", 2, $"Se desbloqueó al usuario: {usuarioSeleccionadoNombre}");
+
+                MessageBox.Show("Usuario desbloqueado correctamente. Se le solicitará cambio de contraseña.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarUsuarios();
             }
         }
     }
