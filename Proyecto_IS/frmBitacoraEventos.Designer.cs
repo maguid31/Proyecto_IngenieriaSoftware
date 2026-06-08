@@ -53,9 +53,10 @@
             this.btnAplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAplicar.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAplicar.ForeColor = System.Drawing.Color.White;
-            this.btnAplicar.Location = new System.Drawing.Point(256, 569);
+            this.btnAplicar.Location = new System.Drawing.Point(341, 700);
+            this.btnAplicar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAplicar.Name = "btnAplicar";
-            this.btnAplicar.Size = new System.Drawing.Size(115, 35);
+            this.btnAplicar.Size = new System.Drawing.Size(153, 43);
             this.btnAplicar.TabIndex = 54;
             this.btnAplicar.Text = "APLICAR";
             this.btnAplicar.UseVisualStyleBackColor = false;
@@ -68,9 +69,10 @@
             this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLimpiar.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(449, 569);
+            this.btnLimpiar.Location = new System.Drawing.Point(599, 700);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(115, 35);
+            this.btnLimpiar.Size = new System.Drawing.Size(153, 43);
             this.btnLimpiar.TabIndex = 55;
             this.btnLimpiar.Text = "LIMPIAR";
             this.btnLimpiar.UseVisualStyleBackColor = false;
@@ -83,9 +85,10 @@
             this.btnImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImprimir.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImprimir.ForeColor = System.Drawing.Color.White;
-            this.btnImprimir.Location = new System.Drawing.Point(642, 569);
+            this.btnImprimir.Location = new System.Drawing.Point(856, 700);
+            this.btnImprimir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(115, 35);
+            this.btnImprimir.Size = new System.Drawing.Size(153, 43);
             this.btnImprimir.TabIndex = 56;
             this.btnImprimir.Text = "IMPRIMIR";
             this.btnImprimir.UseVisualStyleBackColor = false;
@@ -94,47 +97,54 @@
             // dgvBitacora
             // 
             this.dgvBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBitacora.Location = new System.Drawing.Point(123, 82);
+            this.dgvBitacora.Location = new System.Drawing.Point(164, 101);
+            this.dgvBitacora.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvBitacora.Name = "dgvBitacora";
-            this.dgvBitacora.Size = new System.Drawing.Size(771, 276);
+            this.dgvBitacora.RowHeadersWidth = 51;
+            this.dgvBitacora.Size = new System.Drawing.Size(1190, 330);
             this.dgvBitacora.TabIndex = 57;
             // 
             // dtpFechaIni
             // 
-            this.dtpFechaIni.Location = new System.Drawing.Point(256, 478);
+            this.dtpFechaIni.Location = new System.Drawing.Point(341, 588);
+            this.dtpFechaIni.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtpFechaIni.Name = "dtpFechaIni";
-            this.dtpFechaIni.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaIni.Size = new System.Drawing.Size(265, 22);
             this.dtpFechaIni.TabIndex = 58;
             // 
             // dtpFechaFin
             // 
-            this.dtpFechaFin.Location = new System.Drawing.Point(617, 478);
+            this.dtpFechaFin.Location = new System.Drawing.Point(823, 588);
+            this.dtpFechaFin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtpFechaFin.Name = "dtpFechaFin";
-            this.dtpFechaFin.Size = new System.Drawing.Size(200, 20);
+            this.dtpFechaFin.Size = new System.Drawing.Size(265, 22);
             this.dtpFechaFin.TabIndex = 59;
             // 
             // cmbModulo
             // 
             this.cmbModulo.FormattingEnabled = true;
-            this.cmbModulo.Location = new System.Drawing.Point(207, 407);
+            this.cmbModulo.Location = new System.Drawing.Point(276, 501);
+            this.cmbModulo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbModulo.Name = "cmbModulo";
-            this.cmbModulo.Size = new System.Drawing.Size(121, 21);
+            this.cmbModulo.Size = new System.Drawing.Size(160, 24);
             this.cmbModulo.TabIndex = 60;
             // 
             // cmbEvento
             // 
             this.cmbEvento.FormattingEnabled = true;
-            this.cmbEvento.Location = new System.Drawing.Point(477, 407);
+            this.cmbEvento.Location = new System.Drawing.Point(636, 501);
+            this.cmbEvento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbEvento.Name = "cmbEvento";
-            this.cmbEvento.Size = new System.Drawing.Size(121, 21);
+            this.cmbEvento.Size = new System.Drawing.Size(160, 24);
             this.cmbEvento.TabIndex = 61;
             // 
             // cmbCriticidad
             // 
             this.cmbCriticidad.FormattingEnabled = true;
-            this.cmbCriticidad.Location = new System.Drawing.Point(772, 403);
+            this.cmbCriticidad.Location = new System.Drawing.Point(1029, 496);
+            this.cmbCriticidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cmbCriticidad.Name = "cmbCriticidad";
-            this.cmbCriticidad.Size = new System.Drawing.Size(121, 21);
+            this.cmbCriticidad.Size = new System.Drawing.Size(160, 24);
             this.cmbCriticidad.TabIndex = 62;
             // 
             // label2
@@ -143,9 +153,10 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(118, 407);
+            this.label2.Location = new System.Drawing.Point(157, 501);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 25);
+            this.label2.Size = new System.Drawing.Size(104, 32);
             this.label2.TabIndex = 64;
             this.label2.Text = "Modulo";
             // 
@@ -154,9 +165,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(398, 403);
+            this.label1.Location = new System.Drawing.Point(531, 496);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 25);
+            this.label1.Size = new System.Drawing.Size(92, 32);
             this.label1.TabIndex = 65;
             this.label1.Text = "Evento";
             // 
@@ -165,9 +177,10 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(669, 401);
+            this.label3.Location = new System.Drawing.Point(892, 494);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 25);
+            this.label3.Size = new System.Drawing.Size(124, 32);
             this.label3.TabIndex = 66;
             this.label3.Text = "Criticidad";
             // 
@@ -177,9 +190,10 @@
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label4.Location = new System.Drawing.Point(154, 473);
+            this.label4.Location = new System.Drawing.Point(205, 582);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 25);
+            this.label4.Size = new System.Drawing.Size(78, 32);
             this.label4.TabIndex = 67;
             this.label4.Text = "Inicio";
             // 
@@ -189,9 +203,10 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(559, 475);
+            this.label5.Location = new System.Drawing.Point(745, 585);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 25);
+            this.label5.Size = new System.Drawing.Size(48, 32);
             this.label5.TabIndex = 68;
             this.label5.Text = "Fin";
             // 
@@ -200,17 +215,18 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Nirmala UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            this.label6.Location = new System.Drawing.Point(347, 20);
+            this.label6.Location = new System.Drawing.Point(463, 25);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(315, 37);
+            this.label6.Size = new System.Drawing.Size(397, 46);
             this.label6.TabIndex = 69;
             this.label6.Text = "BITÁCORA DE EVENTOS";
             // 
             // frmBitacoraEventos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1010, 641);
+            this.ClientSize = new System.Drawing.Size(1376, 789);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -226,6 +242,7 @@
             this.Controls.Add(this.btnImprimir);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnAplicar);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmBitacoraEventos";
             this.Load += new System.EventHandler(this.frmBitacoraEventos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).EndInit();

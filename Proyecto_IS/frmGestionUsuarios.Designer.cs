@@ -37,6 +37,14 @@
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
+            this.NombreUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colHabilitado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnaplicar = new System.Windows.Forms.Button();
             this.btncancelar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,14 +59,6 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.btnDesbloquear = new System.Windows.Forms.Button();
-            this.NombreUsuario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Apellido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DNI = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colHabilitado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,7 +92,7 @@
             this.label3.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(122, 454);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(86, 25);
+            this.label3.Size = new System.Drawing.Size(110, 32);
             this.label3.TabIndex = 43;
             this.label3.Text = "Apellido";
             // 
@@ -112,7 +112,7 @@
             this.label2.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(161, 409);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 25);
+            this.label2.Size = new System.Drawing.Size(59, 32);
             this.label2.TabIndex = 41;
             this.label2.Text = "DNI";
             // 
@@ -123,7 +123,7 @@
             this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
             this.label1.Location = new System.Drawing.Point(57, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(273, 37);
+            this.label1.Size = new System.Drawing.Size(344, 46);
             this.label1.TabIndex = 40;
             this.label1.Text = "GESTION USUARIOS";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -168,162 +168,12 @@
             this.Email,
             this.colHabilitado,
             this.Bloqueado});
-            this.dgvUsuarios.Location = new System.Drawing.Point(33, 83);
+            this.dgvUsuarios.Location = new System.Drawing.Point(38, 85);
             this.dgvUsuarios.Name = "dgvUsuarios";
             this.dgvUsuarios.RowHeadersWidth = 51;
-            this.dgvUsuarios.Size = new System.Drawing.Size(928, 239);
+            this.dgvUsuarios.Size = new System.Drawing.Size(1053, 231);
             this.dgvUsuarios.TabIndex = 52;
             this.dgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellContentClick);
-            // 
-            // btnaplicar
-            // 
-            this.btnaplicar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnaplicar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnaplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnaplicar.ForeColor = System.Drawing.Color.White;
-            this.btnaplicar.Location = new System.Drawing.Point(518, 515);
-            this.btnaplicar.Name = "btnaplicar";
-            this.btnaplicar.Size = new System.Drawing.Size(115, 35);
-            this.btnaplicar.TabIndex = 53;
-            this.btnaplicar.Text = "APLICAR";
-            this.btnaplicar.UseVisualStyleBackColor = false;
-            this.btnaplicar.Click += new System.EventHandler(this.btnaplicar_Click);
-            // 
-            // btncancelar
-            // 
-            this.btncancelar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btncancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btncancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btncancelar.ForeColor = System.Drawing.Color.White;
-            this.btncancelar.Location = new System.Drawing.Point(518, 580);
-            this.btncancelar.Name = "btncancelar";
-            this.btncancelar.Size = new System.Drawing.Size(115, 35);
-            this.btncancelar.TabIndex = 54;
-            this.btncancelar.Text = "CANCELAR";
-            this.btncancelar.UseVisualStyleBackColor = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(122, 501);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 25);
-            this.label4.TabIndex = 55;
-            this.label4.Text = "Nombre";
-            // 
-            // txtnombre
-            // 
-            this.txtnombre.BackColor = System.Drawing.Color.LightGray;
-            this.txtnombre.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtnombre.Location = new System.Drawing.Point(238, 498);
-            this.txtnombre.Multiline = true;
-            this.txtnombre.Name = "txtnombre";
-            this.txtnombre.Size = new System.Drawing.Size(216, 28);
-            this.txtnombre.TabIndex = 56;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(161, 548);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 25);
-            this.label5.TabIndex = 57;
-            this.label5.Text = "Rol";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(144, 601);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 25);
-            this.label8.TabIndex = 61;
-            this.label8.Text = "Email";
-            // 
-            // txtemail
-            // 
-            this.txtemail.BackColor = System.Drawing.Color.LightGray;
-            this.txtemail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtemail.Location = new System.Drawing.Point(238, 605);
-            this.txtemail.Multiline = true;
-            this.txtemail.Name = "txtemail";
-            this.txtemail.Size = new System.Drawing.Size(216, 28);
-            this.txtemail.TabIndex = 62;
-            // 
-            // deshabilitar
-            // 
-            this.deshabilitar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.deshabilitar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.deshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deshabilitar.ForeColor = System.Drawing.Color.White;
-            this.deshabilitar.Location = new System.Drawing.Point(797, 498);
-            this.deshabilitar.Name = "deshabilitar";
-            this.deshabilitar.Size = new System.Drawing.Size(143, 39);
-            this.deshabilitar.TabIndex = 63;
-            this.deshabilitar.Text = "DESHABILITAR";
-            this.deshabilitar.UseVisualStyleBackColor = false;
-            this.deshabilitar.Click += new System.EventHandler(this.deshabilitar_Click);
-            // 
-            // cbtodos
-            // 
-            this.cbtodos.AutoSize = true;
-            this.cbtodos.Location = new System.Drawing.Point(518, 409);
-            this.cbtodos.Name = "cbtodos";
-            this.cbtodos.Size = new System.Drawing.Size(71, 21);
-            this.cbtodos.TabIndex = 64;
-            this.cbtodos.Text = "TODOS";
-            this.cbtodos.UseVisualStyleBackColor = true;
-            this.cbtodos.CheckedChanged += new System.EventHandler(this.cbtodos_CheckedChanged);
-            // 
-            // cbactivos
-            // 
-            this.cbactivos.AutoSize = true;
-            this.cbactivos.Location = new System.Drawing.Point(518, 443);
-            this.cbactivos.Name = "cbactivos";
-            this.cbactivos.Size = new System.Drawing.Size(82, 21);
-            this.cbactivos.TabIndex = 65;
-            this.cbactivos.Text = "ACTIVOS";
-            this.cbactivos.UseVisualStyleBackColor = true;
-            this.cbactivos.CheckedChanged += new System.EventHandler(this.cbactivos_CheckedChanged);
-            // 
-            // cmbRol
-            // 
-            this.cmbRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRol.FormattingEnabled = true;
-            this.cmbRol.Location = new System.Drawing.Point(238, 548);
-            this.cmbRol.Name = "cmbRol";
-            this.cmbRol.Size = new System.Drawing.Size(216, 25);
-            this.cmbRol.TabIndex = 66;
-            // 
-            // btnCerrarSesion
-            // 
-            this.btnCerrarSesion.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnCerrarSesion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
-            this.btnCerrarSesion.Location = new System.Drawing.Point(966, 27);
-            this.btnCerrarSesion.Name = "btnCerrarSesion";
-            this.btnCerrarSesion.Size = new System.Drawing.Size(115, 35);
-            this.btnCerrarSesion.TabIndex = 67;
-            this.btnCerrarSesion.Text = "CERRAR SESIÓN";
-            this.btnCerrarSesion.UseVisualStyleBackColor = false;
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
-            // 
-            // btnDesbloquear
-            // 
-            this.btnDesbloquear.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnDesbloquear.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDesbloquear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDesbloquear.ForeColor = System.Drawing.Color.White;
-            this.btnDesbloquear.Location = new System.Drawing.Point(797, 548);
-            this.btnDesbloquear.Name = "btnDesbloquear";
-            this.btnDesbloquear.Size = new System.Drawing.Size(143, 39);
-            this.btnDesbloquear.TabIndex = 68;
-            this.btnDesbloquear.Text = "DESBLOQUEAR";
-            this.btnDesbloquear.UseVisualStyleBackColor = false;
-            this.btnDesbloquear.Click += new System.EventHandler(this.btnDesbloquear_Click);
             // 
             // NombreUsuario
             // 
@@ -377,7 +227,9 @@
             // 
             this.colHabilitado.DataPropertyName = "EstadoActivo";
             this.colHabilitado.HeaderText = "Habilitado";
+            this.colHabilitado.MinimumWidth = 6;
             this.colHabilitado.Name = "colHabilitado";
+            this.colHabilitado.Width = 125;
             // 
             // Bloqueado
             // 
@@ -387,12 +239,162 @@
             this.Bloqueado.Name = "Bloqueado";
             this.Bloqueado.Width = 125;
             // 
+            // btnaplicar
+            // 
+            this.btnaplicar.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnaplicar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnaplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnaplicar.ForeColor = System.Drawing.Color.White;
+            this.btnaplicar.Location = new System.Drawing.Point(518, 515);
+            this.btnaplicar.Name = "btnaplicar";
+            this.btnaplicar.Size = new System.Drawing.Size(115, 35);
+            this.btnaplicar.TabIndex = 53;
+            this.btnaplicar.Text = "APLICAR";
+            this.btnaplicar.UseVisualStyleBackColor = false;
+            this.btnaplicar.Click += new System.EventHandler(this.btnaplicar_Click);
+            // 
+            // btncancelar
+            // 
+            this.btncancelar.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btncancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btncancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btncancelar.ForeColor = System.Drawing.Color.White;
+            this.btncancelar.Location = new System.Drawing.Point(518, 580);
+            this.btncancelar.Name = "btncancelar";
+            this.btncancelar.Size = new System.Drawing.Size(115, 35);
+            this.btncancelar.TabIndex = 54;
+            this.btncancelar.Text = "CANCELAR";
+            this.btncancelar.UseVisualStyleBackColor = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(122, 501);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(108, 32);
+            this.label4.TabIndex = 55;
+            this.label4.Text = "Nombre";
+            // 
+            // txtnombre
+            // 
+            this.txtnombre.BackColor = System.Drawing.Color.LightGray;
+            this.txtnombre.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtnombre.Location = new System.Drawing.Point(238, 498);
+            this.txtnombre.Multiline = true;
+            this.txtnombre.Name = "txtnombre";
+            this.txtnombre.Size = new System.Drawing.Size(216, 28);
+            this.txtnombre.TabIndex = 56;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(161, 548);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 32);
+            this.label5.TabIndex = 57;
+            this.label5.Text = "Rol";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(144, 601);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(76, 32);
+            this.label8.TabIndex = 61;
+            this.label8.Text = "Email";
+            // 
+            // txtemail
+            // 
+            this.txtemail.BackColor = System.Drawing.Color.LightGray;
+            this.txtemail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtemail.Location = new System.Drawing.Point(238, 605);
+            this.txtemail.Multiline = true;
+            this.txtemail.Name = "txtemail";
+            this.txtemail.Size = new System.Drawing.Size(216, 28);
+            this.txtemail.TabIndex = 62;
+            // 
+            // deshabilitar
+            // 
+            this.deshabilitar.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.deshabilitar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.deshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.deshabilitar.ForeColor = System.Drawing.Color.White;
+            this.deshabilitar.Location = new System.Drawing.Point(797, 498);
+            this.deshabilitar.Name = "deshabilitar";
+            this.deshabilitar.Size = new System.Drawing.Size(143, 39);
+            this.deshabilitar.TabIndex = 63;
+            this.deshabilitar.Text = "DESHABILITAR";
+            this.deshabilitar.UseVisualStyleBackColor = false;
+            this.deshabilitar.Click += new System.EventHandler(this.deshabilitar_Click);
+            // 
+            // cbtodos
+            // 
+            this.cbtodos.AutoSize = true;
+            this.cbtodos.Location = new System.Drawing.Point(518, 409);
+            this.cbtodos.Name = "cbtodos";
+            this.cbtodos.Size = new System.Drawing.Size(90, 27);
+            this.cbtodos.TabIndex = 64;
+            this.cbtodos.Text = "TODOS";
+            this.cbtodos.UseVisualStyleBackColor = true;
+            this.cbtodos.CheckedChanged += new System.EventHandler(this.cbtodos_CheckedChanged);
+            // 
+            // cbactivos
+            // 
+            this.cbactivos.AutoSize = true;
+            this.cbactivos.Location = new System.Drawing.Point(518, 443);
+            this.cbactivos.Name = "cbactivos";
+            this.cbactivos.Size = new System.Drawing.Size(104, 27);
+            this.cbactivos.TabIndex = 65;
+            this.cbactivos.Text = "ACTIVOS";
+            this.cbactivos.UseVisualStyleBackColor = true;
+            this.cbactivos.CheckedChanged += new System.EventHandler(this.cbactivos_CheckedChanged);
+            // 
+            // cmbRol
+            // 
+            this.cmbRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbRol.FormattingEnabled = true;
+            this.cmbRol.Location = new System.Drawing.Point(238, 548);
+            this.cmbRol.Name = "cmbRol";
+            this.cmbRol.Size = new System.Drawing.Size(216, 29);
+            this.cmbRol.TabIndex = 66;
+            // 
+            // btnCerrarSesion
+            // 
+            this.btnCerrarSesion.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCerrarSesion.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrarSesion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrarSesion.ForeColor = System.Drawing.Color.White;
+            this.btnCerrarSesion.Location = new System.Drawing.Point(1053, 648);
+            this.btnCerrarSesion.Name = "btnCerrarSesion";
+            this.btnCerrarSesion.Size = new System.Drawing.Size(115, 35);
+            this.btnCerrarSesion.TabIndex = 67;
+            this.btnCerrarSesion.Text = "CERRAR SESIÓN";
+            this.btnCerrarSesion.UseVisualStyleBackColor = false;
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
+            // 
+            // btnDesbloquear
+            // 
+            this.btnDesbloquear.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnDesbloquear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDesbloquear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDesbloquear.ForeColor = System.Drawing.Color.White;
+            this.btnDesbloquear.Location = new System.Drawing.Point(797, 548);
+            this.btnDesbloquear.Name = "btnDesbloquear";
+            this.btnDesbloquear.Size = new System.Drawing.Size(143, 39);
+            this.btnDesbloquear.TabIndex = 68;
+            this.btnDesbloquear.Text = "DESBLOQUEAR";
+            this.btnDesbloquear.UseVisualStyleBackColor = false;
+            this.btnDesbloquear.Click += new System.EventHandler(this.btnDesbloquear_Click);
+            // 
             // frmGestionUsuarios
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1109, 726);
+            this.ClientSize = new System.Drawing.Size(1198, 723);
             this.Controls.Add(this.btnDesbloquear);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.cmbRol);
