@@ -103,9 +103,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(34, 251);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(99, 23);
+            this.label3.Size = new System.Drawing.Size(151, 23);
             this.label3.TabIndex = 34;
-            this.label3.Text = "Contraseña";
+            this.label3.Text = "Contraseña nueva";
             // 
             // txtUsuario
             // 

@@ -28,7 +28,7 @@ namespace Proyecto_IS
         {
             CargarCombos();
             ConfigurarGrilla();
-            dtpFechaIni.Value = DateTime.Now.AddDays(-7); 
+            dtpFechaIni.Value = DateTime.Now.AddDays(-3); 
             dtpFechaFin.Value = DateTime.Now;
 
             BuscarEventos();
@@ -36,34 +36,83 @@ namespace Proyecto_IS
 
         private void CargarCombos()
         {
-            cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios" });
+            // Módulos
+            cmbModulo.Items.Clear();
+            cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios Básicos", "Administradores" });
             cmbModulo.SelectedIndex = 0;
 
-            
-            cmbEvento.Items.AddRange(new string[] {
-                "Todos",
-                "Login",
-                "Login Fallido", 
-                "Logout",
-                "Alta Usuario",
-                "Modificar Usuario",
-                "Bloquear Usuario",
-                "Bloqueo por Intentos",
-                "Desbloquear Usuario",
-                "Cambio Contraseña"
-            });
-            cmbEvento.SelectedIndex = 0;
+            // Inicializar eventos según módulo seleccionado
+            ActualizarEventosPorModulo();
 
+            // Criticidad
+            cmbCriticidad.Items.Clear();
             cmbCriticidad.Items.AddRange(new string[] { "0", "1", "2", "3", "4", "5" });
             cmbCriticidad.SelectedIndex = 0;
+
+            // Suscribirse al cambio de módulo
+            cmbModulo.SelectedIndexChanged += (s, e) => ActualizarEventosPorModulo();
         }
+
+        private void ActualizarEventosPorModulo()
+        {
+            cmbEvento.Items.Clear();
+
+            string moduloSeleccionado = cmbModulo.SelectedItem.ToString();
+
+            if (moduloSeleccionado == "Usuarios Básicos")
+            {
+                cmbEvento.Items.AddRange(new string[] {
+              "Todos",
+              "Login",
+              "Login Fallido",
+              "Logout",
+              "Bloqueo por Intentos",
+              "Cambio Contraseña"});
+
+            }
+            else if (moduloSeleccionado == "Administradores")
+            {
+                cmbEvento.Items.AddRange(new string[] {
+              "Todos",
+              "Login",
+              "Login Fallido",
+              "Logout",
+              "Bloqueo por Intentos",
+              "Cambio Contraseña",
+              "Alta Usuario",
+              "Modificar Usuario",
+              "Bloquear Usuario",
+              "Desbloquear Usuario"});
+
+            }
+            else // Todos
+            {
+                cmbEvento.Items.AddRange(new string[] {
+              "Todos",
+              "Login",
+              "Login Fallido",
+              "Logout",
+              "Bloqueo por Intentos",
+              "Cambio Contraseña",
+              "Alta Usuario",
+              "Modificar Usuario",
+              "Bloquear Usuario",
+              "Desbloquear Usuario"});
+
+            }
+
+            cmbEvento.SelectedIndex = 0;
+        }
+
 
         private void ConfigurarGrilla()
         {
             dgvBitacora.AutoGenerateColumns = false;
             dgvBitacora.Columns.Clear();
 
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LoginUsuario", HeaderText = "Login" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LoginUsuario", HeaderText = "Nombre usuario" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nombre", HeaderText = "Nombre" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Apellido", HeaderText = "Apellido" });
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Fecha", HeaderText = "Fecha" });
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Hora", HeaderText = "Hora" });
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Modulo", HeaderText = "Modulo" });
@@ -98,7 +147,7 @@ namespace Proyecto_IS
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            dtpFechaIni.Value = DateTime.Now.AddDays(-7);
+            dtpFechaIni.Value = DateTime.Now.AddDays(-3);
             dtpFechaFin.Value = DateTime.Now;
             cmbModulo.SelectedIndex = 0;
             cmbEvento.SelectedIndex = 0;

@@ -10,7 +10,10 @@ namespace Servicios_65RD
     {
         public int Id { get; set; }
         public int UsuarioId { get; set; }
-        public string LoginUsuario { get; set; } 
+        public string LoginUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Rol { get; set; }
         public DateTime FechaHora { get; set; }
         public string Modulo { get; set; }
         public string Evento { get; set; } 

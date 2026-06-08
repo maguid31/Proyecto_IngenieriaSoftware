@@ -45,13 +45,20 @@ namespace DAL
                 // JOIN para traer el Apellido+DNI del usuario
                 string query = @"
                     SELECT b.Id, b.UsuarioId, CONCAT(u.Apellido, u.DNI) AS LoginUsuario, 
-                           b.FechaHora, b.Modulo, b.Accion, b.Criticidad, b.Descripcion 
+                         u.Nombre,  u.Apellido, p.Nombre AS Rol,  b.FechaHora, b.Modulo, b.Accion, b.Criticidad, b.Descripcion 
                     FROM Bitacora b
                     INNER JOIN Usuarios u ON b.UsuarioId = u.Id
+                    INNER JOIN Perfiles p ON u.PerfilId = p.Id
                     WHERE b.FechaHora >= @fechaDesde AND b.FechaHora <= @fechaHasta ";
 
                 if (!string.IsNullOrEmpty(modulo) && modulo != "Todos")
-                    query += " AND b.Modulo = @modulo ";
+                {
+                    if (modulo == "Usuarios Básicos")
+                        query += " AND p.Nombre = 'Basico' ";   
+                    else if (modulo == "Administradores")
+                        query += " AND p.Nombre = 'Administrador' ";
+                }
+
 
                 if (!string.IsNullOrEmpty(evento) && evento != "Todos")
                     query += " AND b.Accion = @evento ";
@@ -81,6 +88,10 @@ namespace DAL
                                 Id = Convert.ToInt32(reader["Id"]),
                                 UsuarioId = Convert.ToInt32(reader["UsuarioId"]),
                                 LoginUsuario = reader["LoginUsuario"].ToString(),
+                                Nombre = reader["Nombre"].ToString(),      
+                                Apellido = reader["Apellido"].ToString(),
+                                Rol = reader["Rol"].ToString(),
+
                                 FechaHora = Convert.ToDateTime(reader["FechaHora"]),
                                 Modulo = reader["Modulo"].ToString(),
                                 Evento = reader["Accion"].ToString(),
