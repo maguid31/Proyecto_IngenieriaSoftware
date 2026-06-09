@@ -37,11 +37,11 @@
             this.cmbModulo = new System.Windows.Forms.ComboBox();
             this.cmbEvento = new System.Windows.Forms.ComboBox();
             this.cmbCriticidad = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblModulo = new System.Windows.Forms.Label();
+            this.lblEvento = new System.Windows.Forms.Label();
+            this.lblCriticidad = new System.Windows.Forms.Label();
+            this.lblInicio = new System.Windows.Forms.Label();
+            this.lblFin = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).BeginInit();
             this.SuspendLayout();
@@ -147,68 +147,68 @@
             this.cmbCriticidad.Size = new System.Drawing.Size(160, 24);
             this.cmbCriticidad.TabIndex = 62;
             // 
-            // label2
+            // lblModulo
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(157, 501);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 32);
-            this.label2.TabIndex = 64;
-            this.label2.Text = "Modulo";
+            this.lblModulo.AutoSize = true;
+            this.lblModulo.BackColor = System.Drawing.Color.Transparent;
+            this.lblModulo.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblModulo.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblModulo.Location = new System.Drawing.Point(157, 501);
+            this.lblModulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblModulo.Name = "lblModulo";
+            this.lblModulo.Size = new System.Drawing.Size(104, 32);
+            this.lblModulo.TabIndex = 64;
+            this.lblModulo.Text = "Modulo";
             // 
-            // label1
+            // lblEvento
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(531, 496);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 32);
-            this.label1.TabIndex = 65;
-            this.label1.Text = "Evento";
+            this.lblEvento.AutoSize = true;
+            this.lblEvento.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEvento.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblEvento.Location = new System.Drawing.Point(531, 496);
+            this.lblEvento.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblEvento.Name = "lblEvento";
+            this.lblEvento.Size = new System.Drawing.Size(92, 32);
+            this.lblEvento.TabIndex = 65;
+            this.lblEvento.Text = "Evento";
             // 
-            // label3
+            // lblCriticidad
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Location = new System.Drawing.Point(892, 494);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(124, 32);
-            this.label3.TabIndex = 66;
-            this.label3.Text = "Criticidad";
+            this.lblCriticidad.AutoSize = true;
+            this.lblCriticidad.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCriticidad.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblCriticidad.Location = new System.Drawing.Point(892, 494);
+            this.lblCriticidad.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCriticidad.Name = "lblCriticidad";
+            this.lblCriticidad.Size = new System.Drawing.Size(124, 32);
+            this.lblCriticidad.TabIndex = 66;
+            this.lblCriticidad.Text = "Criticidad";
             // 
-            // label4
+            // lblInicio
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label4.Location = new System.Drawing.Point(205, 582);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(78, 32);
-            this.label4.TabIndex = 67;
-            this.label4.Text = "Inicio";
+            this.lblInicio.AutoSize = true;
+            this.lblInicio.BackColor = System.Drawing.Color.Transparent;
+            this.lblInicio.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInicio.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblInicio.Location = new System.Drawing.Point(205, 582);
+            this.lblInicio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInicio.Name = "lblInicio";
+            this.lblInicio.Size = new System.Drawing.Size(78, 32);
+            this.lblInicio.TabIndex = 67;
+            this.lblInicio.Text = "Inicio";
             // 
-            // label5
+            // lblFin
             // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label5.Location = new System.Drawing.Point(745, 585);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 32);
-            this.label5.TabIndex = 68;
-            this.label5.Text = "Fin";
+            this.lblFin.AutoSize = true;
+            this.lblFin.BackColor = System.Drawing.Color.Transparent;
+            this.lblFin.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFin.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.lblFin.Location = new System.Drawing.Point(745, 585);
+            this.lblFin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFin.Name = "lblFin";
+            this.lblFin.Size = new System.Drawing.Size(48, 32);
+            this.lblFin.TabIndex = 68;
+            this.lblFin.Text = "Fin";
             // 
             // label6
             // 
@@ -228,11 +228,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1376, 789);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblFin);
+            this.Controls.Add(this.lblInicio);
+            this.Controls.Add(this.lblCriticidad);
+            this.Controls.Add(this.lblEvento);
+            this.Controls.Add(this.lblModulo);
             this.Controls.Add(this.cmbCriticidad);
             this.Controls.Add(this.cmbEvento);
             this.Controls.Add(this.cmbModulo);
@@ -262,11 +262,11 @@
         private System.Windows.Forms.ComboBox cmbModulo;
         private System.Windows.Forms.ComboBox cmbEvento;
         private System.Windows.Forms.ComboBox cmbCriticidad;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblModulo;
+        private System.Windows.Forms.Label lblEvento;
+        private System.Windows.Forms.Label lblCriticidad;
+        private System.Windows.Forms.Label lblInicio;
+        private System.Windows.Forms.Label lblFin;
         private System.Windows.Forms.Label label6;
     }
 }

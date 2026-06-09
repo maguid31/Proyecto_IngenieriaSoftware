@@ -31,9 +31,9 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.cbShowPassword = new System.Windows.Forms.CheckBox();
             this.txtContraseña = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblContraseña = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblUsuario = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -74,14 +74,14 @@
             this.txtContraseña.Size = new System.Drawing.Size(216, 28);
             this.txtContraseña.TabIndex = 25;
             // 
-            // label3
+            // lblContraseña
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 157);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(99, 23);
-            this.label3.TabIndex = 24;
-            this.label3.Text = "Contraseña";
+            this.lblContraseña.AutoSize = true;
+            this.lblContraseña.Location = new System.Drawing.Point(38, 157);
+            this.lblContraseña.Name = "lblContraseña";
+            this.lblContraseña.Size = new System.Drawing.Size(99, 23);
+            this.lblContraseña.TabIndex = 24;
+            this.lblContraseña.Text = "Contraseña";
             // 
             // txtUsuario
             // 
@@ -93,14 +93,14 @@
             this.txtUsuario.Size = new System.Drawing.Size(216, 28);
             this.txtUsuario.TabIndex = 23;
             // 
-            // label2
+            // lblUsuario
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(38, 85);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 23);
-            this.label2.TabIndex = 22;
-            this.label2.Text = "Usuario";
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(38, 85);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(70, 23);
+            this.lblUsuario.TabIndex = 22;
+            this.lblUsuario.Text = "Usuario";
             // 
             // label1
             // 
@@ -121,9 +121,9 @@
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.txtContraseña);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblContraseña);
             this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlDark;
@@ -143,9 +143,9 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.CheckBox cbShowPassword;
         private System.Windows.Forms.TextBox txtContraseña;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblContraseña;
         private System.Windows.Forms.TextBox txtUsuario;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label label1;
     }
 }

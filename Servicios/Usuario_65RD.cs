@@ -15,10 +15,8 @@ namespace Servicios_65RD
         public string Nombre { get; set; }
         public string DNI { get; set; }
         public string Contraseña { get; set; }
-
-        
         public Perfil_65RD Perfil { get; set; }
-
+        public string Idioma { get; set; } = "es";
         public bool Activo { get; set; }
         public string Email { get; set; }
         public bool PrimerLogin { get; set; }

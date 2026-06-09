@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Servicios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ namespace Servicios_65RD
         private static readonly object _lock = new object();
 
         public Usuario_65RD UsuarioLogueado { get; private set; }
+        public string IdiomaUsuario => UsuarioLogueado?.Idioma ?? "es";
 
-        
         private SessionManager_65RD() { }
 
         public static SessionManager_65RD Instancia
@@ -35,6 +36,10 @@ namespace Servicios_65RD
         public void IniciarSesion(Usuario_65RD usuario)
         {
             UsuarioLogueado = usuario;
+            if (usuario != null && !string.IsNullOrEmpty(usuario.Idioma))
+            {
+                IdiomaManager.GetInstance().CambiarIdioma(usuario.Idioma);
+            }
         }
 
         public void CerrarSesion()

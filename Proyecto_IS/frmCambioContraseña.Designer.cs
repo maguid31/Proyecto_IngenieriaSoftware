@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.txtConfirmContraseña = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblConfirmarContraseña = new System.Windows.Forms.Label();
             this.btnRegistrar = new System.Windows.Forms.Button();
             this.cbShowPassword = new System.Windows.Forms.CheckBox();
             this.txtContraseña = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblContraseñaNueva = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblUsuario = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.lblContraseñaActual = new System.Windows.Forms.Label();
             this.txtactual = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -51,15 +51,15 @@
             this.txtConfirmContraseña.Size = new System.Drawing.Size(216, 28);
             this.txtConfirmContraseña.TabIndex = 39;
             // 
-            // label6
+            // lblConfirmarContraseña
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 330);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(183, 23);
-            this.label6.TabIndex = 38;
-            this.label6.Text = "Confirmar contraseña";
-            this.label6.Click += new System.EventHandler(this.label6_Click);
+            this.lblConfirmarContraseña.AutoSize = true;
+            this.lblConfirmarContraseña.Location = new System.Drawing.Point(35, 330);
+            this.lblConfirmarContraseña.Name = "lblConfirmarContraseña";
+            this.lblConfirmarContraseña.Size = new System.Drawing.Size(181, 23);
+            this.lblConfirmarContraseña.TabIndex = 38;
+            this.lblConfirmarContraseña.Text = "ConfirmarContraseña";
+            this.lblConfirmarContraseña.Click += new System.EventHandler(this.label6_Click);
             // 
             // btnRegistrar
             // 
@@ -98,14 +98,14 @@
             this.txtContraseña.Size = new System.Drawing.Size(216, 28);
             this.txtContraseña.TabIndex = 35;
             // 
-            // label3
+            // lblContraseñaNueva
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(34, 251);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(151, 23);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "Contraseña nueva";
+            this.lblContraseñaNueva.AutoSize = true;
+            this.lblContraseñaNueva.Location = new System.Drawing.Point(34, 251);
+            this.lblContraseñaNueva.Name = "lblContraseñaNueva";
+            this.lblContraseñaNueva.Size = new System.Drawing.Size(151, 23);
+            this.lblContraseñaNueva.TabIndex = 34;
+            this.lblContraseñaNueva.Text = "Contraseña nueva";
             // 
             // txtUsuario
             // 
@@ -117,14 +117,14 @@
             this.txtUsuario.Size = new System.Drawing.Size(216, 28);
             this.txtUsuario.TabIndex = 33;
             // 
-            // label2
+            // lblUsuario
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(35, 106);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 23);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "Usuario";
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(35, 106);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(70, 23);
+            this.lblUsuario.TabIndex = 32;
+            this.lblUsuario.Text = "Usuario";
             // 
             // label1
             // 
@@ -136,14 +136,14 @@
             this.label1.TabIndex = 31;
             this.label1.Text = "CAMBIAR CONTRASEÑA";
             // 
-            // label4
+            // lblContraseñaActual
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(34, 182);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(152, 23);
-            this.label4.TabIndex = 40;
-            this.label4.Text = "Contraseña actual";
+            this.lblContraseñaActual.AutoSize = true;
+            this.lblContraseñaActual.Location = new System.Drawing.Point(34, 182);
+            this.lblContraseñaActual.Name = "lblContraseñaActual";
+            this.lblContraseñaActual.Size = new System.Drawing.Size(150, 23);
+            this.lblContraseñaActual.TabIndex = 40;
+            this.lblContraseñaActual.Text = "ContraseñaActual";
             // 
             // txtactual
             // 
@@ -163,15 +163,15 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(289, 504);
             this.Controls.Add(this.txtactual);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.lblContraseñaActual);
             this.Controls.Add(this.txtConfirmContraseña);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblConfirmarContraseña);
             this.Controls.Add(this.btnRegistrar);
             this.Controls.Add(this.cbShowPassword);
             this.Controls.Add(this.txtContraseña);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblContraseñaNueva);
             this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblUsuario);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlDark;
@@ -189,15 +189,15 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtConfirmContraseña;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblConfirmarContraseña;
         private System.Windows.Forms.Button btnRegistrar;
         private System.Windows.Forms.CheckBox cbShowPassword;
         private System.Windows.Forms.TextBox txtContraseña;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblContraseñaNueva;
         private System.Windows.Forms.TextBox txtUsuario;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblUsuario;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblContraseñaActual;
         private System.Windows.Forms.TextBox txtactual;
     }
 }

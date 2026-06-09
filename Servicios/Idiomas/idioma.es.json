@@ -1,0 +1,87 @@
+{
+
+  "frmLogin": {
+    "lblUsuario": "Usuario:",
+    "lblContraseña": "Contraseña:",
+    "btnLogin": "Iniciar Sesión",
+    "cbShowPassword": "Mostrar contraseña",
+    "lblTituloVentana": "Iniciar Sesión"
+  },
+
+  "MainForm": {
+    "lblTituloVentana": "Sistema de Gestión - Menú Principal",
+    "lblMenuHeader": "MENÚ",
+    "lblBienvenidaText": "Hola",
+    "segAdministracion": "ADMINISTRACIÓN",
+    "segConfiguracion": "CONFIGURACIÓN",
+    "segSesion": "SESIÓN",
+    "btnGestionUsuarios": "Gestión de Usuarios",
+    "btnBitacoraEventos": "Bitácora de Eventos",
+    "btnCambiarIdioma": "Cambiar Idioma",
+    "btnCerrarSesion": "CERRAR SESIÓN",
+    "btnIniciarSesion": "Iniciar Sesión",
+    "msgCerrarSesionTitulo": "Cerrar Sesión",
+    "msgCerrarSesionCuerpo": "¿Estás seguro que querés cerrar sesión?"
+  },
+
+  "frmGestionUsuarios": {
+    "lblTituloVentana": "Administración de Usuarios",
+    "lblTituloPantalla": "GESTIÓN USUARIOS",
+    "lblDni": "DNI",
+    "lblApellido": "Apellido",
+    "lblNombre": "Nombre",
+    "lblRol": "Rol",
+    "lblEmail": "Email",
+    "cbtodos": "TODOS",
+    "cbactivos": "ACTIVOS",
+    "btnaplicar": "APLICAR",
+    "btnCancelar": "CANCELAR",
+    "btnModificar": "MODIFICAR",
+    "btnHabilitar": "HABILITAR",
+    "btnCrear": "NUEVO",
+    "deshabilitar": "DESHABILITAR",
+    "btnDesbloquear": "DESBLOQUEAR",
+    "btnCerrarSesion": "CERRAR"
+  },
+
+  "frmCambioContraseña": {
+    "lblTituloVentana": "Seguridad - Cambiar Contraseña",
+    "lblTituloPantalla": "CAMBIAR CONTRASEÑA",
+    "lblUsuario": "lblUsuario",
+    "lblContraseñaActual": "lblContraseñaActual",
+    "lblContraseñaNueva": "Contraseña nueva",
+    "lblConfirmarContraseña": "lblConfirmarContraseña",
+    "cbShowPassword": "Mostrar contraseña",
+    "btnRegistrar": "CAMBIAR"
+  },
+
+  "frmBitacoraEventos": {
+    "lblTituloVentana": "Auditoría - Bitácora de Eventos",
+    "lblTituloPantalla": "BITÁCORA DE EVENTOS",
+    "lblModulo": "Modulo",
+    "lblEvento": "Evento",
+    "lblCriticidad": "Criticidad",
+    "lblInicio": "Inicio",
+    "lblFin": "Fin",
+    "btnAplicar": "APLICAR",
+    "btnLimpiar": "LIMPIAR",
+    "btnImprimir": "IMPRIMIR",
+    "colUsuario": "Nombre usuario",
+    "colNombre": "Nombre",
+    "colApellido": "Apellido",
+    "colFecha": "Fecha",
+    "colHora": "Hora",
+    "colModulo": "Modulo",
+    "colEvento": "Evento",
+    "colCriticidad": "Criticidad",
+    "colDescripcion": "Descripción del Evento"
+  },
+
+  "frmIdioma": {
+    "lblTituloPantalla": "Cambiar Idioma del Sistema",
+    "lblSeleccionar": "Seleccione el idioma disponible:",
+    "btnGuardarIdioma": "APLICAR CAMBIO",
+    "msgExitoTitulo": "Idioma Actualizado",
+    "msgExitoCuerpo": "El idioma de la aplicación se ha cambiado correctamente."
+  }
+}

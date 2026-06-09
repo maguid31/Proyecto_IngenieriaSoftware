@@ -8,13 +8,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Proyecto_IS
 {
-    public partial class frmGestionUsuarios : Form
+    public partial class frmGestionUsuarios : Form , IidiomaObserver
     {
         public frmGestionUsuarios()
         {
@@ -75,6 +76,8 @@ namespace Proyecto_IS
 
             CargarUsuarios();
 
+            IdiomaManager.GetInstance().RegisterObserver(this);
+            UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -325,6 +328,46 @@ namespace Proyecto_IS
                 MessageBox.Show("Usuario desbloqueado correctamente. Se le solicitará cambio de contraseña.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
+        }
+
+        private void frmGestionUsuarios_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IdiomaManager.GetInstance().RemoveObserver(this);
+        }
+
+        public void UpdateIdioma(string idioma)
+        {
+            // Título real de la ventana flotante de Windows
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
+
+            // Botones de la columna derecha y acciones (Mapeados según tu diseño y código)
+            if (btnModificar != null) btnModificar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnModificar");
+            if (btnHabilitar != null) btnHabilitar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnHabilitar");
+            if (btnNuevo != null) btnNuevo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCrear"); // Es el botón "NUEVO"
+            if (btnDeshabilitar != null) btnDeshabilitar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "deshabilitar"); // Es el botón "DESHABILITAR"
+            if (btnDesbloquear != null) btnDesbloquear.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnDesbloquear");
+
+            // Botones del centro
+            if (btnAplicar != null) btnAplicar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnaplicar"); // Es el botón "APLICAR"
+            if (btnCancelar != null) btnCancelar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCancelar"); // Asegurate de que se llame btnCancelar en el diseño
+
+            // Botón inferior derecho
+            if (btnCerrarSesion != null) btnCerrarSesion.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCerrarSesion"); // Es el botón "CERRAR"
+
+            // Checkboxes de Filtros
+            if (cbtodos != null) cbtodos.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "cbtodos");
+            if (cbactivos != null) cbactivos.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "cbactivos");
+
+            // Labels del formulario (Mapealos según el número de control que tengan en tu propiedad Name)
+            // El título grande violeta de arriba: "GESTION USUARIOS"
+            if (lblGestionUsuarios != null) lblGestionUsuarios.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
+
+            // Las etiquetas de los campos de texto
+            if (label3 != null) label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDni");       // "DNI"
+            if (label2 != null) label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblApellido");  // "Apellido"
+            if (lblGestionUsuarios != null) lblGestionUsuarios.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombre");    // "Nombre"
+            if (label5 != null) label5.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRol");       // "Rol"
+            if (label4 != null) label4.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEmail");     // "Email"
         }
     }
 }
