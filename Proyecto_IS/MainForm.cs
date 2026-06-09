@@ -60,7 +60,6 @@ namespace Proyecto_IS
         
         private void ConfigurarVentana()
         {
-            this.Text = "Menú Principal";
             this.Size = new Size(1000, 650);
             this.MinimumSize = new Size(800, 550);
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -71,7 +70,7 @@ namespace Proyecto_IS
             panelMenu.BackColor = ColorMenu;
             panelContenido.BackColor = ColorFondoContenido;
 
-            lblAppNombre.Text = "MENÚ";
+            
             lblAppNombre.ForeColor = ColorAccent;
         }
 
@@ -119,11 +118,48 @@ namespace Proyecto_IS
 
         private void ReLogin(object sender, EventArgs e)
         {
+            // 1. Verificamos en el Singleton si ya hay una sesión activa en memoria
+            if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
+            {
+                //  textos traducidos para la alerta
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSesionActivaCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSesionActivaTitulo");
+
+                
+                DialogResult advertencia = MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                
+                if (advertencia == DialogResult.No)
+                {
+                    return;
+                }
+
+                
+                int idUsuarioActual = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
+                new BitacoraBLL_65RD().RegistrarEvento(idUsuarioActual, "Usuarios", "Logout", 1, "Cierre de sesión por cambio de usuario (ReLogin)");
+
+                SessionManager_65RD.Instancia.CerrarSesion();
+            }
+
+            
             frmLogin login = new frmLogin();
-            login.EsReLogin = true; // 🚨 marcamos que es un relogin
+            login.EsReLogin = true;
             login.Show();
             this.Hide();
-            login.FormClosed += (s, args) => this.Show();
+
+            
+            login.FormClosed += (s, args) =>
+            {
+                // Si cerró el login y el SessionManager tiene un nuevo usuario, volvemos a mostrar el Menú
+                if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
+                {
+                    this.Show();
+                }
+                else
+                {
+                    Application.Exit();
+                }
+            };
         }
 
 
@@ -181,8 +217,13 @@ namespace Proyecto_IS
         
         private void ActualizarBienvenida()
         {
-            lblBienvenida.Text = $"Hola, {_nombre}";
-            lblRol.Text = _rol == "Administrador" ? "🛡  Administrador" : "👤  Usuario Básico";
+            string saludo = IdiomaManager.GetInstance().GetTexto(this.Name, "lblHola");
+            lblBienvenida.Text = $"{saludo}, {_nombre}";
+
+            string rolAdmin = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRolAdmin");
+            string rolBasico = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRolBasico");
+
+            lblRol.Text = _rol == "Administrador" ? rolAdmin : rolBasico;
         }
 
         
@@ -219,7 +260,10 @@ namespace Proyecto_IS
 
         private void CerrarSesion(object sender, EventArgs e)
         {
-            var res = MessageBox.Show("¿Estás seguro que querés cerrar sesión?", "Cerrar Sesión", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgCerrarSesionCuerpo");
+            string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgCerrarSesionTitulo");
+
+            var res = MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes)
             {
                 // REGISTRAMOS LOGOUT EN BITÁCORA ANTES DE BORRAR LA SESIÓN
@@ -230,7 +274,6 @@ namespace Proyecto_IS
                     bitacora.RegistrarEvento(idUsuarioActual, "Usuarios", "Logout", 1, "El usuario cerró sesión desde el menú principal");
                 }
 
-                
                 SessionManager_65RD.Instancia.CerrarSesion();
                 this.Hide();
                 frmLogin login = new frmLogin();
@@ -253,6 +296,10 @@ namespace Proyecto_IS
         {
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
             if (lblAppNombre != null) lblAppNombre.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblMenuHeader");
+
+            // Traducimos las etiquetas del panel central que se muestran por defecto
+            if (lblContenidoTitulo != null) lblContenidoTitulo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPanelInicioTitulo");
+            if (lblContenidoDetalle != null) lblContenidoDetalle.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPanelInicioDetalle");
 
             ActualizarBienvenida();
             ConstruirMenu();

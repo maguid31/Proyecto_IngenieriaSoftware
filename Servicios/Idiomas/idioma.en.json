@@ -12,17 +12,23 @@
   "MainForm": {
     "lblTituloVentana": "Management System - Main Menu",
     "lblMenuHeader": "MENU",
-    "lblBienvenidaText": "Hello",
     "segAdministracion": "ADMINISTRATION",
-    "segConfiguracion": "CONFIGURATION",
-    "segSesion": "SESSION",
     "btnGestionUsuarios": "User Management",
     "btnBitacoraEventos": "Event Log",
+    "segConfiguracion": "CONFIGURATION",
     "btnCambiarIdioma": "Change Language",
+    "segSesion": "SESSION",
     "btnCerrarSesion": "LOG OUT",
     "btnIniciarSesion": "Log In",
-    "msgCerrarSesionTitulo": "Log Out",
-    "msgCerrarSesionCuerpo": "Are you sure you want to log out?"
+    "lblHola": "Hello",
+    "lblRolAdmin": "🛡 Administrator",
+    "lblRolBasico": "👤 Basic User",
+    "msgCerrarSesionCuerpo": "Are you sure you want to log out?",
+    "msgCerrarSesionTitulo": "Confirm Log Out",
+    "lblPanelInicioTitulo": "Home Panel",
+    "lblPanelInicioDetalle": "Select an option from the side menu to begin.",
+    "msgSesionActivaTitulo": "Active session detected",
+    "msgSesionActivaCuerpo": "A user is already logged in. Do you want to log out and switch accounts?"
   },
 
   "frmGestionUsuarios": {
@@ -42,7 +48,30 @@
     "btnCrear": "NEW",
     "deshabilitar": "DISABLE",
     "btnDesbloquear": "UNLOCK",
-    "btnCerrarSesion": "CLOSE"
+    "btnCerrarSesion": "CLOSE",
+    "msgDatosIncompletosTitulo": "Incomplete data",
+    "msgDatosIncompletosCuerpo": "Please fill in all the data and select a role.",
+    "msgDniDuplicadoTitulo": "Duplicate ID",
+    "msgDniDuplicadoCuerpo": "A user with this ID is already registered.",
+    "msgOperacionDenegadaTitulo": "Operation denied",
+    "msgOperacionDenegadaCuerpo": "For security reasons, you cannot modify or disable your own user.",
+    "msgInformacionTitulo": "Information",
+    "msgAtencionTitulo": "Warning",
+    "msgExitoTitulo": "Success",
+    "msgSeleccioneUsuarioCuerpo": "Please select a user from the list.",
+    "msgUsuarioDeshabilitadoCuerpo": "User disabled successfully.",
+    "msgUsuarioHabilitadoCuerpo": "User enabled successfully. A password change will be required upon next login.",
+    "msgUsuarioDesbloqueadoCuerpo": "User unlocked successfully. A password change will be required.",
+    "msgConfirmarSalidaTitulo": "Confirm exit",
+    "msgConfirmarSalidaCuerpo": "Are you sure you want to log out?",
+    "dgvColNombreUsuario": "Username",
+    "dgvColNombre": "First Name",
+    "dgvColApellido": "Last Name",
+    "dgvColDNI": "ID",
+    "dgvColRol": "Role",
+    "dgvColEmail": "Email",
+    "dgvColHabilitado": "Enabled",
+    "dgvColBloqueado": "Locked"
   },
 
   "frmCambioContraseña": {
@@ -75,7 +104,15 @@
     "colModulo": "Module",
     "colEvento": "Event",
     "colCriticidad": "Criticality",
-    "colDescripcion": "Event Description"
+    "colDescripcion": "Event Description",
+    "msgArchivoAbiertoCuerpo": "Cannot overwrite the file. Make sure it is not open in another program.",
+    "msgErrorTitulo": "Error",
+    "msgExitoTitulo": "Success",
+    "msgPdfExitoCuerpo": "The PDF report was successfully generated.",
+    "lblTituloReportePdf": "Event Log Report",
+    "msgErrorGenerarPdfCuerpo": "An error occurred while generating the PDF:",
+    "msgSinEventosExportarCuerpo": "There are no events in the grid to export.",
+    "msgAdvertenciaTitulo": "Warning"
   },
 
   "frmIdioma": {

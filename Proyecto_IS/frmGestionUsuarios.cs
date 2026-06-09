@@ -89,14 +89,15 @@ namespace Proyecto_IS
         {
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
 
-            
             if (string.IsNullOrWhiteSpace(txtnombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text) ||
                 string.IsNullOrWhiteSpace(txtDNI.Text) ||
-                cmbRol.SelectedIndex == -1) 
+                cmbRol.SelectedIndex == -1)
             {
-                MessageBox.Show("Por favor, complete todos los datos y seleccione un rol.", "Datos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return; 
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgDatosIncompletosCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgDatosIncompletosTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
 
             // Validar que el DNI no exista antes de crear
@@ -107,10 +108,13 @@ namespace Proyecto_IS
 
                 if (dniDuplicado)
                 {
-                    MessageBox.Show("Ya existe un usuario registrado con este DNI.", "DNI Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgDniDuplicadoCuerpo");
+                    string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgDniDuplicadoTitulo");
+                    MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
+
 
             if (usuarioSeleccionadoId == -1) 
             {
@@ -186,9 +190,12 @@ namespace Proyecto_IS
         {
             if (usuarioSeleccionadoId == SessionManager_65RD.Instancia.UsuarioLogueado.Id)
             {
-                MessageBox.Show("Por cuestiones de seguridad, no podés modificar ni deshabilitar tu propio usuario.", "Operación denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgOperacionDenegadaCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgOperacionDenegadaTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             // Solo habilitar email y rol
             txtemail.Enabled = true;
             cmbRol.Enabled = true;
@@ -203,29 +210,31 @@ namespace Proyecto_IS
         {
             if (usuarioSeleccionadoId == SessionManager_65RD.Instancia.UsuarioLogueado.Id)
             {
-                MessageBox.Show("Por cuestiones de seguridad, no podés modificar ni deshabilitar tu propio usuario.", "Operación denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgOperacionDenegadaCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgOperacionDenegadaTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (usuarioSeleccionadoId != -1)
             {
                 UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
-
-                
                 gestorUsuario.ActualizarEstado(usuarioSeleccionadoId, false);
 
                 int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
-
-                
                 bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Bloquear Usuario", 3, $"Se deshabilitó al usuario: {usuarioSeleccionadoNombre}");
 
-                MessageBox.Show("Usuario deshabilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgUsuarioDeshabilitadoCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgInformacionTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
             else
             {
-                MessageBox.Show("Seleccione un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccioneUsuarioCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgAtencionTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -274,23 +283,25 @@ namespace Proyecto_IS
                 BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
                 bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Modificar Usuario", 2, $"Se habilitó al usuario: {usuarioSeleccionadoNombre}");
 
-                MessageBox.Show("Usuario habilitado correctamente. Se le solicitará cambio de contraseña en su próximo ingreso.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgUsuarioHabilitadoCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgInformacionTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
             else
             {
-                MessageBox.Show("Seleccione un usuario de la lista.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccioneUsuarioCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgAtencionTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            DialogResult confirmacion = MessageBox.Show(
-            "¿Está seguro de que desea cerrar la sesión?",
-            "Confirmar salida",
-            MessageBoxButtons.OKCancel,
-            MessageBoxIcon.Question
-            );
+            string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgConfirmarSalidaCuerpo");
+            string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgConfirmarSalidaTitulo");
+
+            DialogResult confirmacion = MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
             if (confirmacion == DialogResult.OK)
             {
@@ -318,14 +329,14 @@ namespace Proyecto_IS
             if (usuarioSeleccionadoId != -1)
             {
                 UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
-
-                
                 gestorUsuario.ActualizarBloqueo(usuarioSeleccionadoId, false);
 
                 int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                 new BitacoraBLL_65RD().RegistrarEvento(idAdminLogueado, "Usuarios", "Desbloquear Usuario", 2, $"Se desbloqueó al usuario: {usuarioSeleccionadoNombre}");
 
-                MessageBox.Show("Usuario desbloqueado correctamente. Se le solicitará cambio de contraseña.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgUsuarioDesbloqueadoCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CargarUsuarios();
             }
         }
@@ -363,11 +374,23 @@ namespace Proyecto_IS
             if (lblGestionUsuarios != null) lblGestionUsuarios.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
 
             // Las etiquetas de los campos de texto
-            if (label3 != null) label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDni");       // "DNI"
-            if (label2 != null) label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblApellido");  // "Apellido"
-            if (lblGestionUsuarios != null) lblGestionUsuarios.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombre");    // "Nombre"
+            if (label2 != null) label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDni");       // "DNI"
+            if (label3 != null) label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblApellido");  // "Apellido"
+            if (label4 != null) label4.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombre");    // "Nombre"
             if (label5 != null) label5.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRol");       // "Rol"
-            if (label4 != null) label4.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEmail");     // "Email"
+            if (label8 != null) label8.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEmail"); // "Email"
+
+            if (dgvUsuarios.Columns.Count >= 8) // Validación por seguridad
+            {
+                dgvUsuarios.Columns[0].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColNombreUsuario");
+                dgvUsuarios.Columns[1].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColNombre");
+                dgvUsuarios.Columns[2].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColApellido");
+                dgvUsuarios.Columns[3].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColDNI");
+                dgvUsuarios.Columns[4].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColRol");
+                dgvUsuarios.Columns[5].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColEmail");
+                dgvUsuarios.Columns[6].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColHabilitado");
+                dgvUsuarios.Columns[7].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColBloqueado");
+            }
         }
     }
 }

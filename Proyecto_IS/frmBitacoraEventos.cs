@@ -114,15 +114,15 @@ namespace Proyecto_IS
             dgvBitacora.AutoGenerateColumns = false;
             dgvBitacora.Columns.Clear();
 
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "LoginUsuario", HeaderText = "Nombre usuario" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Nombre", HeaderText = "Nombre" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Apellido", HeaderText = "Apellido" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Fecha", HeaderText = "Fecha" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Hora", HeaderText = "Hora" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Modulo", HeaderText = "Modulo" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Evento", HeaderText = "Evento" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Criticidad", HeaderText = "Criticidad" });
-            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Descripcion", HeaderText = "Descripción del Evento", Width = 300 });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colUsuario", DataPropertyName = "LoginUsuario", HeaderText = "Nombre usuario" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colNombre", DataPropertyName = "Nombre", HeaderText = "Nombre" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colApellido", DataPropertyName = "Apellido", HeaderText = "Apellido" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colFecha", DataPropertyName = "Fecha", HeaderText = "Fecha" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colHora", DataPropertyName = "Hora", HeaderText = "Hora" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colModulo", DataPropertyName = "Modulo", HeaderText = "Modulo" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colEvento", DataPropertyName = "Evento", HeaderText = "Evento" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colCriticidad", DataPropertyName = "Criticidad", HeaderText = "Criticidad" });
+            dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { Name = "colDescripcion", DataPropertyName = "Descripcion", HeaderText = "Descripción del Evento", Width = 300 });
 
             UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
@@ -163,17 +163,16 @@ namespace Proyecto_IS
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            
             if (dgvBitacora.Rows.Count > 0)
             {
                 SaveFileDialog guardar = new SaveFileDialog();
                 guardar.Filter = "Archivo PDF (*.pdf)|*.pdf";
-                guardar.FileName = "Reporte_Bitacora.pdf"; 
+                guardar.FileName = "Reporte_Bitacora.pdf";
 
                 if (guardar.ShowDialog() == DialogResult.OK)
                 {
                     bool errorArchivo = false;
-                    
+
                     if (File.Exists(guardar.FileName))
                     {
                         try
@@ -183,7 +182,10 @@ namespace Proyecto_IS
                         catch (IOException)
                         {
                             errorArchivo = true;
-                            MessageBox.Show("No se puede sobreescribir el archivo. Asegurate de que no esté abierto en otro programa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // TRADUCCIÓN: Error de archivo abierto
+                            string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgArchivoAbiertoCuerpo");
+                            string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo");
+                            MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
 
@@ -191,40 +193,35 @@ namespace Proyecto_IS
                     {
                         try
                         {
-                            
                             PdfPTable tablaPdf = new PdfPTable(dgvBitacora.Columns.Count);
                             tablaPdf.DefaultCell.Padding = 3;
                             tablaPdf.WidthPercentage = 100;
                             tablaPdf.HorizontalAlignment = Element.ALIGN_LEFT;
 
-                            
                             foreach (DataGridViewColumn columna in dgvBitacora.Columns)
                             {
                                 PdfPCell celda = new PdfPCell(new Phrase(columna.HeaderText));
-                                celda.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240); 
+                                celda.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
                                 tablaPdf.AddCell(celda);
                             }
 
-                           
                             foreach (DataGridViewRow fila in dgvBitacora.Rows)
                             {
                                 foreach (DataGridViewCell celda in fila.Cells)
                                 {
-                                    
                                     tablaPdf.AddCell(celda.Value?.ToString() ?? "");
                                 }
                             }
 
-                            
                             using (FileStream stream = new FileStream(guardar.FileName, FileMode.Create))
                             {
-                                
                                 Document pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
                                 PdfWriter.GetInstance(pdfDoc, stream);
                                 pdfDoc.Open();
 
-                                
-                                Paragraph titulo = new Paragraph("Reporte de Bitácora de Eventos\n\n");
+                                // TRADUCCIÓN: Título dentro del PDF
+                                string tituloPdfTexto = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloReportePdf");
+                                Paragraph titulo = new Paragraph(tituloPdfTexto + "\n\n");
                                 titulo.Alignment = Element.ALIGN_CENTER;
                                 pdfDoc.Add(titulo);
 
@@ -233,18 +230,27 @@ namespace Proyecto_IS
                                 stream.Close();
                             }
 
-                            MessageBox.Show("El reporte PDF se generó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // TRADUCCIÓN: Éxito al generar
+                            string msgExitoCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgPdfExitoCuerpo");
+                            string msgExitoTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo");
+                            MessageBox.Show(msgExitoCuerpo, msgExitoTitulo, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Ocurrió un error al generar el PDF: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // TRADUCCIÓN: Error de excepción general
+                            string msgErrorGenerar = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorGenerarPdfCuerpo");
+                            string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo");
+                            MessageBox.Show(msgErrorGenerar + " " + ex.Message, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No hay eventos en la grilla para exportar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // TRADUCCIÓN: Advertencia de grilla vacía
+                string msgAdvertenciaCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSinEventosExportarCuerpo");
+                string msgAdvertenciaTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo");
+                MessageBox.Show(msgAdvertenciaCuerpo, msgAdvertenciaTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -262,7 +268,7 @@ namespace Proyecto_IS
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
 
             // Título principal violeta del Form (Verificá en las propiedades si es label1 u otro index)
-            if (lblEvento != null) lblEvento.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
+            if (label6 != null) label6.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
 
             // Traducir las etiquetas de los filtros superiores (Colocá los nombres de objeto que tengan en tus propiedades)
             if (lblModulo != null) lblModulo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblModulo");
