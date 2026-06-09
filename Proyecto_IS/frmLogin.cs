@@ -42,7 +42,7 @@ namespace Proyecto_IS
                     Apellido = "Sistema",
                     DNI = "1234",
                     Contraseña = Seguridad_65RD.Encriptar("1234"), // Hash 
-                    Perfil = new Perfil_65RD { Id = 2, Nombre = "Administrador" }, // El ID 2 es Admin en SQL
+                    Perfil = new Perfil_65RD { Id = 1, Nombre = "Administrador" }, // El ID 2 es Admin en SQL
                     Activo = true,
                     PrimerLogin = false 
                 };
