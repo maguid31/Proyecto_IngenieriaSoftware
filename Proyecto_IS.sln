@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI_65RD", "Proyecto_IS\UI_6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BE_65RD", "BE\BE_65RD.csproj", "{64190D17-1668-411D-ADA0-EF07AF03F817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios_65RD", "Servicios\Servicios_65RD.csproj", "{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL_65RD", "BLL\BLL_65RD.csproj", "{D979B86B-199C-4329-888C-786C38E94F21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL_65RD", "DAL\DAL_65RD.csproj", "{BC90B916-27D5-4609-BC37-20EEEC19E193}"
@@ -17,8 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base de Datos", "Base de Datos", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\Users\Magui\Downloads\BDActualizada.sql = ..\..\..\Users\Magui\Downloads\BDActualizada.sql
+		..\Users\Magui\Downloads\BDActualizada.sql = ..\Users\Magui\Downloads\BDActualizada.sql
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servicios_65RD", "Servicios\Servicios_65RD.csproj", "{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,10 +34,6 @@ Global
 		{64190D17-1668-411D-ADA0-EF07AF03F817}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64190D17-1668-411D-ADA0-EF07AF03F817}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64190D17-1668-411D-ADA0-EF07AF03F817}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D979B86B-199C-4329-888C-786C38E94F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D979B86B-199C-4329-888C-786C38E94F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D979B86B-199C-4329-888C-786C38E94F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,6 +42,10 @@ Global
 		{BC90B916-27D5-4609-BC37-20EEEC19E193}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC90B916-27D5-4609-BC37-20EEEC19E193}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC90B916-27D5-4609-BC37-20EEEC19E193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5E1D3F-C1E0-404D-8C41-9CCB5B5B2081}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

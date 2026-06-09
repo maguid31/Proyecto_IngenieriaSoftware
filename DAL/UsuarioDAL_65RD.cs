@@ -21,7 +21,7 @@ namespace DAL_65RD
             {
                 
                 string query = @"
-                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin, u.Bloqueado,
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Contraseña, u.Activo, u.PrimerLogin, u.Bloqueado, u.Idioma,
                     p.Id AS PerfilId, p.Nombre AS PerfilNombre
                     FROM Usuarios u
                     INNER JOIN Perfiles p ON u.PerfilId = p.Id
@@ -46,6 +46,7 @@ namespace DAL_65RD
                                 Activo = Convert.ToBoolean(reader["Activo"]),
                                 PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
                                 Bloqueado = Convert.ToBoolean(reader["Bloqueado"]),
+                                Idioma = reader["Idioma"].ToString() ?? "es",
 
 
                                 Perfil = new Perfil_65RD
@@ -66,8 +67,8 @@ namespace DAL_65RD
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 
-                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, PerfilId, Activo, Email) " +
-                               "VALUES (@nombre, @apellido, @dni, @contraseña, @perfilId, @activo, @email)";
+                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, PerfilId, Activo, Email,Idioma) " +
+                               "VALUES (@nombre, @apellido, @dni, @contraseña, @perfilId, @activo, @email,@idioma)";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@nombre", (object)nuevoUsuario.Nombre ?? DBNull.Value);
@@ -77,6 +78,7 @@ namespace DAL_65RD
                     cmd.Parameters.AddWithValue("@perfilId", nuevoUsuario.Perfil.Id); // Obtenemos el Id del objeto Perfil
                     cmd.Parameters.AddWithValue("@activo", nuevoUsuario.Activo);
                     cmd.Parameters.AddWithValue("@email", (object)nuevoUsuario.Email ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@idioma", !string.IsNullOrEmpty(nuevoUsuario.Idioma) ? nuevoUsuario.Idioma : "es");
                     con.Open();
                     return cmd.ExecuteNonQuery() > 0;
                 }
@@ -121,7 +123,7 @@ namespace DAL_65RD
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string query = @"
-                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.PrimerLogin,u.Bloqueado,
+                    SELECT u.Id, u.Nombre, u.Apellido, u.DNI, u.Email, u.Activo, u.PrimerLogin,u.Bloqueado, u.Idioma,
                     p.Id AS PerfilId, p.Nombre AS PerfilNombre
                     FROM Usuarios u
                     INNER JOIN Perfiles p ON u.PerfilId = p.Id";
@@ -142,6 +144,7 @@ namespace DAL_65RD
                         Activo = Convert.ToBoolean(reader["Activo"]),
                         PrimerLogin = Convert.ToBoolean(reader["PrimerLogin"]),
                         Bloqueado = Convert.ToBoolean(reader["Bloqueado"]),
+                        Idioma = reader["Idioma"].ToString() ?? "es",
 
                         Perfil = new Perfil_65RD
                         {
@@ -210,6 +213,21 @@ namespace DAL_65RD
                     cmd.Parameters.AddWithValue("@id", idUsuario);
                     con.Open();
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public bool ActualizarIdiomaUsuario(int idUsuario, string nuevoIdioma)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Usuarios SET Idioma = @idioma WHERE Id = @id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@idioma", nuevoIdioma);
+                    cmd.Parameters.AddWithValue("@id", idUsuario);
+                    con.Open();
+                    return cmd.ExecuteNonQuery() > 0;
                 }
             }
         }

@@ -127,5 +127,11 @@ namespace BLL_65RD
             
             return _usuarioDAL.ObtenerPerfiles();
         }
+
+        public bool ActualizarIdiomaUsuario(int idUsuario, string nuevoIdioma)
+        {
+            UsuarioDAL_65RD usuarioDAL = new UsuarioDAL_65RD();
+            return usuarioDAL.ActualizarIdiomaUsuario(idUsuario, nuevoIdioma);
+        }
     }
 }

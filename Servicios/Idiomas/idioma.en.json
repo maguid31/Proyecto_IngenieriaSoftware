@@ -1,0 +1,88 @@
+{
+
+  "frmLogin": {
+    "lblUsuario": "Username:",
+    "lblContraseña": "Password:",
+    "btnLogin": "Log In",
+    "cbShowPassword": "Show password",
+    "lblTituloVentana": "Login"
+  },
+
+
+  "MainForm": {
+    "lblTituloVentana": "Management System - Main Menu",
+    "lblMenuHeader": "MENU",
+    "lblBienvenidaText": "Hello",
+    "segAdministracion": "ADMINISTRATION",
+    "segConfiguracion": "CONFIGURATION",
+    "segSesion": "SESSION",
+    "btnGestionUsuarios": "User Management",
+    "btnBitacoraEventos": "Event Log",
+    "btnCambiarIdioma": "Change Language",
+    "btnCerrarSesion": "LOG OUT",
+    "btnIniciarSesion": "Log In",
+    "msgCerrarSesionTitulo": "Log Out",
+    "msgCerrarSesionCuerpo": "Are you sure you want to log out?"
+  },
+
+  "frmGestionUsuarios": {
+    "lblTituloVentana": "User Administration",
+    "lblTituloPantalla": "USER MANAGEMENT",
+    "lblDni": "ID / DNI",
+    "lblApellido": "Last Name",
+    "lblNombre": "First Name",
+    "lblRol": "Role",
+    "lblEmail": "Email",
+    "cbtodos": "ALL",
+    "cbactivos": "ACTIVE",
+    "btnaplicar": "APPLY",
+    "btnCancelar": "CANCEL",
+    "btnModificar": "MODIFY",
+    "btnHabilitar": "ENABLE",
+    "btnCrear": "NEW",
+    "deshabilitar": "DISABLE",
+    "btnDesbloquear": "UNLOCK",
+    "btnCerrarSesion": "CLOSE"
+  },
+
+  "frmCambioContraseña": {
+    "lblTituloVentana": "Security - Change Password",
+    "lblTituloPantalla": "CHANGE PASSWORD",
+    "lblUsuario": "Username",
+    "lblContraseñaActual": "Current Password",
+    "lblContraseñaNueva": "New Password",
+    "lblConfirmarContraseña": "Confirm Password",
+    "cbShowPassword": "Show password",
+    "btnRegistrar": "CHANGE"
+  },
+
+  "frmBitacoraEventos": {
+    "lblTituloVentana": "Audit - Event Log",
+    "lblTituloPantalla": "EVENT LOG",
+    "lblModulo": "Module",
+    "lblEvento": "Event",
+    "lblCriticidad": "Criticality",
+    "lblInicio": "Start Date",
+    "lblFin": "End Date",
+    "btnAplicar": "APPLY",
+    "btnLimpiar": "CLEAR",
+    "btnImprimir": "PRINT",
+    "colUsuario": "Username",
+    "colNombre": "First Name",
+    "colApellido": "Last Name",
+    "colFecha": "Date",
+    "colHora": "Time",
+    "colModulo": "Module",
+    "colEvento": "Event",
+    "colCriticidad": "Criticality",
+    "colDescripcion": "Event Description"
+  },
+
+  "frmIdioma": {
+    "lblTituloPantalla": "Change System Language",
+    "lblSeleccionar": "Select an available language:",
+    "btnGuardarIdioma": "APPLY CHANGE",
+    "msgExitoTitulo": "Language Updated",
+    "msgExitoCuerpo": "The application language has been successfully changed."
+  }
+}

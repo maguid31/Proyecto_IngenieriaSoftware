@@ -1,4 +1,5 @@
 ﻿using BLL;
+using Servicios;
 using Servicios_65RD;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Proyecto_IS
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form , IidiomaObserver
     {
 
         public MainForm()
@@ -22,6 +23,8 @@ namespace Proyecto_IS
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            IdiomaManager.GetInstance().RegisterObserver(this);
+            UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
 
         }
 
@@ -49,6 +52,9 @@ namespace Proyecto_IS
             ConfigurarVentana();
             ConstruirMenu();
             ActualizarBienvenida();
+
+            IdiomaManager.GetInstance().RegisterObserver(this);
+            UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
 
         
@@ -76,28 +82,37 @@ namespace Proyecto_IS
         {
             panelMenu.Controls.Clear();
 
-            
             panelMenu.Controls.Add(lblRol);
             panelMenu.Controls.Add(lblBienvenida);
 
-            int y = 20; 
+            int y = 100; // Ajustá este valor según dónde queden tus etiquetas de bienvenida en el diseño
 
             if (_rol == "Administrador")
             {
-                AgregarSeparador("ADMINISTRACIÓN", ref y);
-                AgregarBoton("👤  Gestión de Usuarios", ref y, AbrirGestionUsuarios);
-                AgregarBoton("📋  Bitácora de Eventos", ref y, AbrirBitacora);
-            }
-            else if (_rol == "Basico")
-            {
-                AgregarSeparador("CONFIGURACIÓN", ref y);
-                AgregarBoton("🌐  Cambiar Idioma", ref y, AbrirCambiarIdioma);
+                string segAdmin = IdiomaManager.GetInstance().GetTexto(this.Name, "segAdministracion");
+                string btnGestion = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGestionUsuarios");
+                string btnBitacora = IdiomaManager.GetInstance().GetTexto(this.Name, "btnBitacoraEventos");
+
+                AgregarSeparador(segAdmin, ref y);
+                AgregarBoton("👤  " + btnGestion, ref y, AbrirGestionUsuarios);
+                AgregarBoton("📋  " + btnBitacora, ref y, AbrirBitacora);
             }
 
-            
-            AgregarSeparador("SESIÓN", ref y);
-            AgregarBoton("CERRAR SESIÓN", ref y, CerrarSesion, esLogout: true);
-            AgregarBoton("🔄  Iniciar Sesión", ref y, ReLogin);
+            // Ambos roles (o según tu lógica) deberían poder cambiar el idioma
+            string segConfig = IdiomaManager.GetInstance().GetTexto(this.Name, "segConfiguracion");
+            string btnIdioma = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarIdioma");
+
+            AgregarSeparador(segConfig, ref y);
+            AgregarBoton("🌐  " + btnIdioma, ref y, AbrirCambiarIdioma);
+
+            // Sección Sesión
+            string segSesion = IdiomaManager.GetInstance().GetTexto(this.Name, "segSesion");
+            string btnLogOut = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCerrarSesion");
+            string btnReLog = IdiomaManager.GetInstance().GetTexto(this.Name, "btnIniciarSesion");
+
+            AgregarSeparador(segSesion, ref y);
+            AgregarBoton(btnLogOut, ref y, CerrarSesion, esLogout: true);
+            AgregarBoton("🔄  " + btnReLog, ref y, ReLogin);
 
         }
 
@@ -188,8 +203,19 @@ namespace Proyecto_IS
 
         private void AbrirCambiarIdioma(object sender, EventArgs e)
         {
-            MostrarContenido("Cambiar Idioma", "El formulario para cambiar el idioma todavía no está desarrollado.");
+
+            panelContenido.Controls.Clear();
+
+            frmIdioma frmIdioma = new frmIdioma();
+            frmIdioma.TopLevel = false;
+            frmIdioma.FormBorderStyle = FormBorderStyle.None;
+            frmIdioma.Dock = DockStyle.Fill;
+
+            panelContenido.Controls.Add(frmIdioma);
+            panelContenido.Tag = frmIdioma;
+            frmIdioma.Show();
         }
+        
 
         private void CerrarSesion(object sender, EventArgs e)
         {
@@ -217,6 +243,19 @@ namespace Proyecto_IS
         {
             lblContenidoTitulo.Text = titulo;
             lblContenidoDetalle.Text = descripcion;
+        }
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IdiomaManager.GetInstance().RemoveObserver(this);
+        }
+
+        public void UpdateIdioma(string idioma)
+        {
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
+            if (lblAppNombre != null) lblAppNombre.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblMenuHeader");
+
+            ActualizarBienvenida();
+            ConstruirMenu();
         }
     }
 

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.btnNuevo = new System.Windows.Forms.Button();
             this.txtApellido = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtDNI = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblGestionUsuarios = new System.Windows.Forms.Label();
             this.btnModificar = new System.Windows.Forms.Button();
             this.btnHabilitar = new System.Windows.Forms.Button();
             this.dgvUsuarios = new System.Windows.Forms.DataGridView();
@@ -45,14 +45,14 @@
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHabilitado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Bloqueado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnaplicar = new System.Windows.Forms.Button();
-            this.btncancelar = new System.Windows.Forms.Button();
+            this.btnAplicar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtnombre = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtemail = new System.Windows.Forms.TextBox();
-            this.deshabilitar = new System.Windows.Forms.Button();
+            this.btnDeshabilitar = new System.Windows.Forms.Button();
             this.cbtodos = new System.Windows.Forms.CheckBox();
             this.cbactivos = new System.Windows.Forms.CheckBox();
             this.cmbRol = new System.Windows.Forms.ComboBox();
@@ -62,19 +62,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnLimpiar
+            // btnNuevo
             // 
-            this.btnLimpiar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLimpiar.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiar.Location = new System.Drawing.Point(797, 454);
-            this.btnLimpiar.Name = "btnLimpiar";
-            this.btnLimpiar.Size = new System.Drawing.Size(143, 35);
-            this.btnLimpiar.TabIndex = 46;
-            this.btnLimpiar.Text = "NUEVO";
-            this.btnLimpiar.UseVisualStyleBackColor = false;
-            this.btnLimpiar.Click += new System.EventHandler(this.btnCrear_Click);
+            this.btnNuevo.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnNuevo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNuevo.ForeColor = System.Drawing.Color.White;
+            this.btnNuevo.Location = new System.Drawing.Point(797, 454);
+            this.btnNuevo.Name = "btnNuevo";
+            this.btnNuevo.Size = new System.Drawing.Size(143, 35);
+            this.btnNuevo.TabIndex = 46;
+            this.btnNuevo.Text = "NUEVO";
+            this.btnNuevo.UseVisualStyleBackColor = false;
+            this.btnNuevo.Click += new System.EventHandler(this.btnCrear_Click);
             // 
             // txtApellido
             // 
@@ -116,17 +116,17 @@
             this.label2.TabIndex = 41;
             this.label2.Text = "DNI";
             // 
-            // label1
+            // lblGestionUsuarios
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Nirmala UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            this.label1.Location = new System.Drawing.Point(57, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(344, 46);
-            this.label1.TabIndex = 40;
-            this.label1.Text = "GESTION USUARIOS";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.lblGestionUsuarios.AutoSize = true;
+            this.lblGestionUsuarios.Font = new System.Drawing.Font("Nirmala UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGestionUsuarios.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            this.lblGestionUsuarios.Location = new System.Drawing.Point(57, 27);
+            this.lblGestionUsuarios.Name = "lblGestionUsuarios";
+            this.lblGestionUsuarios.Size = new System.Drawing.Size(344, 46);
+            this.lblGestionUsuarios.TabIndex = 40;
+            this.lblGestionUsuarios.Text = "GESTION USUARIOS";
+            this.lblGestionUsuarios.Click += new System.EventHandler(this.label1_Click);
             // 
             // btnModificar
             // 
@@ -239,32 +239,32 @@
             this.Bloqueado.Name = "Bloqueado";
             this.Bloqueado.Width = 125;
             // 
-            // btnaplicar
+            // btnAplicar
             // 
-            this.btnaplicar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnaplicar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnaplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnaplicar.ForeColor = System.Drawing.Color.White;
-            this.btnaplicar.Location = new System.Drawing.Point(518, 515);
-            this.btnaplicar.Name = "btnaplicar";
-            this.btnaplicar.Size = new System.Drawing.Size(115, 35);
-            this.btnaplicar.TabIndex = 53;
-            this.btnaplicar.Text = "APLICAR";
-            this.btnaplicar.UseVisualStyleBackColor = false;
-            this.btnaplicar.Click += new System.EventHandler(this.btnaplicar_Click);
+            this.btnAplicar.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnAplicar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAplicar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAplicar.ForeColor = System.Drawing.Color.White;
+            this.btnAplicar.Location = new System.Drawing.Point(518, 515);
+            this.btnAplicar.Name = "btnAplicar";
+            this.btnAplicar.Size = new System.Drawing.Size(115, 35);
+            this.btnAplicar.TabIndex = 53;
+            this.btnAplicar.Text = "APLICAR";
+            this.btnAplicar.UseVisualStyleBackColor = false;
+            this.btnAplicar.Click += new System.EventHandler(this.btnaplicar_Click);
             // 
-            // btncancelar
+            // btnCancelar
             // 
-            this.btncancelar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btncancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btncancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btncancelar.ForeColor = System.Drawing.Color.White;
-            this.btncancelar.Location = new System.Drawing.Point(518, 580);
-            this.btncancelar.Name = "btncancelar";
-            this.btncancelar.Size = new System.Drawing.Size(115, 35);
-            this.btncancelar.TabIndex = 54;
-            this.btncancelar.Text = "CANCELAR";
-            this.btncancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelar.ForeColor = System.Drawing.Color.White;
+            this.btnCancelar.Location = new System.Drawing.Point(518, 580);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(115, 35);
+            this.btnCancelar.TabIndex = 54;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = false;
             // 
             // label4
             // 
@@ -316,19 +316,19 @@
             this.txtemail.Size = new System.Drawing.Size(216, 28);
             this.txtemail.TabIndex = 62;
             // 
-            // deshabilitar
+            // btnDeshabilitar
             // 
-            this.deshabilitar.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.deshabilitar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.deshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.deshabilitar.ForeColor = System.Drawing.Color.White;
-            this.deshabilitar.Location = new System.Drawing.Point(797, 498);
-            this.deshabilitar.Name = "deshabilitar";
-            this.deshabilitar.Size = new System.Drawing.Size(143, 39);
-            this.deshabilitar.TabIndex = 63;
-            this.deshabilitar.Text = "DESHABILITAR";
-            this.deshabilitar.UseVisualStyleBackColor = false;
-            this.deshabilitar.Click += new System.EventHandler(this.deshabilitar_Click);
+            this.btnDeshabilitar.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnDeshabilitar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDeshabilitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeshabilitar.ForeColor = System.Drawing.Color.White;
+            this.btnDeshabilitar.Location = new System.Drawing.Point(797, 498);
+            this.btnDeshabilitar.Name = "btnDeshabilitar";
+            this.btnDeshabilitar.Size = new System.Drawing.Size(143, 39);
+            this.btnDeshabilitar.TabIndex = 63;
+            this.btnDeshabilitar.Text = "DESHABILITAR";
+            this.btnDeshabilitar.UseVisualStyleBackColor = false;
+            this.btnDeshabilitar.Click += new System.EventHandler(this.deshabilitar_Click);
             // 
             // cbtodos
             // 
@@ -400,23 +400,23 @@
             this.Controls.Add(this.cmbRol);
             this.Controls.Add(this.cbactivos);
             this.Controls.Add(this.cbtodos);
-            this.Controls.Add(this.deshabilitar);
+            this.Controls.Add(this.btnDeshabilitar);
             this.Controls.Add(this.txtemail);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtnombre);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.btncancelar);
-            this.Controls.Add(this.btnaplicar);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnAplicar);
             this.Controls.Add(this.dgvUsuarios);
             this.Controls.Add(this.btnHabilitar);
             this.Controls.Add(this.btnModificar);
-            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.btnNuevo);
             this.Controls.Add(this.txtApellido);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtDNI);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblGestionUsuarios);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -431,23 +431,23 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Button btnNuevo;
         private System.Windows.Forms.TextBox txtApellido;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtDNI;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblGestionUsuarios;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnHabilitar;
         private System.Windows.Forms.DataGridView dgvUsuarios;
-        private System.Windows.Forms.Button btnaplicar;
-        private System.Windows.Forms.Button btncancelar;
+        private System.Windows.Forms.Button btnAplicar;
+        private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtnombre;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtemail;
-        private System.Windows.Forms.Button deshabilitar;
+        private System.Windows.Forms.Button btnDeshabilitar;
         private System.Windows.Forms.CheckBox cbtodos;
         private System.Windows.Forms.CheckBox cbactivos;
         private System.Windows.Forms.ComboBox cmbRol;

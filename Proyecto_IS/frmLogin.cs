@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Proyecto_IS
 {
-    public partial class frmLogin : Form
+    public partial class frmLogin : Form , IidiomaObserver
     {
         public frmLogin()
         {
@@ -25,10 +25,12 @@ namespace Proyecto_IS
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            
-           
 
-            
+            IdiomaManager.GetInstance().RegisterObserver(this);
+
+            UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
+
+
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
 
             
@@ -137,6 +139,8 @@ namespace Proyecto_IS
 
         private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
         {
+            IdiomaManager.GetInstance().RemoveObserver(this);
+
             if (!this.EsReLogin)
             {
                 // 🚨 Solo cerrar la aplicación si era el login inicial
@@ -151,6 +155,18 @@ namespace Proyecto_IS
                     main.Show();
                 }
             }
+        }
+
+        public void UpdateIdioma(string idioma)
+        {
+
+            if (lblUsuario != null) lblUsuario.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblUsuario");
+            if (lblContraseña != null) lblContraseña.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblContraseña");
+
+            if (btnLogin != null) btnLogin.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLogin");
+            if (cbShowPassword != null) cbShowPassword.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "cbShowPassword");
+
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
         }
     }
 }

@@ -12,10 +12,11 @@ using System.Windows.Forms;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Servicios;
 
 namespace Proyecto_IS
 {
-    public partial class frmBitacoraEventos : Form
+    public partial class frmBitacoraEventos : Form, IidiomaObserver
     {
         private BitacoraBLL_65RD _bitacoraBLL;
         public frmBitacoraEventos()
@@ -32,6 +33,9 @@ namespace Proyecto_IS
             dtpFechaFin.Value = DateTime.Now;
 
             BuscarEventos();
+
+            IdiomaManager.GetInstance().RegisterObserver(this);
+            UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
 
         private void CargarCombos()
@@ -119,6 +123,8 @@ namespace Proyecto_IS
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Evento", HeaderText = "Evento" });
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Criticidad", HeaderText = "Criticidad" });
             dgvBitacora.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Descripcion", HeaderText = "Descripción del Evento", Width = 300 });
+
+            UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
 
         private void BuscarEventos()
@@ -239,6 +245,49 @@ namespace Proyecto_IS
             else
             {
                 MessageBox.Show("No hay eventos en la grilla para exportar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
+        private void frmBitacoraEventos_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            IdiomaManager.GetInstance().RemoveObserver(this);
+        }
+
+        
+
+        public void UpdateIdioma(string idioma)
+        {
+            // Título de la barra de control superior de Windows
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
+
+            // Título principal violeta del Form (Verificá en las propiedades si es label1 u otro index)
+            if (lblEvento != null) lblEvento.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
+
+            // Traducir las etiquetas de los filtros superiores (Colocá los nombres de objeto que tengan en tus propiedades)
+            if (lblModulo != null) lblModulo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblModulo");
+            if (lblEvento != null) lblEvento.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEvento");
+            if (lblCriticidad != null) lblCriticidad.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblCriticidad");
+            if (lblInicio != null) lblInicio.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblInicio");
+            if (lblFin != null) lblFin.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblFin");
+
+            // Traducir los botones inferiores
+            if (btnAplicar != null) btnAplicar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAplicar");
+            if (btnLimpiar != null) btnLimpiar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLimpiar");
+            if (btnImprimir != null) btnImprimir.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnImprimir");
+
+            // Traducir dinámicamente los headers de las columnas del DataGridView si ya fue instanciado
+            if (dgvBitacora != null && dgvBitacora.Columns.Count > 0)
+            {
+                if (dgvBitacora.Columns.Contains("colUsuario")) dgvBitacora.Columns["colUsuario"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colUsuario");
+                if (dgvBitacora.Columns.Contains("colNombre")) dgvBitacora.Columns["colNombre"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colNombre");
+                if (dgvBitacora.Columns.Contains("colApellido")) dgvBitacora.Columns["colApellido"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colApellido");
+                if (dgvBitacora.Columns.Contains("colFecha")) dgvBitacora.Columns["colFecha"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colFecha");
+                if (dgvBitacora.Columns.Contains("colHora")) dgvBitacora.Columns["colHora"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colHora");
+                if (dgvBitacora.Columns.Contains("colModulo")) dgvBitacora.Columns["colModulo"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colModulo");
+                if (dgvBitacora.Columns.Contains("colEvento")) dgvBitacora.Columns["colEvento"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colEvento");
+                if (dgvBitacora.Columns.Contains("colCriticidad")) dgvBitacora.Columns["colCriticidad"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colCriticidad");
+                if (dgvBitacora.Columns.Contains("colDescripcion")) dgvBitacora.Columns["colDescripcion"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colDescripcion");
             }
         }
     }
