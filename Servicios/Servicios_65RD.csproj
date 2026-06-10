@@ -51,8 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bitacora_65RD.cs" />
+    <Compile Include="ComponentePermiso_65RD.cs" />
+    <Compile Include="Familia_65RD.cs" />
     <Compile Include="IdiomaManager.cs" />
     <Compile Include="IidiomaObserver.cs" />
+    <Compile Include="Patente_65RD.cs" />
     <Compile Include="Perfil_65RD.cs" />
     <Compile Include="Seguridad_65RD.cs" />
     <Compile Include="SessionManager_65RD.cs" />
