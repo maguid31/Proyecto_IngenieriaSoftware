@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraBLL_65RD.cs" />
+    <Compile Include="PerfilBLL_65RD.cs" />
+    <Compile Include="PermisoBLL_65RD.cs" />
     <Compile Include="UsuarioBLL_65RD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

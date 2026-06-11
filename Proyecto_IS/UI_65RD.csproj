@@ -64,6 +64,12 @@
     <Compile Include="frmCambioContraseña.Designer.cs">
       <DependentUpon>frmCambioContraseña.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGestionRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestionRoles.Designer.cs">
+      <DependentUpon>frmGestionRoles.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIdioma.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmCambioContraseña.resx">
       <DependentUpon>frmCambioContraseña.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestionRoles.resx">
+      <DependentUpon>frmGestionRoles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmIdioma.resx">
       <DependentUpon>frmIdioma.cs</DependentUpon>

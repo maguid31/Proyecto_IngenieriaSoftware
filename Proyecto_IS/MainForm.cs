@@ -95,6 +95,7 @@ namespace Proyecto_IS
                 AgregarSeparador(segAdmin, ref y);
                 AgregarBoton("👤  " + btnGestion, ref y, AbrirGestionUsuarios);
                 AgregarBoton("📋  " + btnBitacora, ref y, AbrirBitacora);
+                AgregarBoton("⚙️  Gestión de Roles", ref y, AbrirGestionRoles);
             }
 
             // Ambos roles (o según tu lógica) deberían poder cambiar el idioma
@@ -303,6 +304,12 @@ namespace Proyecto_IS
 
             ActualizarBienvenida();
             ConstruirMenu();
+        }
+
+        private void AbrirGestionRoles(object sender, EventArgs e)
+        {
+            frmGestionRoles frm = new frmGestionRoles();
+            frm.ShowDialog();
         }
     }
 

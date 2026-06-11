@@ -150,7 +150,38 @@ namespace DAL_65RD
             // Según las reglas del profesor, agrupamos permisos EXISTENTES, por lo que insertar la relación basta.
         }
 
+        public List<ComponentePermiso_65RD> ObtenerTodosLosPermisos()
+        {
+            List<ComponentePermiso_65RD> listaPermisos = new List<ComponentePermiso_65RD>();
+            List<int> idsPermisos = new List<int>();
 
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Id FROM Permisos";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            idsPermisos.Add(Convert.ToInt32(reader["Id"]));
+                        }
+                    }
+                }
+            }
+
+            foreach (int id in idsPermisos)
+            {
+                var permiso = ObtenerPermisoRecursivo(id);
+                if (permiso != null)
+                {
+                    listaPermisos.Add(permiso);
+                }
+            }
+
+            return listaPermisos;
+        }
 
         public List<Patente_65RD> ObtenerTodasLasPatentes()
         {
@@ -176,6 +207,51 @@ namespace DAL_65RD
                 }
             }
             return patentes;
+        }
+
+        public bool ActualizarFamilia(Familia_65RD familia)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                using (SqlTransaction transaccion = con.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Actualizamos el nombre y descripción
+                        string queryUpdate = "UPDATE Permisos SET Nombre = @nombre, Descripcion = @desc WHERE Id = @id";
+                        using (SqlCommand cmd = new SqlCommand(queryUpdate, con, transaccion))
+                        {
+                            cmd.Parameters.AddWithValue("@nombre", familia.Nombre);
+                            cmd.Parameters.AddWithValue("@desc", (object)familia.Descripcion ?? DBNull.Value);
+                            cmd.Parameters.AddWithValue("@id", familia.Id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // 2. Borramos las relaciones viejas de esta familia
+                        string queryDelete = "DELETE FROM Familia_Permiso WHERE IdPadre = @idPadre";
+                        using (SqlCommand cmdDel = new SqlCommand(queryDelete, con, transaccion))
+                        {
+                            cmdDel.Parameters.AddWithValue("@idPadre", familia.Id);
+                            cmdDel.ExecuteNonQuery();
+                        }
+
+                        // 3. Insertamos las relaciones nuevas (recursivamente)
+                        foreach (var hijo in familia.ObtenerHijos())
+                        {
+                            GuardarRelacionRecursiva(familia.Id, hijo, con, transaccion);
+                        }
+
+                        transaccion.Commit();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+                        transaccion.Rollback();
+                        throw;
+                    }
+                }
+            }
         }
     }
 }
