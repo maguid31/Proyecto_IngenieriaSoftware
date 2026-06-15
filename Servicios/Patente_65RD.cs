@@ -24,5 +24,10 @@ namespace Servicios
         {
             return new List<ComponentePermiso_65RD>(); // Retorna lista vacía
         }
+        public override bool TienePermiso(string nombrePermiso)
+        {
+            // Si mi nombre coincide (sin importar mayúsculas/minúsculas), devuelvo true
+            return this.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

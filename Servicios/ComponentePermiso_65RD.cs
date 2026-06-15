@@ -16,5 +16,6 @@ namespace Servicios_65RD
         public abstract void AgregarHijo(ComponentePermiso_65RD c);
         public abstract void VaciarHijos();
         public abstract IList<ComponentePermiso_65RD> ObtenerHijos();
+        public abstract bool TienePermiso(string nombrePermiso);
     }
 }

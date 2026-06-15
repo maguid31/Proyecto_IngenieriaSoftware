@@ -29,5 +29,30 @@ namespace Servicios
         {
             return _hijos;
         }
+
+        public override bool TienePermiso(string nombrePermiso)
+        {
+            // 1. Primero me fijo si la familia misma coincide con el nombre buscado
+            if (this.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            // 2. Si no, recorro a todos mis hijos (Patentes o Sub-Familias) buscando el permiso
+            var hijos = ObtenerHijos();
+            if (hijos != null)
+            {
+                foreach (var hijo in hijos)
+                {
+                    if (hijo.TienePermiso(nombrePermiso))
+                    {
+                        return true; // Si algún hijo o nieto lo tiene, corto la búsqueda y devuelvo true
+                    }
+                }
+            }
+
+            return false;
+        }
+
     }
 }

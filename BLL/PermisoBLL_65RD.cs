@@ -98,5 +98,11 @@ namespace BLL
             }
             return _permisoDAL.ActualizarFamilia(familia);
         }
+
+        public bool EliminarFamiliaBLL(int idFamilia)
+        {
+            // Este método llama a tu capa DAL para ejecutar la baja física o lógica en la base de datos
+            return _permisoDAL.EliminarPermiso(idFamilia);
+        }
     }
 }

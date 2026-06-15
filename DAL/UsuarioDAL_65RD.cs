@@ -59,9 +59,43 @@ namespace DAL_65RD
                     }
                 }
             }
+
+            if (usuarioEncontrado != null && usuarioEncontrado.Perfil != null)
+            {
+                PermisoDAL_65RD permisoDAL = new PermisoDAL_65RD();
+
+                // Buscamos los permisos iniciales de su rol
+                var componentesRaiz = permisoDAL.ObtenerPermisosPorPerfil(usuarioEncontrado.Perfil.Id);
+
+                foreach (var comp in componentesRaiz)
+                {
+                    // Si el permiso es una familia, llamamos a la función mágica para que busque sus hijos
+                    if (comp is Familia_65RD)
+                    {
+                        CargarHijosRecursivos(comp, permisoDAL);
+                    }
+
+                    // Agregamos el permiso completo con sus hijos al usuario logueado
+                    usuarioEncontrado.Perfil.PermisosAsignados.Add(comp);
+                }
+            }
             return usuarioEncontrado;
         }
 
+        private void CargarHijosRecursivos(ComponentePermiso_65RD padre, PermisoDAL_65RD dal)
+        {
+            // Va a la base de datos a buscar qué tiene adentro la familia
+            var hijos = dal.ObtenerHijosDeFamilia(padre.Id);
+            foreach (var hijo in hijos)
+            {
+                padre.AgregarHijo(hijo); // Lo mete en la lista en memoria
+
+                if (hijo is Familia_65RD) // Si adentro hay otra subfamilia, vuelve a bajarse de nivel
+                {
+                    CargarHijosRecursivos(hijo, dal);
+                }
+            }
+        }
         public bool RegistrarUsuario(Usuario_65RD nuevoUsuario)
         {
             using (SqlConnection con = new SqlConnection(connectionString))

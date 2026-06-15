@@ -19,5 +19,26 @@ namespace Servicios
         {
             PermisosAsignados = new List<Servicios_65RD.ComponentePermiso_65RD>();
         }
+        public bool TienePermiso(string nombrePermiso)
+        {
+            if (PermisosAsignados == null) return false;
+
+            foreach (var componente in PermisosAsignados)
+            {
+                // Si el componente actual (sea Patente o Familia) coincide con el nombre, da true
+                if (componente.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                // Si es una Familia, el Composite delega la búsqueda de manera recursiva hacia adentro
+                if (componente.TienePermiso(nombrePermiso))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

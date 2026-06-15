@@ -86,26 +86,56 @@ namespace Proyecto_IS
 
             int y = 100; // Ajustá este valor según dónde queden tus etiquetas de bienvenida en el diseño
 
-            if (_rol == "Administrador")
-            {
-                string segAdmin = IdiomaManager.GetInstance().GetTexto(this.Name, "segAdministracion");
-                string btnGestion = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGestionUsuarios");
-                string btnBitacora = IdiomaManager.GetInstance().GetTexto(this.Name, "btnBitacoraEventos");
+            // ── SECCIÓN SEGURIDAD / ADMINISTRACIÓN ──
+            string segAdmin = IdiomaManager.GetInstance().GetTexto(this.Name, "segAdministracion");
 
+            // Primero verificamos qué patentes individuales tiene permitidas el usuario logueado
+            bool canGestionUsuarios = SessionManager_65RD.Instancia.TienePermiso("Gestión de Usuarios");
+            bool canBitacora = SessionManager_65RD.Instancia.TienePermiso("Ver Bitácora");
+            bool canGestionRoles = SessionManager_65RD.Instancia.TienePermiso("Gestión de Perfiles");
+            bool canGestionFamilias = SessionManager_65RD.Instancia.TienePermiso("Gestión de Familias");
+
+            // Si tiene al menos una patente de seguridad, creamos la sección violeta
+            if (canGestionUsuarios || canBitacora || canGestionRoles || canGestionFamilias)
+            {
                 AgregarSeparador(segAdmin, ref y);
+            }
+
+            // Dibujamos de forma dinámica CADA botón SOLO si el usuario tiene su permiso correspondiente
+            if (canGestionUsuarios)
+            {
+                string btnGestion = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGestionUsuarios");
                 AgregarBoton("👤  " + btnGestion, ref y, AbrirGestionUsuarios);
+            }
+
+            if (canBitacora)
+            {
+                string btnBitacora = IdiomaManager.GetInstance().GetTexto(this.Name, "btnBitacoraEventos");
                 AgregarBoton("📋  " + btnBitacora, ref y, AbrirBitacora);
+            }
+
+            if (canGestionRoles)
+            {
                 AgregarBoton("⚙️  Gestión de Roles", ref y, AbrirGestionRoles);
             }
 
-            // Ambos roles (o según tu lógica) deberían poder cambiar el idioma
+            if (canGestionFamilias)
+            {
+                AgregarBoton("📁  Gestión de Familias", ref y, AbrirGestionFamilias);
+            }
+
+
+            // ── SECCIÓN CONFIGURACIÓN (Todos entran acá) ──
             string segConfig = IdiomaManager.GetInstance().GetTexto(this.Name, "segConfiguracion");
             string btnIdioma = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarIdioma");
+            string btnContrasena = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarContrasena");
 
             AgregarSeparador(segConfig, ref y);
             AgregarBoton("🌐  " + btnIdioma, ref y, AbrirCambiarIdioma);
+            AgregarBoton("🔑 " + btnContrasena, ref y,  AbrirCambiarContraseña);
 
-            // Sección Sesión
+
+            // ── SECCIÓN SESIÓN (Todos entran acá) ──
             string segSesion = IdiomaManager.GetInstance().GetTexto(this.Name, "segSesion");
             string btnLogOut = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCerrarSesion");
             string btnReLog = IdiomaManager.GetInstance().GetTexto(this.Name, "btnIniciarSesion");
@@ -310,6 +340,22 @@ namespace Proyecto_IS
         {
             frmGestionRoles frm = new frmGestionRoles();
             frm.ShowDialog();
+        }
+
+        private void AbrirGestionFamilias(object sender, EventArgs e)
+        {
+            // Abre el nuevo formulario que creamos exclusivamente para armar los árboles de Familias
+            frmGestionFamilias frm = new frmGestionFamilias();
+            frm.ShowDialog();
+        }
+        private void AbrirCambiarContraseña(object sender, EventArgs e)
+        {
+            frmCambioContraseña frm = new frmCambioContraseña();
+            frm.ShowDialog(); 
+        }
+        private void panelContenido_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 

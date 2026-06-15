@@ -134,22 +134,40 @@ namespace DAL
                 {
                     try
                     {
-                        // 1. Borrar asignaciones anteriores
+                        // 1. Borramos asignaciones anteriores en ambas tablas intermedias
                         using (SqlCommand cmd = new SqlCommand("DELETE FROM Perfil_Permiso WHERE IdPerfil = @id", con, tx))
                         {
                             cmd.Parameters.AddWithValue("@id", perfil.Id);
                             cmd.ExecuteNonQuery();
                         }
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM Perfil_Familia WHERE IdPerfil = @id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@id", perfil.Id);
+                            cmd.ExecuteNonQuery();
+                        }
 
-                        // 2. Insertar las nuevas
-                        string queryIns = "INSERT INTO Perfil_Permiso (IdPerfil, IdPermiso) VALUES (@idPerfil, @idPermiso)";
+                        // 2. Recorremos e insertamos discriminando el tipo de componente en la tabla correcta
                         foreach (var permiso in perfil.PermisosAsignados)
                         {
-                            using (SqlCommand cmd = new SqlCommand(queryIns, con, tx))
+                            if (permiso is Familia_65RD)
                             {
-                                cmd.Parameters.AddWithValue("@idPerfil", perfil.Id);
-                                cmd.Parameters.AddWithValue("@idPermiso", permiso.Id);
-                                cmd.ExecuteNonQuery();
+                                string queryInsFam = "INSERT INTO Perfil_Familia (IdPerfil, IdFamilia) VALUES (@idPerfil, @idFamilia)";
+                                using (SqlCommand cmd = new SqlCommand(queryInsFam, con, tx))
+                                {
+                                    cmd.Parameters.AddWithValue("@idPerfil", perfil.Id);
+                                    cmd.Parameters.AddWithValue("@idFamilia", permiso.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                            else // Es Patente_65RD
+                            {
+                                string queryInsPat = "INSERT INTO Perfil_Permiso (IdPerfil, IdPermiso) VALUES (@idPerfil, @idPermiso)";
+                                using (SqlCommand cmd = new SqlCommand(queryInsPat, con, tx))
+                                {
+                                    cmd.Parameters.AddWithValue("@idPerfil", perfil.Id);
+                                    cmd.Parameters.AddWithValue("@idPermiso", permiso.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
 

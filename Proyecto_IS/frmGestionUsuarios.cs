@@ -62,6 +62,15 @@ namespace Proyecto_IS
 
             
         }
+        private void RefrescarComboRoles()
+        {
+            UsuarioBLL_65RD gestor = new UsuarioBLL_65RD();
+            cmbRol.DataSource = null; // Limpiamos el origen viejo
+            cmbRol.DataSource = gestor.ObtenerPerfiles(); // Recargamos de la Base de Datos
+            cmbRol.DisplayMember = "Nombre";
+            cmbRol.ValueMember = "Id";
+            cmbRol.SelectedIndex = -1; // Que arranque vacío sin selección
+        }
 
         private void frmGestionUsuarios_Load(object sender, EventArgs e)
         {
@@ -75,7 +84,7 @@ namespace Proyecto_IS
             cmbRol.SelectedIndex = -1;
 
             CargarUsuarios();
-
+            RefrescarComboRoles();
             IdiomaManager.GetInstance().RegisterObserver(this);
             UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
@@ -163,6 +172,11 @@ namespace Proyecto_IS
 
             usuarioSeleccionadoId = -1; 
             CargarUsuarios();
+            RefrescarComboRoles();
+            txtnombre.Text = "";
+            txtApellido.Text = "";
+            txtDNI.Text = "";
+            txtemail.Text = "";
         }
 
         private void dgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
