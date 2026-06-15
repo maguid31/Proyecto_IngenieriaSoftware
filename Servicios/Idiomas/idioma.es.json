@@ -27,7 +27,8 @@
     "lblPanelInicioTitulo": "Panel de Inicio",
     "lblPanelInicioDetalle": "Seleccione una opción del menú lateral para comenzar.",
     "msgSesionActivaTitulo": "Sesión activa detectada",
-    "msgSesionActivaCuerpo": "Ya existe un usuario con la sesión iniciada. ¿Desea cerrar la sesión actual e ingresar con otra cuenta?"
+    "msgSesionActivaCuerpo": "Ya existe un usuario con la sesión iniciada. ¿Desea cerrar la sesión actual e ingresar con otra cuenta?",
+    "btnCambiarContrasena": "Cambiar Contraseña"
   },
 
   "frmGestionUsuarios": {

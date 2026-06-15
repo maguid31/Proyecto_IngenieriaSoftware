@@ -60,7 +60,7 @@ namespace Proyecto_IS
         
         private void ConfigurarVentana()
         {
-            this.Size = new Size(1000, 650);
+            this.Size = new Size(1000, 750);
             this.MinimumSize = new Size(800, 550);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);

@@ -50,7 +50,7 @@ namespace Proyecto_IS
             this.lblAppNombre.Font = new System.Drawing.Font("Segoe UI Black", 16F, System.Drawing.FontStyle.Bold);
             this.lblAppNombre.Location = new System.Drawing.Point(20, 15);
             this.lblAppNombre.Name = "lblAppNombre";
-            this.lblAppNombre.Size = new System.Drawing.Size(116, 37);
+            this.lblAppNombre.Size = new System.Drawing.Size(94, 30);
             this.lblAppNombre.TabIndex = 0;
             this.lblAppNombre.Text = "TITULO";
             // 
@@ -102,7 +102,7 @@ namespace Proyecto_IS
             this.lblContenidoDetalle.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.lblContenidoDetalle.Location = new System.Drawing.Point(45, 90);
             this.lblContenidoDetalle.Name = "lblContenidoDetalle";
-            this.lblContenidoDetalle.Size = new System.Drawing.Size(479, 25);
+            this.lblContenidoDetalle.Size = new System.Drawing.Size(376, 20);
             this.lblContenidoDetalle.TabIndex = 0;
             this.lblContenidoDetalle.Text = "Seleccione una opción del menú lateral para comenzar.";
             // 
@@ -112,12 +112,13 @@ namespace Proyecto_IS
             this.lblContenidoTitulo.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
             this.lblContenidoTitulo.Location = new System.Drawing.Point(40, 40);
             this.lblContenidoTitulo.Name = "lblContenidoTitulo";
-            this.lblContenidoTitulo.Size = new System.Drawing.Size(253, 46);
+            this.lblContenidoTitulo.Size = new System.Drawing.Size(204, 37);
             this.lblContenidoTitulo.TabIndex = 1;
             this.lblContenidoTitulo.Text = "Panel de Inicio";
             // 
             // MainForm
             // 
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(900, 550);
             this.Controls.Add(this.panelContenido);
             this.Controls.Add(this.panelMenu);
