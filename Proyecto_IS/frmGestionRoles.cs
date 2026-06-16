@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,13 +21,11 @@ namespace Proyecto_IS
         private readonly PerfilBLL_65RD _perfilBLL = new PerfilBLL_65RD();
         private readonly BitacoraBLL_65RD _bitacoraBLL = new BitacoraBLL_65RD();
 
-        // ── ESTADOS EN MEMORIA
         
         private Perfil_65RD _perfilSeleccionado;
         private List<Perfil_65RD> _perfilesCompletos = new List<Perfil_65RD>();
 
 
-        // ── COLORES PARA ESTADOS VISUALES
         private static readonly Color ColorDanger = Color.FromArgb(220, 53, 69);
         private static readonly Color ColorSuccess = Color.SeaGreen;
         private static readonly Color ColorWarning = Color.Orange;
@@ -34,7 +33,7 @@ namespace Proyecto_IS
         public frmGestionRoles()
         {
             InitializeComponent();
-            txtBuscarPerfil.TextChanged += txtBuscarPerfil_TextChanged; // 👈 ¡Meté esta línea acá!
+            txtBuscarPerfil.TextChanged += txtBuscarPerfil_TextChanged; // 
         }
 
         private void frmGestionRoles_Load(object sender, EventArgs e)
@@ -283,11 +282,7 @@ namespace Proyecto_IS
             IdiomaManager.GetInstance().RemoveObserver(this);
         }
 
-        public void UpdateIdioma(string idioma)
-        {
-            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
-        }
-
+       
         private class ListBoxItemPermiso
         {
             public ComponentePermiso_65RD Permiso { get; }
@@ -351,6 +346,28 @@ namespace Proyecto_IS
 
             tvPermisosAsignados.ExpandAll();
         }
+
+        public void UpdateIdioma(string idioma)
+        {
+            
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
+
+
+            // Etiquetas de textos (Labels)
+            label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombrePerfil");
+            label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDescripcion");
+            lbPermisosDisponiblesTab2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPermisosDisponibles"); 
+            lbPerfiles.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPerfilesExistentes");   
+
+           
+            btnCrearPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCrearPerfil");
+            btnEliminarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnEliminarPerfil");
+            btnAsignarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAsignarPermiso");
+            btnQuitarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnQuitarPermiso");
+            btnGuardarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGuardarPerfil");
+        }
+
+
     }
 }
 

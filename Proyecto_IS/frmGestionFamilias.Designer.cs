@@ -189,7 +189,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1274, 665);
+            this.ClientSize = new System.Drawing.Size(1385, 665);
             this.Controls.Add(this.btnAgregarFamilia);
             this.Controls.Add(this.btnEliminarFamilia);
             this.Controls.Add(this.lblDescripcionFamilia);

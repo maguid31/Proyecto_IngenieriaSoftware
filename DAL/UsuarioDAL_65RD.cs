@@ -84,13 +84,13 @@ namespace DAL_65RD
 
         private void CargarHijosRecursivos(ComponentePermiso_65RD padre, PermisoDAL_65RD dal)
         {
-            // Va a la base de datos a buscar qué tiene adentro la familia
+           
             var hijos = dal.ObtenerHijosDeFamilia(padre.Id);
             foreach (var hijo in hijos)
             {
-                padre.AgregarHijo(hijo); // Lo mete en la lista en memoria
+                padre.AgregarHijo(hijo); 
 
-                if (hijo is Familia_65RD) // Si adentro hay otra subfamilia, vuelve a bajarse de nivel
+                if (hijo is Familia_65RD) 
                 {
                     CargarHijosRecursivos(hijo, dal);
                 }
@@ -108,8 +108,8 @@ namespace DAL_65RD
                     cmd.Parameters.AddWithValue("@nombre", (object)nuevoUsuario.Nombre ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@apellido", nuevoUsuario.Apellido);
                     cmd.Parameters.AddWithValue("@dni", nuevoUsuario.DNI);
-                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña); // Sigue siendo hash
-                    cmd.Parameters.AddWithValue("@perfilId", nuevoUsuario.Perfil.Id); // Obtenemos el Id del objeto Perfil
+                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña); 
+                    cmd.Parameters.AddWithValue("@perfilId", nuevoUsuario.Perfil.Id); 
                     cmd.Parameters.AddWithValue("@activo", nuevoUsuario.Activo);
                     cmd.Parameters.AddWithValue("@email", (object)nuevoUsuario.Email ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@idioma", !string.IsNullOrEmpty(nuevoUsuario.Idioma) ? nuevoUsuario.Idioma : "es");
@@ -235,7 +235,7 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // Si estaBloqueado es false, forzamos PrimerLogin = 1
+               
                 string query = @"UPDATE Usuarios 
                          SET Bloqueado = @bloqueado, 
                              PrimerLogin = CASE WHEN @bloqueado = 0 THEN 1 ELSE PrimerLogin END

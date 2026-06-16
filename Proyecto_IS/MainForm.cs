@@ -84,24 +84,23 @@ namespace Proyecto_IS
             panelMenu.Controls.Add(lblRol);
             panelMenu.Controls.Add(lblBienvenida);
 
-            int y = 100; // Ajustá este valor según dónde queden tus etiquetas de bienvenida en el diseño
+            int y = 100; 
 
-            // ── SECCIÓN SEGURIDAD / ADMINISTRACIÓN ──
             string segAdmin = IdiomaManager.GetInstance().GetTexto(this.Name, "segAdministracion");
 
-            // Primero verificamos qué patentes individuales tiene permitidas el usuario logueado
+            
             bool canGestionUsuarios = SessionManager_65RD.Instancia.TienePermiso("Gestión de Usuarios");
             bool canBitacora = SessionManager_65RD.Instancia.TienePermiso("Ver Bitácora");
             bool canGestionRoles = SessionManager_65RD.Instancia.TienePermiso("Gestión de Perfiles");
             bool canGestionFamilias = SessionManager_65RD.Instancia.TienePermiso("Gestión de Familias");
 
-            // Si tiene al menos una patente de seguridad, creamos la sección violeta
+            
             if (canGestionUsuarios || canBitacora || canGestionRoles || canGestionFamilias)
             {
                 AgregarSeparador(segAdmin, ref y);
             }
 
-            // Dibujamos de forma dinámica CADA botón SOLO si el usuario tiene su permiso correspondiente
+            
             if (canGestionUsuarios)
             {
                 string btnGestion = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGestionUsuarios");
@@ -116,26 +115,30 @@ namespace Proyecto_IS
 
             if (canGestionRoles)
             {
-                AgregarBoton("⚙️  Gestión de Roles", ref y, AbrirGestionRoles);
+                string btnRoles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuRoles");
+                AgregarBoton("⚙️  " + btnRoles, ref y, AbrirGestionRoles);
             }
 
             if (canGestionFamilias)
             {
-                AgregarBoton("📁  Gestión de Familias", ref y, AbrirGestionFamilias);
+                string btnFamilias = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuFamilias");
+                AgregarBoton("📁  " + btnFamilias, ref y, AbrirGestionFamilias);
             }
 
 
-            // ── SECCIÓN CONFIGURACIÓN (Todos entran acá) ──
+
             string segConfig = IdiomaManager.GetInstance().GetTexto(this.Name, "segConfiguracion");
             string btnIdioma = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarIdioma");
             string btnContrasena = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarContrasena");
+            string btnGestionRoles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuRoles");
+            string btnGestionFamilia = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuFamilias");
 
             AgregarSeparador(segConfig, ref y);
             AgregarBoton("🌐  " + btnIdioma, ref y, AbrirCambiarIdioma);
             AgregarBoton("🔑 " + btnContrasena, ref y,  AbrirCambiarContraseña);
 
 
-            // ── SECCIÓN SESIÓN (Todos entran acá) ──
+            
             string segSesion = IdiomaManager.GetInstance().GetTexto(this.Name, "segSesion");
             string btnLogOut = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCerrarSesion");
             string btnReLog = IdiomaManager.GetInstance().GetTexto(this.Name, "btnIniciarSesion");
@@ -149,10 +152,10 @@ namespace Proyecto_IS
 
         private void ReLogin(object sender, EventArgs e)
         {
-            // 1. Verificamos en el Singleton si ya hay una sesión activa en memoria
+            
             if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
             {
-                //  textos traducidos para la alerta
+                
                 string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSesionActivaCuerpo");
                 string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSesionActivaTitulo");
 
@@ -181,7 +184,7 @@ namespace Proyecto_IS
             
             login.FormClosed += (s, args) =>
             {
-                // Si cerró el login y el SessionManager tiene un nuevo usuario, volvemos a mostrar el Menú
+                
                 if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
                 {
                     this.Show();
@@ -297,7 +300,7 @@ namespace Proyecto_IS
             var res = MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes)
             {
-                // REGISTRAMOS LOGOUT EN BITÁCORA ANTES DE BORRAR LA SESIÓN
+                
                 if (SessionManager_65RD.Instancia.UsuarioLogueado != null)
                 {
                     int idUsuarioActual = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
@@ -351,7 +354,9 @@ namespace Proyecto_IS
         private void AbrirCambiarContraseña(object sender, EventArgs e)
         {
             frmCambioContraseña frm = new frmCambioContraseña();
-            frm.ShowDialog(); 
+            frm.ShowDialog();
+
+           
         }
         private void panelContenido_Paint(object sender, PaintEventArgs e)
         {

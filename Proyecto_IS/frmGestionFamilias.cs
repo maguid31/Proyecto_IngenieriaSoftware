@@ -292,10 +292,7 @@ namespace Proyecto_IS
             IdiomaManager.GetInstance().RemoveObserver(this);
         }
 
-        public void UpdateIdioma(string idioma)
-        {
-            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
-        }
+       
 
         // WRAPPERS INTERNOS DE SOPORTE PARA LAS LISTBOX
         private class ListBoxItemPermiso
@@ -310,6 +307,22 @@ namespace Proyecto_IS
             public Familia_65RD Familia { get; }
             public ListBoxItemFamilia(Familia_65RD f) { Familia = f; }
             public override string ToString() => $"📁 {Familia.Nombre}";
+        }
+
+        public void UpdateIdioma(string idioma)
+        {
+           
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
+
+            
+            btnAgregarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAgregarFamilia");
+            btnGuardarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGuardarFamilia");
+            btnEliminarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnEliminarFamilia");
+            btnLimpiarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLimpiarFamilia");
+
+            
+            label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombreFamilia");
+            label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDescFamilia");
         }
     }
 }
