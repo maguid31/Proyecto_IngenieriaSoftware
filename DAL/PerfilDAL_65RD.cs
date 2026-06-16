@@ -103,14 +103,11 @@ namespace DAL
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-
+                
                 string query = @"
-                    DECLARE @NuevoId INT;
-                    SELECT @NuevoId = ISNULL(MAX(Id), 0) + 1 FROM Perfiles;
-            
-                    INSERT INTO Perfiles (Id, Nombre, Descripcion) 
-                    OUTPUT INSERTED.Id 
-                    VALUES (@NuevoId, @nombre, @desc)";
+                INSERT INTO Perfiles (Nombre, Descripcion) 
+                OUTPUT INSERTED.Id 
+                VALUES (@nombre, @desc)";
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
@@ -118,6 +115,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@desc", (object)perfil.Descripcion ?? DBNull.Value);
 
                     con.Open();
+                    
                     perfil.Id = (int)cmd.ExecuteScalar();
                     return perfil.Id > 0;
                 }
