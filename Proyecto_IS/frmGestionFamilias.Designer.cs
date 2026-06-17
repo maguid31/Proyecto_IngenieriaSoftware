@@ -118,6 +118,7 @@
             this.tvFamiliaEdicion.Name = "tvFamiliaEdicion";
             this.tvFamiliaEdicion.Size = new System.Drawing.Size(221, 403);
             this.tvFamiliaEdicion.TabIndex = 46;
+            this.tvFamiliaEdicion.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvFamiliaEdicion_AfterSelect);
             // 
             // lbFuentePermisos
             // 

@@ -144,9 +144,10 @@ namespace Proyecto_IS
                 return;
             }
 
-            // 🌟 CORRECCIÓN: Desempaquetamos correctamente el permiso usando el Wrapper ListBoxItemPermiso
+            // Desempaquetamos el permiso o familia seleccionada
             ComponentePermiso_65RD permisoSeleccionado = ((ListBoxItemPermiso)lbFuentePermisos.SelectedItem).Permiso;
 
+            // 1. Validación básica de seguridad: no agregarse a sí misma
             if (_editandoFamiliaExistente && _familiaEnEdicion.Id == permisoSeleccionado.Id)
             {
                 MessageBox.Show("❌ No podés agregar una familia a sí misma.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -158,19 +159,25 @@ namespace Proyecto_IS
                 _familiaEnEdicion = new Familia_65RD();
             }
 
-            // Validamos que no esté duplicado mediante la BLL o el objeto en memoria
-            if (_permisoBLL.ExistePermisoEnFamilia(_familiaEnEdicion, permisoSeleccionado.Id))
+            try
             {
-                MessageBox.Show($"El permiso '{permisoSeleccionado.Nombre}' ya forma parte de esta familia.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                // 2. 🌟 NUEVA VALIDACIÓN RECURSIVA ANTES DE AGREGAR
+                // Le pedimos a la BLL de permisos que valide que 'permisoSeleccionado' 
+                // no traiga patentes que ya existan dentro de '_familiaEnEdicion'
+                _permisoBLL.ValidarAsignacionSinRepetidos(_familiaEnEdicion, permisoSeleccionado);
+
+                // 3. SI PASÓ LA VALIDACIÓN: Agregamos al objeto y al árbol visual
+                _familiaEnEdicion.AgregarHijo(permisoSeleccionado);
+
+                TreeNode nuevoNodo = CrearNodoPermiso(permisoSeleccionado);
+                tvFamiliaEdicion.Nodes.Add(nuevoNodo);
+                tvFamiliaEdicion.ExpandAll();
             }
-
-            // Agregamos al objeto y al árbol visual
-            _familiaEnEdicion.AgregarHijo(permisoSeleccionado);
-
-            TreeNode nuevoNodo = CrearNodoPermiso(permisoSeleccionado);
-            tvFamiliaEdicion.Nodes.Add(nuevoNodo);
-            tvFamiliaEdicion.ExpandAll();
+            catch (Exception ex)
+            {
+                // Si la BLL detecta que se repiten patentes en las profundidades, salta acá
+                MessageBox.Show($"❌ {ex.Message}", "Validación de Estructura", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         // ── 4. BOTÓN GUARDAR CAMBIOS / NUEVA FAMILIA
@@ -323,6 +330,11 @@ namespace Proyecto_IS
             
             label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombreFamilia");
             label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDescFamilia");
+        }
+
+        private void tvFamiliaEdicion_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }

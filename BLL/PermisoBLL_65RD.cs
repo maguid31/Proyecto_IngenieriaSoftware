@@ -16,21 +16,17 @@ namespace BLL
         // 1. VALIDACIÓN RECURSIVA DE DUPLICADOS EN FAMILIAS
 
         /// Recorre recursivamente un componente (Familia) para verificar si un permiso específico ya existe en su estructura.
-
         public bool ExistePermisoEnFamilia(ComponentePermiso_65RD componenteRaiz, int idPermisoBuscado)
         {
-            // Caso base 1: El nodo actual es el que estamos buscando
             if (componenteRaiz.Id == idPermisoBuscado)
             {
                 return true;
             }
 
-            // Caso base 2: Si el nodo actual es una Familia, iteramos sobre sus hijos
             if (componenteRaiz is Familia_65RD familia)
             {
                 foreach (var hijo in familia.ObtenerHijos())
                 {
-                    // Llamada recursiva: si el hijo (o alguno de los sub-hijos) lo encuentra, cortamos y devolvemos true
                     if (ExistePermisoEnFamilia(hijo, idPermisoBuscado))
                     {
                         return true;
@@ -38,25 +34,37 @@ namespace BLL
                 }
             }
 
-            // Si recorrió todo el árbol y no lo encontró, entonces no existe
             return false;
         }
 
+        public bool ExisteComponenteEnEstructura(ComponentePermiso_65RD nodoRaiz, int idComponenteBuscar)
+        {
+            if (nodoRaiz.Id == idComponenteBuscar)
+            {
+                return true;
+            }
 
-        /// Intenta agregar un nuevo permiso a una familia destino, aplicando la regla estricta de validación.
-        /// Devuelve true si se agregó correctamente, o false si se detectó una repetición.
+            if (nodoRaiz is Familia_65RD familia)
+            {
+                foreach (var hijo in familia.ObtenerHijos())
+                {
+                    if (ExisteComponenteEnEstructura(hijo, idComponenteBuscar))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         public bool AsignarPermisoAFamilia(Familia_65RD familiaDestino, ComponentePermiso_65RD nuevoPermiso)
         {
-            // Validamos que el permiso no exista ya dentro del árbol de la familia destino
             if (ExistePermisoEnFamilia(familiaDestino, nuevoPermiso.Id))
             {
-                // Regla de negocio: El permiso ya existe, se rechaza la operación.
-                // En la UI, evaluaremos este 'false' para lanzar el MessageBox de alerta.
                 return false;
             }
 
-            // Pasa la validación, lo agregamos en memoria
             familiaDestino.AgregarHijo(nuevoPermiso);
             return true;
         }
@@ -65,8 +73,6 @@ namespace BLL
 
         public bool GuardarFamilia(Familia_65RD familia)
         {
-            // Antes de guardar en la base de datos, podrías agregar validaciones extra 
-            // (ej. que la familia tenga al menos un permiso, que el nombre no esté vacío, etc.)
             if (string.IsNullOrWhiteSpace(familia.Nombre))
             {
                 throw new ArgumentException("El nombre de la familia no puede estar vacío.");
@@ -101,8 +107,48 @@ namespace BLL
 
         public bool EliminarFamiliaBLL(int idFamilia)
         {
-            // Este método llama a tu capa DAL para ejecutar la baja física o lógica en la base de datos
             return _permisoDAL.EliminarPermiso(idFamilia);
+        }
+
+        // 3. 🌟 CORRECCIÓN Y UNIFICACIÓN DE MÉTODOS DE VALIDACIÓN
+
+        public void ValidarAsignacionSinRepetidos(ComponentePermiso_65RD contenedorPadre, ComponentePermiso_65RD elementoAAgregar)
+        {
+            // Buscamos todas las patentes reales que ya existen en el contenedor (Perfil o Familia)
+            List<int> patentesActuales = ObtenerTodasLasPatentesDeFormaRecursiva(contenedorPadre);
+
+            // Buscamos las patentes que trae el elemento que queremos meter
+            List<int> patentesNuevas = ObtenerTodasLasPatentesDeFormaRecursiva(elementoAAgregar);
+
+            // Cruzamos las listas para ver si hay un choque de IDs
+            foreach (int idPatente in patentesNuevas)
+            {
+                if (patentesActuales.Contains(idPatente))
+                {
+                    throw new Exception($"El permiso o sub-familia contiene la patente con ID {idPatente}, la cual ya forma parte de este elemento.");
+                }
+            }
+        }
+
+        // 🛠 CORREGIDO: Cambiamos 'familia.Hijos' por 'familia.ObtenerHijos()' para mantener tu diseño
+        private List<int> ObtenerTodasLasPatentesDeFormaRecursiva(ComponentePermiso_65RD componente)
+        {
+            List<int> ids = new List<int>();
+
+            if (componente is Patente_65RD)
+            {
+                ids.Add(componente.Id);
+            }
+            else if (componente is Familia_65RD familia)
+            {
+                // 👈 Cambiado acá para usar tu método nativo de la entidad
+                foreach (var hijo in familia.ObtenerHijos())
+                {
+                    ids.AddRange(ObtenerTodasLasPatentesDeFormaRecursiva(hijo));
+                }
+            }
+
+            return ids.Distinct().ToList();
         }
     }
 }

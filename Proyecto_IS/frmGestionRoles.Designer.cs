@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.tcRoles = new System.Windows.Forms.TabPage();
+            this.btnLimpiarPerfil = new System.Windows.Forms.Button();
             this.lblDescripcionPerfil = new System.Windows.Forms.Label();
             this.lbPerfiles = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +41,6 @@
             this.btnQuitarPermiso = new System.Windows.Forms.Button();
             this.btnAsignarPermiso = new System.Windows.Forms.Button();
             this.btnEliminarPerfil = new System.Windows.Forms.Button();
-            this.btnCrearPerfil = new System.Windows.Forms.Button();
             this.txtNuevoPerfil = new System.Windows.Forms.TextBox();
             this.tvPermisosAsignados = new System.Windows.Forms.TreeView();
             this.lbPermisosDisponiblesTab2 = new System.Windows.Forms.ListBox();
@@ -51,6 +51,7 @@
             // 
             // tcRoles
             // 
+            this.tcRoles.Controls.Add(this.btnLimpiarPerfil);
             this.tcRoles.Controls.Add(this.lblDescripcionPerfil);
             this.tcRoles.Controls.Add(this.lbPerfiles);
             this.tcRoles.Controls.Add(this.label1);
@@ -62,7 +63,6 @@
             this.tcRoles.Controls.Add(this.btnQuitarPermiso);
             this.tcRoles.Controls.Add(this.btnAsignarPermiso);
             this.tcRoles.Controls.Add(this.btnEliminarPerfil);
-            this.tcRoles.Controls.Add(this.btnCrearPerfil);
             this.tcRoles.Controls.Add(this.txtNuevoPerfil);
             this.tcRoles.Controls.Add(this.tvPermisosAsignados);
             this.tcRoles.Controls.Add(this.lbPermisosDisponiblesTab2);
@@ -75,6 +75,20 @@
             this.tcRoles.Text = "Asignación de Roles";
             this.tcRoles.UseVisualStyleBackColor = true;
             this.tcRoles.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btnLimpiarPerfil
+            // 
+            this.btnLimpiarPerfil.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnLimpiarPerfil.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLimpiarPerfil.ForeColor = System.Drawing.Color.White;
+            this.btnLimpiarPerfil.Location = new System.Drawing.Point(1193, 348);
+            this.btnLimpiarPerfil.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLimpiarPerfil.Name = "btnLimpiarPerfil";
+            this.btnLimpiarPerfil.Size = new System.Drawing.Size(229, 43);
+            this.btnLimpiarPerfil.TabIndex = 49;
+            this.btnLimpiarPerfil.Text = "LIMPIAR PERFIL";
+            this.btnLimpiarPerfil.UseVisualStyleBackColor = false;
+            this.btnLimpiarPerfil.Click += new System.EventHandler(this.btnLimpiarPerfil_Click);
             // 
             // lblDescripcionPerfil
             // 
@@ -165,7 +179,7 @@
             this.btnQuitarPermiso.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnQuitarPermiso.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnQuitarPermiso.ForeColor = System.Drawing.Color.White;
-            this.btnQuitarPermiso.Location = new System.Drawing.Point(1193, 407);
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(1193, 282);
             this.btnQuitarPermiso.Margin = new System.Windows.Forms.Padding(4);
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(229, 43);
@@ -179,7 +193,7 @@
             this.btnAsignarPermiso.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnAsignarPermiso.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAsignarPermiso.ForeColor = System.Drawing.Color.White;
-            this.btnAsignarPermiso.Location = new System.Drawing.Point(1193, 342);
+            this.btnAsignarPermiso.Location = new System.Drawing.Point(1193, 221);
             this.btnAsignarPermiso.Margin = new System.Windows.Forms.Padding(4);
             this.btnAsignarPermiso.Name = "btnAsignarPermiso";
             this.btnAsignarPermiso.Size = new System.Drawing.Size(229, 44);
@@ -193,7 +207,7 @@
             this.btnEliminarPerfil.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnEliminarPerfil.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminarPerfil.ForeColor = System.Drawing.Color.White;
-            this.btnEliminarPerfil.Location = new System.Drawing.Point(1193, 274);
+            this.btnEliminarPerfil.Location = new System.Drawing.Point(1193, 411);
             this.btnEliminarPerfil.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminarPerfil.Name = "btnEliminarPerfil";
             this.btnEliminarPerfil.Size = new System.Drawing.Size(229, 43);
@@ -201,20 +215,6 @@
             this.btnEliminarPerfil.Text = "ELIMINAR PERFIL";
             this.btnEliminarPerfil.UseVisualStyleBackColor = false;
             this.btnEliminarPerfil.Click += new System.EventHandler(this.btnEliminarPerfil_Click);
-            // 
-            // btnCrearPerfil
-            // 
-            this.btnCrearPerfil.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.btnCrearPerfil.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCrearPerfil.ForeColor = System.Drawing.Color.White;
-            this.btnCrearPerfil.Location = new System.Drawing.Point(1193, 208);
-            this.btnCrearPerfil.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCrearPerfil.Name = "btnCrearPerfil";
-            this.btnCrearPerfil.Size = new System.Drawing.Size(229, 44);
-            this.btnCrearPerfil.TabIndex = 15;
-            this.btnCrearPerfil.Text = "CREAR PERFIL";
-            this.btnCrearPerfil.UseVisualStyleBackColor = false;
-            this.btnCrearPerfil.Click += new System.EventHandler(this.btnCrearPerfil_Click);
             // 
             // txtNuevoPerfil
             // 
@@ -231,12 +231,13 @@
             this.tvPermisosAsignados.Name = "tvPermisosAsignados";
             this.tvPermisosAsignados.Size = new System.Drawing.Size(288, 400);
             this.tvPermisosAsignados.TabIndex = 12;
+            this.tvPermisosAsignados.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermisosAsignados_AfterSelect);
             // 
             // lbPermisosDisponiblesTab2
             // 
             this.lbPermisosDisponiblesTab2.FormattingEnabled = true;
             this.lbPermisosDisponiblesTab2.ItemHeight = 16;
-            this.lbPermisosDisponiblesTab2.Location = new System.Drawing.Point(41, 112);
+            this.lbPermisosDisponiblesTab2.Location = new System.Drawing.Point(57, 130);
             this.lbPermisosDisponiblesTab2.Margin = new System.Windows.Forms.Padding(4);
             this.lbPermisosDisponiblesTab2.Name = "lbPermisosDisponiblesTab2";
             this.lbPermisosDisponiblesTab2.Size = new System.Drawing.Size(282, 404);
@@ -256,7 +257,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1567, 731);
+            this.ClientSize = new System.Drawing.Size(1659, 761);
             this.Controls.Add(this.Gestion);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmGestionRoles";
@@ -278,7 +279,6 @@
         private System.Windows.Forms.Button btnQuitarPermiso;
         private System.Windows.Forms.Button btnAsignarPermiso;
         private System.Windows.Forms.Button btnEliminarPerfil;
-        private System.Windows.Forms.Button btnCrearPerfil;
         private System.Windows.Forms.TextBox txtNuevoPerfil;
         private System.Windows.Forms.TreeView tvPermisosAsignados;
         private System.Windows.Forms.ListBox lbPermisosDisponiblesTab2;
@@ -288,5 +288,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtDescripcion;
         private System.Windows.Forms.Label lblDescripcionPerfil;
+        private System.Windows.Forms.Button btnLimpiarPerfil;
     }
 }

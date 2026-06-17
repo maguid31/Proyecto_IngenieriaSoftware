@@ -110,53 +110,7 @@ namespace Proyecto_IS
 
       
 
-        private void btnCrearPerfil_Click(object sender, EventArgs e)
-        {
-            string nombre = txtNuevoPerfil.Text;
-            string descripcion = txtDescripcion.Text;
-
-            if (string.IsNullOrWhiteSpace(nombre))
-            {
-                MessageBox.Show("Por favor, ingrese un nombre para el perfil.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (tvPermisosAsignados.Nodes.Count == 0)
-            {
-                MessageBox.Show("No podés crear el perfil vacío. Primero seleccioná un permiso de la izquierda, hacé clic en 'Asignar Permiso' para pasarlo al árbol, y luego creá el perfil.", "Operación Denegada", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-            try
-            {
-                var nuevoPerfil = new Perfil_65RD
-                {
-                    Nombre = nombre.Trim(),
-                    Descripcion = descripcion.Trim()
-                };
-
-                foreach (TreeNode nodo in tvPermisosAsignados.Nodes)
-                {
-                    if (nodo.Tag is ComponentePermiso_65RD permiso)
-                    {
-                        nuevoPerfil.PermisosAsignados.Add(permiso);
-                    }
-                }
-
-                _perfilBLL.CrearPerfil(nuevoPerfil);
-                txtNuevoPerfil.Clear();
-                txtDescripcion.Clear();
-                txtBuscarPerfil.Clear();
-                tvPermisosAsignados.Nodes.Clear(); 
-
-                CargarPerfiles(); 
-
-                MessageBox.Show($"✔ El perfil '{nombre}' fue creado y guardado con sus permisos exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al crear el perfil: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        
 
         private void btnEliminarPerfil_Click(object sender, EventArgs e)
         {
@@ -195,23 +149,66 @@ namespace Proyecto_IS
         {
             if (lbPermisosDisponiblesTab2.SelectedItem == null) return;
 
+            
             var permiso = ((ListBoxItemPermiso)lbPermisosDisponiblesTab2.SelectedItem).Permiso;
 
             if (_perfilSeleccionado != null)
             {
-                bool ok = _perfilBLL.ValidarAsignacionARol(_perfilSeleccionado, permiso);
-                if (!ok)
+                
+                if (_perfilSeleccionado.PermisosAsignados.Any(p => p.Id == permiso.Id))
                 {
-                    int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
-                    _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Bloqueo Asignación", 2, $"Colisión de patentes al intentar asignar a rol '{_perfilSeleccionado.Nombre}'.");
-                    MostrarMensajePerfil($"❌ Colisión de patentes: no se puede asignar.", ColorDanger);
+                    MostrarMensajePerfil($"❌ El permiso o familia '{permiso.Nombre}' ya está asignado a este perfil.", ColorDanger);
                     return;
                 }
 
-                _perfilSeleccionado.PermisosAsignados.Add(permiso);
-                MostrarMensajePerfil($"✔ '{permiso.Nombre}' asignado (pendiente de guardar).", ColorSuccess);
+                try
+                {
+                   
+                    _perfilBLL.ValidarAsignacionSinRepetidos(_perfilSeleccionado, permiso);
+
+                   
+                    _perfilSeleccionado.PermisosAsignados.Add(permiso);
+                    MostrarMensajePerfil($"✔ '{permiso.Nombre}' asignado (pendiente de guardar).", ColorSuccess);
+
+                    
+                    tvPermisosAsignados.Nodes.Clear();
+                    foreach (var perm in _perfilSeleccionado.PermisosAsignados)
+                    {
+                        tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(perm));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
+
+                    _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Bloqueo Asignación", 2, $"Colisión de patentes al intentar asignar a rol '{_perfilSeleccionado.Nombre}'. Detalle: {ex.Message}");
+
+                    MostrarMensajePerfil($"❌ Colisión: {ex.Message}", ColorDanger);
+                    return;
+                }
             }
-            tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(permiso));
+            else
+            {
+                
+                bool yaExisteEnArbol = false;
+                foreach (TreeNode nodo in tvPermisosAsignados.Nodes)
+                {
+                    if (nodo.Tag is ComponentePermiso_65RD comp && comp.Id == permiso.Id)
+                    {
+                        yaExisteEnArbol = true;
+                        break;
+                    }
+                }
+
+                if (yaExisteEnArbol)
+                {
+                    MessageBox.Show($"El permiso '{permiso.Nombre}' ya fue agregado al nuevo perfil.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(permiso));
+            }
+
             tvPermisosAsignados.ExpandAll();
         }
 
@@ -234,22 +231,92 @@ namespace Proyecto_IS
 
         private void btnGuardarPerfil_Click(object sender, EventArgs e)
         {
-            if (_perfilSeleccionado == null) return;
+            string nombre = txtNuevoPerfil.Text.Trim();
+            string descripcion = txtDescripcion.Text.Trim();
+
+            // 1. Validaciones
+            if (string.IsNullOrWhiteSpace(nombre))
+            {
+                MessageBox.Show("Por favor, ingrese un nombre para el perfil.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (tvPermisosAsignados.Nodes.Count == 0)
+            {
+                MessageBox.Show("No podés guardar un perfil vacío. Primero asignale al menos un permiso.", "Operación Denegada", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
 
             try
             {
-                bool ok = _perfilBLL.GuardarAsignacionPermisos(_perfilSeleccionado);
-                if (ok)
+                int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
+
+                // 2. MODO CREACIÓN (Alta)
+                if (_perfilSeleccionado == null)
                 {
-                    int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
-                    _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Modificación", 2, $"Actualización de permisos del rol '{_perfilSeleccionado.Nombre}'.");
-                    MostrarMensajePerfil($"✔ Permisos guardados exitosamente.", ColorSuccess);
+                    var nuevoPerfil = new Perfil_65RD
+                    {
+                        Nombre = nombre,
+                        Descripcion = descripcion
+                    };
+
+                    foreach (TreeNode nodo in tvPermisosAsignados.Nodes)
+                    {
+                        if (nodo.Tag is ComponentePermiso_65RD permiso)
+                        {
+                            nuevoPerfil.PermisosAsignados.Add(permiso);
+                        }
+                    }
+
+                    _perfilBLL.CrearPerfil(nuevoPerfil);
+                    _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Alta", 2, $"Creación del rol '{nombre}'.");
+                    MessageBox.Show($"✔ El perfil '{nombre}' fue creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+                // 3. MODO EDICIÓN (Modificación)
+                else
+                {
+                    _perfilSeleccionado.Nombre = nombre;
+                    _perfilSeleccionado.Descripcion = descripcion;
+
+                    // Sincronización: Limpiamos y recargamos los permisos desde el TreeView
+                    _perfilSeleccionado.PermisosAsignados.Clear();
+
+                    foreach (TreeNode nodo in tvPermisosAsignados.Nodes)
+                    {
+                        if (nodo.Tag is ComponentePermiso_65RD permiso)
+                        {
+                            _perfilSeleccionado.PermisosAsignados.Add(permiso);
+                        }
+                    }
+
+                    bool ok = _perfilBLL.GuardarAsignacionPermisos(_perfilSeleccionado);
+
+                    if (ok)
+                    {
+                        _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Modificación", 2, $"Actualización de permisos del rol '{_perfilSeleccionado.Nombre}'.");
+                        MessageBox.Show($"✔ Cambios guardados exitosamente en el perfil '{nombre}'.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                // 4. Limpieza final
+                LimpiarPantallaCompleta();
             }
             catch (Exception ex)
             {
-                MostrarMensajePerfil($"❌ Error: {ex.Message}", ColorDanger);
+                MessageBox.Show($"❌ Error al procesar la operación: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LimpiarPantallaCompleta()
+        {
+            _perfilSeleccionado = null;
+            lbPerfiles.ClearSelected();
+            txtNuevoPerfil.Clear();
+            txtDescripcion.Clear();
+            tvPermisosAsignados.Nodes.Clear();
+            lblEstadoPerfil.Text = string.Empty;
+            lblDescripcionPerfil.Text = string.Empty;
+            CargarPerfiles();
         }
 
         private TreeNode CrearNodoPermiso(ComponentePermiso_65RD perm)
@@ -325,17 +392,27 @@ namespace Proyecto_IS
                 return;
             }
 
-            _perfilSeleccionado = ((ListBoxItemPerfil)lbPerfiles.SelectedItem).Perfil;
+            // 1. Obtenemos solo el ID del perfil seleccionado
+            var perfilBase = ((ListBoxItemPerfil)lbPerfiles.SelectedItem).Perfil;
+
+            // 2. 🌟 ¡IGUAL QUE EN FAMILIAS!: Pedimos a la BLL el perfil completo y actualizado
+            // Usamos el ID para asegurar que traemos los permisos actuales de la BD
+            _perfilSeleccionado = _perfilBLL.ObtenerTodosLosPerfiles()
+                                            .FirstOrDefault(p => p.Id == perfilBase.Id);
+
+            // Si por alguna razón no lo encuentra, nos quedamos con el base
+            if (_perfilSeleccionado == null) _perfilSeleccionado = perfilBase;
+
+            // 3. Cargamos los datos visuales
+            txtNuevoPerfil.Text = _perfilSeleccionado.Nombre;
+            txtDescripcion.Text = _perfilSeleccionado.Descripcion;
 
             if (!string.IsNullOrWhiteSpace(_perfilSeleccionado.Descripcion))
-            {
                 lblDescripcionPerfil.Text = $"📝 Descripción: {_perfilSeleccionado.Descripcion}";
-            }
             else
-            {
                 lblDescripcionPerfil.Text = "📝 Sin descripción disponible.";
-            }
 
+            // 4. Dibujamos los nodos (aquí es donde ya deberías ver los permisos frescos)
             if (_perfilSeleccionado.PermisosAsignados != null)
             {
                 foreach (var perm in _perfilSeleccionado.PermisosAsignados)
@@ -360,14 +437,24 @@ namespace Proyecto_IS
             lbPerfiles.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPerfilesExistentes");   
 
            
-            btnCrearPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCrearPerfil");
+           
             btnEliminarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnEliminarPerfil");
             btnAsignarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAsignarPermiso");
             btnQuitarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnQuitarPermiso");
             btnGuardarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGuardarPerfil");
+            btnLimpiarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLimpiarPerfil");
         }
 
+        private void btnLimpiarPerfil_Click(object sender, EventArgs e)
+        {
+            LimpiarPantallaCompleta();
+            MostrarMensajePerfil("✔ Formulario listo para crear un nuevo perfil.", ColorSuccess);
+        }
 
+        private void tvPermisosAsignados_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
     }
 }
 

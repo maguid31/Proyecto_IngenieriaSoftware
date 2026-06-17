@@ -63,10 +63,6 @@ namespace DAL
             }
         }
 
-        // ──────────────────────────────────────────────
-        //  MÉTODOS NUEVOS
-        // ──────────────────────────────────────────────
-
         public List<Perfil_65RD> ObtenerTodosLosPerfiles()
         {
             var lista = new List<Perfil_65RD>();
@@ -122,7 +118,7 @@ namespace DAL
             }
         }
 
-        /// Reemplaza todas las asignaciones del perfil (delete + re-insert en transacción).
+      
         public bool ActualizarPermisosDelPerfil(Perfil_65RD perfil)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -189,7 +185,12 @@ namespace DAL
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT IdPermiso FROM Perfil_Permiso WHERE IdPerfil = @id";
+                // 🌟 CORRECCIÓN: Usamos UNION para traer los IDs tanto de Patentes como de Familias asociadas al Perfil
+                string query = @"
+                         SELECT IdPermiso AS PermisoId FROM Perfil_Permiso WHERE IdPerfil = @id
+                         UNION
+                         SELECT IdFamilia AS PermisoId FROM Perfil_Familia WHERE IdPerfil = @id";
+
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@id", idPerfil);
@@ -198,7 +199,9 @@ namespace DAL
                     {
                         while (r.Read())
                         {
-                            int idPermiso = Convert.ToInt32(r["IdPermiso"]);
+                            int idPermiso = Convert.ToInt32(r["PermisoId"]);
+
+                            // Tu método recursivo se encarga de determinar inteligentemente si es Patente o Familia
                             var comp = permDAL.ObtenerPermisoRecursivo(idPermiso);
                             if (comp != null) lista.Add(comp);
                         }

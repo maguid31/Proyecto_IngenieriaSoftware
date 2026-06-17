@@ -133,7 +133,7 @@
     "lblPermisosAsignados": "Assigned Permissions Tree",
     "lblNombrePerfil": "Profile Name",
     "lblDescripcion": "Description",
-    "btnCrearPerfil": "CREATE PROFILE",
+    "btnLimpiarPerfil": "Clear Profile",
     "btnEliminarPerfil": "DELETE PROFILE",
     "btnAsignarPermiso": "ASSIGN PERMISSION",
     "btnQuitarPermiso": "REMOVE PERMISSION",

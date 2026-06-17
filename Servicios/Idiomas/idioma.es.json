@@ -134,7 +134,7 @@
     "lblPermisosAsignados": "Árbol de Permisos Asignados",
     "lblNombrePerfil": "Nombre Perfil",
     "lblDescripcion": "Descripción",
-    "btnCrearPerfil": "CREAR PERFIL",
+    "btnLimpiarPerfil": "Limpiar Perfil",
     "btnEliminarPerfil": "ELIMINAR PERFIL",
     "btnAsignarPermiso": "ASIGNAR PERMISO",
     "btnQuitarPermiso": "QUITAR PERMISO",

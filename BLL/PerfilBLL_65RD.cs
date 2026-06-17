@@ -31,19 +31,52 @@ namespace BLL
         }
 
         // REGLA 2: VALIDACIÓN ANTI-REPETICIÓN EN ROLES
-        public bool ValidarAsignacionARol(Perfil_65RD rolActual, ComponentePermiso_65RD nuevoPermiso)
+        public void ValidarAsignacionSinRepetidos(Perfil_65RD rolActual, ComponentePermiso_65RD nuevoPermiso)
         {
-            List<int> patentesExistentes = new List<int>();
-            foreach (var permiso in rolActual.PermisosAsignados)
-                patentesExistentes.AddRange(ExtraerIdsPatentes(permiso));
+            // 1. Extraemos todas las IDs de patentes que YA tiene el rol actual
+            List<int> patentesActuales = new List<int>();
 
-            List<int> patentesNuevas = ExtraerIdsPatentes(nuevoPermiso);
-            foreach (int idNuevo in patentesNuevas)
+            foreach (var permisoExistente in rolActual.PermisosAsignados)
             {
-                if (patentesExistentes.Contains(idNuevo))
-                    return false;
+                // Usamos el aplanador para desglosar todo lo que ya tiene el rol adentro
+                patentesActuales.AddRange(ExtraerIdsPatentes(permisoExistente));
             }
-            return true;
+            // Eliminamos duplicados por las dudas
+            patentesActuales = patentesActuales.Distinct().ToList();
+
+            // 2. Extraemos las IDs de lo que queremos agregar ahora
+            List<int> patentesNuevas = ExtraerIdsPatentes(nuevoPermiso);
+
+            // 3. VALIDACIÓN DIRECTA: Si el usuario intenta agregar EXACTAMENTE el mismo componente 
+            // (sea una patente suelta o la misma familia) que ya está en la lista principal del rol:
+            if (rolActual.PermisosAsignados.Any(p => p.Id == nuevoPermiso.Id && p.GetType() == nuevoPermiso.GetType()))
+            {
+                throw new Exception($"El componente '{nuevoPermiso.Nombre}' ya está asignado directamente en la lista de este rol.");
+            }
+
+            // 4. VALIDACIÓN RECURSIVA TRADICIONAL (Cruzar las patentes internas)
+            foreach (int idPatente in patentesNuevas)
+            {
+                if (patentesActuales.Contains(idPatente))
+                {
+                    throw new Exception($"La patente con ID {idPatente} ya se encuentra asignada en este rol (de forma directa o heredada por una familia).");
+                }
+            }
+        }
+
+        // Función auxiliar interna recursiva para PerfilBLL (La dejamos por si la usan en otro lado)
+        private bool ExisteElementoRec(ComponentePermiso_65RD nodo, int idBuscar)
+        {
+            if (nodo.Id == idBuscar) return true;
+
+            if (nodo is Familia_65RD familia)
+            {
+                foreach (var hijo in familia.ObtenerHijos())
+                {
+                    if (ExisteElementoRec(hijo, idBuscar)) return true;
+                }
+            }
+            return false;
         }
 
         // MÉTODO AUXILIAR RECURSIVO: APLANADOR DE ÁRBOLES
