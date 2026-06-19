@@ -14,10 +14,12 @@
     "segAdministracion": "ADMINISTRACIÓN",
     "btnGestionUsuarios": "Gestión de Usuarios",
     "btnBitacoraEventos": "Bitácora de Eventos",
-    "btnMenuRoles": "Gestión de Roles",
+    "btnMenuRoles": "Gestión de Perfiles",
+    "btnMenuPerfiles": "Gestión de Perfiles",
     "btnMenuFamilias": "Gestión de Familias",
     "segConfiguracion": "CONFIGURACIÓN",
     "btnCambiarIdioma": "Cambiar Idioma",
+    "btnCambiarContrasena": "Cambiar Contraseña",
     "segSesion": "SESIÓN",
     "btnCerrarSesion": "CERRAR SESIÓN",
     "btnIniciarSesion": "Iniciar Sesión",
@@ -29,8 +31,7 @@
     "lblPanelInicioTitulo": "Panel de Inicio",
     "lblPanelInicioDetalle": "Seleccione una opción del menú lateral para comenzar.",
     "msgSesionActivaTitulo": "Sesión activa detectada",
-    "msgSesionActivaCuerpo": "Ya existe un usuario con la sesión iniciada. ¿Desea cerrar la sesión actual e ingresar con otra cuenta?",
-    "btnCambiarContrasena": "Cambiar Contraseña"
+    "msgSesionActivaCuerpo": "Ya existe un usuario con la sesión iniciada. ¿Desea cerrar la sesión actual e ingresar con otra cuenta?"
   },
 
   "frmGestionUsuarios": {
@@ -80,9 +81,9 @@
     "lblTituloVentana": "Seguridad - Cambiar Contraseña",
     "lblTituloPantalla": "CAMBIAR CONTRASEÑA",
     "lblUsuario": "Usuario",
-    "lblContraseñaActual": "ContraseñaActual",
-    "lblContraseñaNueva": "Contraseña nueva",
-    "lblConfirmarContraseña": "ConfirmarContraseña",
+    "lblContraseñaActual": "Contraseña Actual",
+    "lblContraseñaNueva": "Contraseña Nueva",
+    "lblConfirmarContraseña": "Confirmar Contraseña",
     "cbShowPassword": "Mostrar contraseña",
     "btnRegistrar": "CAMBIAR"
   },
@@ -125,9 +126,9 @@
     "msgExitoCuerpo": "El idioma de la aplicación se ha cambiado correctamente."
   },
 
-  "frmGestionRoles": {
-    "lblTituloVentana": "Control de Accesos - Gestión de Roles",
-    "lblTituloPantalla": "GESTIÓN DE ROLES",
+  "frmGestionPerfiles": {
+    "lblTituloVentana": "Control de Accesos - Gestión de Perfiles",
+    "lblTituloPantalla": "GESTIÓN DE PERFILES",
     "tabAsignacionRoles": "Asignación de Roles",
     "lblPermisosDisponibles": "Permisos Disponibles",
     "lblPerfilesExistentes": "Perfiles Existentes",
@@ -179,4 +180,4 @@
     "msgExitoTitulo": "Éxito"
 
   }
-  }
+}

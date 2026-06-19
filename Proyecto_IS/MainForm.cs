@@ -115,8 +115,8 @@ namespace Proyecto_IS
 
             if (canGestionRoles)
             {
-                string btnRoles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuRoles");
-                AgregarBoton("⚙️  " + btnRoles, ref y, AbrirGestionRoles);
+                string btnGestionPerfiles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuPerfiles");
+                AgregarBoton("⚙️  " + btnGestionPerfiles, ref y, AbrirGestionRoles);
             }
 
             if (canGestionFamilias)
@@ -130,9 +130,10 @@ namespace Proyecto_IS
             string segConfig = IdiomaManager.GetInstance().GetTexto(this.Name, "segConfiguracion");
             string btnIdioma = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarIdioma");
             string btnContrasena = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarContrasena");
-            string btnGestionRoles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuRoles");
+            string btnPerfiles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuPerfiles");
             string btnGestionFamilia = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuFamilias");
-
+             
+             
             AgregarSeparador(segConfig, ref y);
             AgregarBoton("🌐  " + btnIdioma, ref y, AbrirCambiarIdioma);
             AgregarBoton("🔑 " + btnContrasena, ref y,  AbrirCambiarContraseña);
@@ -309,6 +310,7 @@ namespace Proyecto_IS
                 }
 
                 SessionManager_65RD.Instancia.CerrarSesion();
+                IdiomaManager.GetInstance().CambiarIdioma("es");
                 this.Hide();
                 frmLogin login = new frmLogin();
                 login.Show();
@@ -341,7 +343,7 @@ namespace Proyecto_IS
 
         private void AbrirGestionRoles(object sender, EventArgs e)
         {
-            frmGestionRoles frm = new frmGestionRoles();
+            frmGestionPerfiles frm = new frmGestionPerfiles();
             frm.ShowDialog();
         }
 

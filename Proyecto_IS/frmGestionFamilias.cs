@@ -49,17 +49,21 @@ namespace Proyecto_IS
         private void CargarPermisosDisponibles()
         {
             lbFuentePermisos.Items.Clear();
-            var permisos = _permisoBLL.ObtenerTodosLosPermisos();
-            foreach (var p in permisos)
-            {
+
+            // Traemos TODAS las familias (sin importar si son hijas de otra)
+            var familias = _permisoBLL.ObtenerTodasLasFamilias();
+            foreach (var f in familias)
+                lbFuentePermisos.Items.Add(new ListBoxItemPermiso(f));
+
+            // Traemos TODAS las patentes (sin importar si ya están en alguna familia)
+            var patentes = _permisoBLL.ObtenerTodasLasPatentes();
+            foreach (var p in patentes)
                 lbFuentePermisos.Items.Add(new ListBoxItemPermiso(p));
-            }
         }
 
         private void CargarFamilias()
         {
-            var todos = _permisoBLL.ObtenerTodosLosPermisos();
-            _familiasCompletas = todos.OfType<Familia_65RD>().ToList() ?? new List<Familia_65RD>();
+            _familiasCompletas = _permisoBLL.ObtenerTodasLasFamilias();
             FiltrarYMostrarFamilias();
         }
 
@@ -138,45 +142,37 @@ namespace Proyecto_IS
         // ── 3. BOTÓN AGREGAR FAMILIA (METE EL PERMISO SELECCIONADO EN EL ARBOL)
         private void btnAgregarFamilia_Click(object sender, EventArgs e)
         {
-            if (lbFuentePermisos.SelectedItem == null)
-            {
-                MessageBox.Show("Por favor, seleccioná un permiso de la lista de la izquierda para agregar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if(lbFuentePermisos.SelectedItem == null)
+    {
+                MessageBox.Show("Por favor, seleccioná un permiso de la lista de la izquierda para agregar.",
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Desempaquetamos el permiso o familia seleccionada
+            // Garantizamos que haya una familia en edición antes de cualquier validación
+            if (_familiaEnEdicion == null)
+                _familiaEnEdicion = new Familia_65RD();
+
             ComponentePermiso_65RD permisoSeleccionado = ((ListBoxItemPermiso)lbFuentePermisos.SelectedItem).Permiso;
 
-            // 1. Validación básica de seguridad: no agregarse a sí misma
             if (_editandoFamiliaExistente && _familiaEnEdicion.Id == permisoSeleccionado.Id)
             {
-                MessageBox.Show("❌ No podés agregar una familia a sí misma.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("❌ No podés agregar una familia a sí misma.",
+                    "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
-
-            if (_familiaEnEdicion == null)
-            {
-                _familiaEnEdicion = new Familia_65RD();
             }
 
             try
             {
-                // 2. 🌟 NUEVA VALIDACIÓN RECURSIVA ANTES DE AGREGAR
-                // Le pedimos a la BLL de permisos que valide que 'permisoSeleccionado' 
-                // no traiga patentes que ya existan dentro de '_familiaEnEdicion'
                 _permisoBLL.ValidarAsignacionSinRepetidos(_familiaEnEdicion, permisoSeleccionado);
-
-                // 3. SI PASÓ LA VALIDACIÓN: Agregamos al objeto y al árbol visual
                 _familiaEnEdicion.AgregarHijo(permisoSeleccionado);
-
-                TreeNode nuevoNodo = CrearNodoPermiso(permisoSeleccionado);
-                tvFamiliaEdicion.Nodes.Add(nuevoNodo);
+                tvFamiliaEdicion.Nodes.Add(CrearNodoPermiso(permisoSeleccionado));
                 tvFamiliaEdicion.ExpandAll();
             }
             catch (Exception ex)
             {
-                // Si la BLL detecta que se repiten patentes en las profundidades, salta acá
-                MessageBox.Show($"❌ {ex.Message}", "Validación de Estructura", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"❌ {ex.Message}", "Validación de Estructura",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -335,6 +331,29 @@ namespace Proyecto_IS
         private void tvFamiliaEdicion_AfterSelect(object sender, TreeViewEventArgs e)
         {
 
+        }
+
+        private void btnQuitarPermiso_Click(object sender, EventArgs e)
+        {
+            if (tvFamiliaEdicion.SelectedNode == null)
+            {
+                MessageBox.Show("Seleccioná un elemento del árbol para quitar.",
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Solo permitimos quitar nodos raíz del árbol (hijos directos de la familia)
+            if (tvFamiliaEdicion.SelectedNode.Parent != null)
+            {
+                MessageBox.Show("Solo podés quitar elementos del primer nivel. " +
+                    "Para quitar un sub-elemento, editá la familia que lo contiene.",
+                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var componente = (ComponentePermiso_65RD)tvFamiliaEdicion.SelectedNode.Tag;
+            _familiaEnEdicion.EliminarHijo(componente);
+            tvFamiliaEdicion.Nodes.Remove(tvFamiliaEdicion.SelectedNode);
         }
     }
 }

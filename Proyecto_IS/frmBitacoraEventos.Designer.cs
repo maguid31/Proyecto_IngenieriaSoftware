@@ -54,7 +54,7 @@
             this.btnAplicar.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAplicar.ForeColor = System.Drawing.Color.White;
             this.btnAplicar.Location = new System.Drawing.Point(341, 700);
-            this.btnAplicar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAplicar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAplicar.Name = "btnAplicar";
             this.btnAplicar.Size = new System.Drawing.Size(153, 43);
             this.btnAplicar.TabIndex = 54;
@@ -70,7 +70,7 @@
             this.btnLimpiar.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiar.ForeColor = System.Drawing.Color.White;
             this.btnLimpiar.Location = new System.Drawing.Point(599, 700);
-            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(153, 43);
             this.btnLimpiar.TabIndex = 55;
@@ -86,7 +86,7 @@
             this.btnImprimir.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnImprimir.ForeColor = System.Drawing.Color.White;
             this.btnImprimir.Location = new System.Drawing.Point(856, 700);
-            this.btnImprimir.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnImprimir.Margin = new System.Windows.Forms.Padding(4);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(153, 43);
             this.btnImprimir.TabIndex = 56;
@@ -98,7 +98,7 @@
             // 
             this.dgvBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBitacora.Location = new System.Drawing.Point(164, 101);
-            this.dgvBitacora.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvBitacora.Margin = new System.Windows.Forms.Padding(4);
             this.dgvBitacora.Name = "dgvBitacora";
             this.dgvBitacora.RowHeadersWidth = 51;
             this.dgvBitacora.Size = new System.Drawing.Size(1190, 330);
@@ -107,15 +107,15 @@
             // dtpFechaIni
             // 
             this.dtpFechaIni.Location = new System.Drawing.Point(341, 588);
-            this.dtpFechaIni.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaIni.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaIni.Name = "dtpFechaIni";
             this.dtpFechaIni.Size = new System.Drawing.Size(265, 22);
             this.dtpFechaIni.TabIndex = 58;
             // 
             // dtpFechaFin
             // 
-            this.dtpFechaFin.Location = new System.Drawing.Point(823, 588);
-            this.dtpFechaFin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpFechaFin.Location = new System.Drawing.Point(898, 588);
+            this.dtpFechaFin.Margin = new System.Windows.Forms.Padding(4);
             this.dtpFechaFin.Name = "dtpFechaFin";
             this.dtpFechaFin.Size = new System.Drawing.Size(265, 22);
             this.dtpFechaFin.TabIndex = 59;
@@ -124,7 +124,7 @@
             // 
             this.cmbModulo.FormattingEnabled = true;
             this.cmbModulo.Location = new System.Drawing.Point(276, 501);
-            this.cmbModulo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbModulo.Margin = new System.Windows.Forms.Padding(4);
             this.cmbModulo.Name = "cmbModulo";
             this.cmbModulo.Size = new System.Drawing.Size(160, 24);
             this.cmbModulo.TabIndex = 60;
@@ -133,7 +133,7 @@
             // 
             this.cmbEvento.FormattingEnabled = true;
             this.cmbEvento.Location = new System.Drawing.Point(636, 501);
-            this.cmbEvento.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbEvento.Margin = new System.Windows.Forms.Padding(4);
             this.cmbEvento.Name = "cmbEvento";
             this.cmbEvento.Size = new System.Drawing.Size(160, 24);
             this.cmbEvento.TabIndex = 61;
@@ -142,7 +142,7 @@
             // 
             this.cmbCriticidad.FormattingEnabled = true;
             this.cmbCriticidad.Location = new System.Drawing.Point(1029, 496);
-            this.cmbCriticidad.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbCriticidad.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCriticidad.Name = "cmbCriticidad";
             this.cmbCriticidad.Size = new System.Drawing.Size(160, 24);
             this.cmbCriticidad.TabIndex = 62;
@@ -203,7 +203,7 @@
             this.lblFin.BackColor = System.Drawing.Color.Transparent;
             this.lblFin.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFin.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblFin.Location = new System.Drawing.Point(745, 585);
+            this.lblFin.Location = new System.Drawing.Point(760, 582);
             this.lblFin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFin.Name = "lblFin";
             this.lblFin.Size = new System.Drawing.Size(48, 32);
@@ -242,7 +242,7 @@
             this.Controls.Add(this.btnImprimir);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnAplicar);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmBitacoraEventos";
             this.Load += new System.EventHandler(this.frmBitacoraEventos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBitacora)).EndInit();

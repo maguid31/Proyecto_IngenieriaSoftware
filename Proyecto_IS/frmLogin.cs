@@ -103,11 +103,18 @@ namespace Proyecto_IS
                     break;
 
                 case ResultadoLogin.RequiereCambioContrasena:
-                    MessageBox.Show("Por seguridad, debe cambiar su contraseña en su primer ingreso.", "Cambio requerido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Por seguridad, debe cambiar su contraseña en su primer ingreso.",
+                        "Cambio requerido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     frmCambioContraseña frmCambio = new frmCambioContraseña();
                     frmCambio.Show();
                     this.Hide();
-                    frmCambio.FormClosed += (s, args) => this.Show();
+                    frmCambio.FormClosed += (s, args) =>
+                    {
+                        txtUsuario.Text = "";
+                        txtContraseña.Text = "";
+                        txtUsuario.Focus();
+                        this.Show();
+                    };
                     break;
 
                 case ResultadoLogin.CredencialesInvalidas:

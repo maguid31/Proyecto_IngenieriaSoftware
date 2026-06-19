@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_IS
 {
-    partial class frmGestionRoles
+    partial class frmGestionPerfiles
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tcRoles = new System.Windows.Forms.TabPage();
             this.btnLimpiarPerfil = new System.Windows.Forms.Button();
             this.lblDescripcionPerfil = new System.Windows.Forms.Label();
             this.lbPerfiles = new System.Windows.Forms.ListBox();
@@ -44,44 +43,14 @@
             this.txtNuevoPerfil = new System.Windows.Forms.TextBox();
             this.tvPermisosAsignados = new System.Windows.Forms.TreeView();
             this.lbPermisosDisponiblesTab2 = new System.Windows.Forms.ListBox();
-            this.Gestion = new System.Windows.Forms.TabControl();
-            this.tcRoles.SuspendLayout();
-            this.Gestion.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tcRoles
-            // 
-            this.tcRoles.Controls.Add(this.btnLimpiarPerfil);
-            this.tcRoles.Controls.Add(this.lblDescripcionPerfil);
-            this.tcRoles.Controls.Add(this.lbPerfiles);
-            this.tcRoles.Controls.Add(this.label1);
-            this.tcRoles.Controls.Add(this.txtDescripcion);
-            this.tcRoles.Controls.Add(this.txtBuscarPerfil);
-            this.tcRoles.Controls.Add(this.label3);
-            this.tcRoles.Controls.Add(this.btnGuardarPerfil);
-            this.tcRoles.Controls.Add(this.lblEstadoPerfil);
-            this.tcRoles.Controls.Add(this.btnQuitarPermiso);
-            this.tcRoles.Controls.Add(this.btnAsignarPermiso);
-            this.tcRoles.Controls.Add(this.btnEliminarPerfil);
-            this.tcRoles.Controls.Add(this.txtNuevoPerfil);
-            this.tcRoles.Controls.Add(this.tvPermisosAsignados);
-            this.tcRoles.Controls.Add(this.lbPermisosDisponiblesTab2);
-            this.tcRoles.Location = new System.Drawing.Point(4, 25);
-            this.tcRoles.Margin = new System.Windows.Forms.Padding(4);
-            this.tcRoles.Name = "tcRoles";
-            this.tcRoles.Padding = new System.Windows.Forms.Padding(4);
-            this.tcRoles.Size = new System.Drawing.Size(1448, 664);
-            this.tcRoles.TabIndex = 1;
-            this.tcRoles.Text = "Asignación de Roles";
-            this.tcRoles.UseVisualStyleBackColor = true;
-            this.tcRoles.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // btnLimpiarPerfil
             // 
             this.btnLimpiarPerfil.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnLimpiarPerfil.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarPerfil.ForeColor = System.Drawing.Color.White;
-            this.btnLimpiarPerfil.Location = new System.Drawing.Point(1193, 348);
+            this.btnLimpiarPerfil.Location = new System.Drawing.Point(1172, 387);
             this.btnLimpiarPerfil.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiarPerfil.Name = "btnLimpiarPerfil";
             this.btnLimpiarPerfil.Size = new System.Drawing.Size(229, 43);
@@ -93,7 +62,7 @@
             // lblDescripcionPerfil
             // 
             this.lblDescripcionPerfil.AutoSize = true;
-            this.lblDescripcionPerfil.Location = new System.Drawing.Point(573, 584);
+            this.lblDescripcionPerfil.Location = new System.Drawing.Point(707, 617);
             this.lblDescripcionPerfil.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescripcionPerfil.Name = "lblDescripcionPerfil";
             this.lblDescripcionPerfil.Size = new System.Drawing.Size(44, 16);
@@ -104,7 +73,7 @@
             // 
             this.lbPerfiles.FormattingEnabled = true;
             this.lbPerfiles.ItemHeight = 16;
-            this.lbPerfiles.Location = new System.Drawing.Point(417, 112);
+            this.lbPerfiles.Location = new System.Drawing.Point(372, 159);
             this.lbPerfiles.Name = "lbPerfiles";
             this.lbPerfiles.Size = new System.Drawing.Size(241, 404);
             this.lbPerfiles.TabIndex = 47;
@@ -115,7 +84,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label1.Location = new System.Drawing.Point(1039, 153);
+            this.label1.Location = new System.Drawing.Point(1004, 174);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 32);
@@ -124,7 +93,7 @@
             // 
             // txtDescripcion
             // 
-            this.txtDescripcion.Location = new System.Drawing.Point(1209, 153);
+            this.txtDescripcion.Location = new System.Drawing.Point(1213, 174);
             this.txtDescripcion.Margin = new System.Windows.Forms.Padding(4);
             this.txtDescripcion.Name = "txtDescripcion";
             this.txtDescripcion.Size = new System.Drawing.Size(213, 22);
@@ -132,7 +101,7 @@
             // 
             // txtBuscarPerfil
             // 
-            this.txtBuscarPerfil.Location = new System.Drawing.Point(417, 84);
+            this.txtBuscarPerfil.Location = new System.Drawing.Point(372, 116);
             this.txtBuscarPerfil.Name = "txtBuscarPerfil";
             this.txtBuscarPerfil.Size = new System.Drawing.Size(127, 22);
             this.txtBuscarPerfil.TabIndex = 44;
@@ -143,7 +112,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Nirmala UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label3.Location = new System.Drawing.Point(1013, 102);
+            this.label3.Location = new System.Drawing.Point(978, 130);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(175, 32);
@@ -155,7 +124,7 @@
             this.btnGuardarPerfil.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnGuardarPerfil.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardarPerfil.ForeColor = System.Drawing.Color.White;
-            this.btnGuardarPerfil.Location = new System.Drawing.Point(1193, 477);
+            this.btnGuardarPerfil.Location = new System.Drawing.Point(1172, 520);
             this.btnGuardarPerfil.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarPerfil.Name = "btnGuardarPerfil";
             this.btnGuardarPerfil.Size = new System.Drawing.Size(229, 39);
@@ -167,7 +136,7 @@
             // lblEstadoPerfil
             // 
             this.lblEstadoPerfil.AutoSize = true;
-            this.lblEstadoPerfil.Location = new System.Drawing.Point(111, 584);
+            this.lblEstadoPerfil.Location = new System.Drawing.Point(34, 617);
             this.lblEstadoPerfil.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEstadoPerfil.Name = "lblEstadoPerfil";
             this.lblEstadoPerfil.Size = new System.Drawing.Size(44, 16);
@@ -179,7 +148,7 @@
             this.btnQuitarPermiso.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnQuitarPermiso.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnQuitarPermiso.ForeColor = System.Drawing.Color.White;
-            this.btnQuitarPermiso.Location = new System.Drawing.Point(1193, 282);
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(1172, 325);
             this.btnQuitarPermiso.Margin = new System.Windows.Forms.Padding(4);
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(229, 43);
@@ -193,7 +162,7 @@
             this.btnAsignarPermiso.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnAsignarPermiso.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAsignarPermiso.ForeColor = System.Drawing.Color.White;
-            this.btnAsignarPermiso.Location = new System.Drawing.Point(1193, 221);
+            this.btnAsignarPermiso.Location = new System.Drawing.Point(1172, 257);
             this.btnAsignarPermiso.Margin = new System.Windows.Forms.Padding(4);
             this.btnAsignarPermiso.Name = "btnAsignarPermiso";
             this.btnAsignarPermiso.Size = new System.Drawing.Size(229, 44);
@@ -207,7 +176,7 @@
             this.btnEliminarPerfil.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnEliminarPerfil.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminarPerfil.ForeColor = System.Drawing.Color.White;
-            this.btnEliminarPerfil.Location = new System.Drawing.Point(1193, 411);
+            this.btnEliminarPerfil.Location = new System.Drawing.Point(1172, 455);
             this.btnEliminarPerfil.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminarPerfil.Name = "btnEliminarPerfil";
             this.btnEliminarPerfil.Size = new System.Drawing.Size(229, 43);
@@ -218,7 +187,7 @@
             // 
             // txtNuevoPerfil
             // 
-            this.txtNuevoPerfil.Location = new System.Drawing.Point(1209, 112);
+            this.txtNuevoPerfil.Location = new System.Drawing.Point(1213, 130);
             this.txtNuevoPerfil.Margin = new System.Windows.Forms.Padding(4);
             this.txtNuevoPerfil.Name = "txtNuevoPerfil";
             this.txtNuevoPerfil.Size = new System.Drawing.Size(213, 22);
@@ -226,7 +195,7 @@
             // 
             // tvPermisosAsignados
             // 
-            this.tvPermisosAsignados.Location = new System.Drawing.Point(708, 116);
+            this.tvPermisosAsignados.Location = new System.Drawing.Point(646, 159);
             this.tvPermisosAsignados.Margin = new System.Windows.Forms.Padding(4);
             this.tvPermisosAsignados.Name = "tvPermisosAsignados";
             this.tvPermisosAsignados.Size = new System.Drawing.Size(288, 400);
@@ -237,42 +206,42 @@
             // 
             this.lbPermisosDisponiblesTab2.FormattingEnabled = true;
             this.lbPermisosDisponiblesTab2.ItemHeight = 16;
-            this.lbPermisosDisponiblesTab2.Location = new System.Drawing.Point(57, 130);
+            this.lbPermisosDisponiblesTab2.Location = new System.Drawing.Point(37, 159);
             this.lbPermisosDisponiblesTab2.Margin = new System.Windows.Forms.Padding(4);
             this.lbPermisosDisponiblesTab2.Name = "lbPermisosDisponiblesTab2";
             this.lbPermisosDisponiblesTab2.Size = new System.Drawing.Size(282, 404);
             this.lbPermisosDisponiblesTab2.TabIndex = 11;
             // 
-            // Gestion
-            // 
-            this.Gestion.Controls.Add(this.tcRoles);
-            this.Gestion.Location = new System.Drawing.Point(46, 13);
-            this.Gestion.Margin = new System.Windows.Forms.Padding(4);
-            this.Gestion.Name = "Gestion";
-            this.Gestion.SelectedIndex = 0;
-            this.Gestion.Size = new System.Drawing.Size(1456, 693);
-            this.Gestion.TabIndex = 0;
-            // 
             // frmGestionRoles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1659, 761);
-            this.Controls.Add(this.Gestion);
+            this.ClientSize = new System.Drawing.Size(1677, 695);
+            this.Controls.Add(this.tvPermisosAsignados);
+            this.Controls.Add(this.lbPerfiles);
+            this.Controls.Add(this.btnLimpiarPerfil);
+            this.Controls.Add(this.btnGuardarPerfil);
+            this.Controls.Add(this.btnEliminarPerfil);
+            this.Controls.Add(this.lblDescripcionPerfil);
+            this.Controls.Add(this.txtDescripcion);
+            this.Controls.Add(this.btnQuitarPermiso);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnAsignarPermiso);
+            this.Controls.Add(this.lbPermisosDisponiblesTab2);
+            this.Controls.Add(this.txtBuscarPerfil);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblEstadoPerfil);
+            this.Controls.Add(this.txtNuevoPerfil);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmGestionRoles";
             this.Text = "frmGestionRoles";
             this.Load += new System.EventHandler(this.frmGestionRoles_Load);
-            this.tcRoles.ResumeLayout(false);
-            this.tcRoles.PerformLayout();
-            this.Gestion.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TabPage tcRoles;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnGuardarPerfil;
         private System.Windows.Forms.Label lblEstadoPerfil;
@@ -282,7 +251,6 @@
         private System.Windows.Forms.TextBox txtNuevoPerfil;
         private System.Windows.Forms.TreeView tvPermisosAsignados;
         private System.Windows.Forms.ListBox lbPermisosDisponiblesTab2;
-        private System.Windows.Forms.TabControl Gestion;
         private System.Windows.Forms.TextBox txtBuscarPerfil;
         private System.Windows.Forms.ListBox lbPerfiles;
         private System.Windows.Forms.Label label1;

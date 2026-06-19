@@ -41,6 +41,7 @@
             this.lblDescripcionFamilia = new System.Windows.Forms.Label();
             this.btnEliminarFamilia = new System.Windows.Forms.Button();
             this.btnAgregarFamilia = new System.Windows.Forms.Button();
+            this.btnQuitarPermiso = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -72,7 +73,7 @@
             this.btnGuardarFamilia.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnGuardarFamilia.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardarFamilia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnGuardarFamilia.Location = new System.Drawing.Point(941, 447);
+            this.btnGuardarFamilia.Location = new System.Drawing.Point(941, 528);
             this.btnGuardarFamilia.Margin = new System.Windows.Forms.Padding(4);
             this.btnGuardarFamilia.Name = "btnGuardarFamilia";
             this.btnGuardarFamilia.Size = new System.Drawing.Size(296, 46);
@@ -86,7 +87,7 @@
             this.btnLimpiarFamilia.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnLimpiarFamilia.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpiarFamilia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnLimpiarFamilia.Location = new System.Drawing.Point(941, 393);
+            this.btnLimpiarFamilia.Location = new System.Drawing.Point(941, 474);
             this.btnLimpiarFamilia.Margin = new System.Windows.Forms.Padding(4);
             this.btnLimpiarFamilia.Name = "btnLimpiarFamilia";
             this.btnLimpiarFamilia.Size = new System.Drawing.Size(296, 46);
@@ -151,7 +152,7 @@
             // lblDescripcionFamilia
             // 
             this.lblDescripcionFamilia.AutoSize = true;
-            this.lblDescripcionFamilia.Location = new System.Drawing.Point(472, 625);
+            this.lblDescripcionFamilia.Location = new System.Drawing.Point(586, 575);
             this.lblDescripcionFamilia.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDescripcionFamilia.Name = "lblDescripcionFamilia";
             this.lblDescripcionFamilia.Size = new System.Drawing.Size(44, 16);
@@ -163,7 +164,7 @@
             this.btnEliminarFamilia.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.btnEliminarFamilia.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminarFamilia.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnEliminarFamilia.Location = new System.Drawing.Point(941, 339);
+            this.btnEliminarFamilia.Location = new System.Drawing.Point(941, 408);
             this.btnEliminarFamilia.Margin = new System.Windows.Forms.Padding(4);
             this.btnEliminarFamilia.Name = "btnEliminarFamilia";
             this.btnEliminarFamilia.Size = new System.Drawing.Size(296, 46);
@@ -186,11 +187,26 @@
             this.btnAgregarFamilia.UseVisualStyleBackColor = false;
             this.btnAgregarFamilia.Click += new System.EventHandler(this.btnAgregarFamilia_Click);
             // 
+            // btnQuitarPermiso
+            // 
+            this.btnQuitarPermiso.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.btnQuitarPermiso.Font = new System.Drawing.Font("Nirmala UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitarPermiso.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnQuitarPermiso.Location = new System.Drawing.Point(941, 339);
+            this.btnQuitarPermiso.Margin = new System.Windows.Forms.Padding(4);
+            this.btnQuitarPermiso.Name = "btnQuitarPermiso";
+            this.btnQuitarPermiso.Size = new System.Drawing.Size(296, 46);
+            this.btnQuitarPermiso.TabIndex = 61;
+            this.btnQuitarPermiso.Text = "QUITAR PERMISO";
+            this.btnQuitarPermiso.UseVisualStyleBackColor = false;
+            this.btnQuitarPermiso.Click += new System.EventHandler(this.btnQuitarPermiso_Click);
+            // 
             // frmGestionFamilias
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1385, 665);
+            this.ClientSize = new System.Drawing.Size(1385, 677);
+            this.Controls.Add(this.btnQuitarPermiso);
             this.Controls.Add(this.btnAgregarFamilia);
             this.Controls.Add(this.btnEliminarFamilia);
             this.Controls.Add(this.lblDescripcionFamilia);
@@ -227,5 +243,6 @@
         private System.Windows.Forms.Label lblDescripcionFamilia;
         private System.Windows.Forms.Button btnEliminarFamilia;
         private System.Windows.Forms.Button btnAgregarFamilia;
+        private System.Windows.Forms.Button btnQuitarPermiso;
     }
 }

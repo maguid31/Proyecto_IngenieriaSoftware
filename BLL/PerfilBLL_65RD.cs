@@ -108,6 +108,12 @@ namespace BLL
         {
             if (string.IsNullOrWhiteSpace(perfil.Nombre))
                 throw new ArgumentException("El nombre del perfil no puede estar vacío.");
+
+            // Validar nombre duplicado
+            var existentes = _perfilDAL.ObtenerTodosLosPerfiles();
+            if (existentes.Any(p => p.Nombre.Equals(perfil.Nombre.Trim(), StringComparison.OrdinalIgnoreCase)))
+                throw new ArgumentException($"Ya existe un perfil con el nombre '{perfil.Nombre}'.");
+
             return _perfilDAL.InsertarPerfil(perfil);
         }
 

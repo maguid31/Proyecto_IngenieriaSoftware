@@ -15,10 +15,12 @@
     "segAdministracion": "ADMINISTRATION",
     "btnGestionUsuarios": "User Management",
     "btnBitacoraEventos": "Event Log",
-    "btnMenuRoles": "Role Management",
+    "btnMenuRoles": "Profile Management",
+    "btnMenuPerfiles": "Profile Management",
     "btnMenuFamilias": "Family Management",
     "segConfiguracion": "CONFIGURATION",
     "btnCambiarIdioma": "Change Language",
+    "btnCambiarContrasena": "Change Password",
     "segSesion": "SESSION",
     "btnCerrarSesion": "LOG OUT",
     "btnIniciarSesion": "Log In",
@@ -124,9 +126,9 @@
     "msgExitoTitulo": "Language Updated",
     "msgExitoCuerpo": "The application language has been successfully changed."
   },
-  "frmGestionRoles": {
-    "lblTituloVentana": "Access Control - Role Management",
-    "lblTituloPantalla": "ROLE MANAGEMENT",
+  "frmGestionPerfiles": {
+    "lblTituloVentana": "Access Control - Profile Management",
+    "lblTituloPantalla": "PROFILE MANAGEMENT",
     "tabAsignacionRoles": "Role Assignment",
     "lblPermisosDisponibles": "Available Permissions",
     "lblPerfilesExistentes": "Existing Profiles",

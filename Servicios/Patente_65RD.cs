@@ -14,7 +14,10 @@ namespace Servicios
             // Las patentes no pueden tener hijos, lanzamos excepción o simplemente no hacemos nada
             throw new Exception("No se le pueden asignar permisos hijos a una Patente.");
         }
-
+        public override void EliminarHijo(ComponentePermiso_65RD c)
+        {
+            // Hoja: no hace nada
+        }
         public override void VaciarHijos()
         {
             // No hace nada

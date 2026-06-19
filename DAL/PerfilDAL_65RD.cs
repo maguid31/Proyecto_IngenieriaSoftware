@@ -185,29 +185,59 @@ namespace DAL
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // 🌟 CORRECCIÓN: Usamos UNION para traer los IDs tanto de Patentes como de Familias asociadas al Perfil
-                string query = @"
-                         SELECT IdPermiso AS PermisoId FROM Perfil_Permiso WHERE IdPerfil = @id
-                         UNION
-                         SELECT IdFamilia AS PermisoId FROM Perfil_Familia WHERE IdPerfil = @id";
+                con.Open();
 
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                // Patentes directas del perfil
+                string queryPatentes = @"
+            SELECT p.Id, p.Nombre, p.Descripcion
+            FROM Permisos p
+            INNER JOIN Perfil_Permiso pp ON p.Id = pp.IdPermiso
+            WHERE pp.IdPerfil = @id";
+
+                using (SqlCommand cmd = new SqlCommand(queryPatentes, con))
                 {
                     cmd.Parameters.AddWithValue("@id", idPerfil);
-                    con.Open();
                     using (SqlDataReader r = cmd.ExecuteReader())
                     {
                         while (r.Read())
                         {
-                            int idPermiso = Convert.ToInt32(r["PermisoId"]);
+                            lista.Add(new Patente_65RD
+                            {
+                                Id = Convert.ToInt32(r["Id"]),
+                                Nombre = r["Nombre"].ToString(),
+                                Descripcion = r["Descripcion"].ToString()
+                            });
+                        }
+                    }
+                }
 
-                            // Tu método recursivo se encarga de determinar inteligentemente si es Patente o Familia
-                            var comp = permDAL.ObtenerPermisoRecursivo(idPermiso);
-                            if (comp != null) lista.Add(comp);
+                // Familias directas del perfil, cargadas recursivamente
+                string queryFamilias = @"
+            SELECT f.Id, f.Nombre, f.Descripcion
+            FROM Familia f
+            INNER JOIN Perfil_Familia pf ON f.Id = pf.IdFamilia
+            WHERE pf.IdPerfil = @id";
+
+                using (SqlCommand cmd = new SqlCommand(queryFamilias, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", idPerfil);
+                    using (SqlDataReader r = cmd.ExecuteReader())
+                    {
+                        while (r.Read())
+                        {
+                            var familia = new Familia_65RD
+                            {
+                                Id = Convert.ToInt32(r["Id"]),
+                                Nombre = r["Nombre"].ToString(),
+                                Descripcion = r["Descripcion"].ToString()
+                            };
+                            // Cargamos sus hijos recursivamente
+                            lista.Add(permDAL.ObtenerPermisoRecursivo(familia));
                         }
                     }
                 }
             }
+
             return lista;
         }
     }

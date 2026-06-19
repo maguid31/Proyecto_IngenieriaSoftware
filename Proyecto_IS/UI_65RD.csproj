@@ -70,11 +70,11 @@
     <Compile Include="frmGestionFamilias.Designer.cs">
       <DependentUpon>frmGestionFamilias.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmGestionRoles.cs">
+    <Compile Include="frmGestionPerfiles.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmGestionRoles.Designer.cs">
-      <DependentUpon>frmGestionRoles.cs</DependentUpon>
+    <Compile Include="frmGestionPerfiles.Designer.cs">
+      <DependentUpon>frmGestionPerfiles.cs</DependentUpon>
     </Compile>
     <Compile Include="frmIdioma.cs">
       <SubType>Form</SubType>
@@ -111,8 +111,8 @@
     <EmbeddedResource Include="frmGestionFamilias.resx">
       <DependentUpon>frmGestionFamilias.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGestionRoles.resx">
-      <DependentUpon>frmGestionRoles.cs</DependentUpon>
+    <EmbeddedResource Include="frmGestionPerfiles.resx">
+      <DependentUpon>frmGestionPerfiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmIdioma.resx">
       <DependentUpon>frmIdioma.cs</DependentUpon>

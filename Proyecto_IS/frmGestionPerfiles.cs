@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Proyecto_IS
 {
-    public partial class frmGestionRoles : Form, IidiomaObserver
+    public partial class frmGestionPerfiles : Form, IidiomaObserver
     {
         // ── CAPAS BLL
         private readonly PermisoBLL_65RD _permisoBLL = new PermisoBLL_65RD();
@@ -30,7 +30,7 @@ namespace Proyecto_IS
         private static readonly Color ColorSuccess = Color.SeaGreen;
         private static readonly Color ColorWarning = Color.Orange;
 
-        public frmGestionRoles()
+        public frmGestionPerfiles()
         {
             InitializeComponent();
             txtBuscarPerfil.TextChanged += txtBuscarPerfil_TextChanged; // 
@@ -71,40 +71,18 @@ namespace Proyecto_IS
             FiltrarYMostrarPerfiles();
         }
 
-        private void lbPerfiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            tvPermisosAsignados.Nodes.Clear();
-            lblEstadoPerfil.Text = string.Empty;
-
-            if (lbPerfiles.SelectedItem == null)
-            {
-                _perfilSeleccionado = null;
-                return;
-            }
-
-            _perfilSeleccionado = ((ListBoxItemPerfil)lbPerfiles.SelectedItem).Perfil;
-
-            if (!string.IsNullOrWhiteSpace(_perfilSeleccionado.Descripcion))
-            {
-                lblDescripcionPerfil.Text = $"📝 Descripciones: {_perfilSeleccionado.Descripcion}";
-            }
-            else
-            {
-                lblDescripcionPerfil.Text = "📝 Sin descripción disponible.";
-            }
-
-            foreach (var perm in _perfilSeleccionado.PermisosAsignados)
-            {
-                tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(perm));
-            }
-            tvPermisosAsignados.ExpandAll();
-        }
+       
 
         private void CargarPermisosDisponiblesTab2()
         {
             lbPermisosDisponiblesTab2.Items.Clear();
-            var permisos = _permisoBLL.ObtenerTodosLosPermisos();
-            foreach (var p in permisos)
+
+            var familias = _permisoBLL.ObtenerTodasLasFamilias();
+            foreach (var f in familias)
+                lbPermisosDisponiblesTab2.Items.Add(new ListBoxItemPermiso(f));
+
+            var patentes = _permisoBLL.ObtenerTodasLasPatentes();
+            foreach (var p in patentes)
                 lbPermisosDisponiblesTab2.Items.Add(new ListBoxItemPermiso(p));
         }
 
@@ -189,24 +167,22 @@ namespace Proyecto_IS
             }
             else
             {
-                
-                bool yaExisteEnArbol = false;
-                foreach (TreeNode nodo in tvPermisosAsignados.Nodes)
-                {
-                    if (nodo.Tag is ComponentePermiso_65RD comp && comp.Id == permiso.Id)
-                    {
-                        yaExisteEnArbol = true;
-                        break;
-                    }
-                }
 
-                if (yaExisteEnArbol)
-                {
-                    MessageBox.Show($"El permiso '{permiso.Nombre}' ya fue agregado al nuevo perfil.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                var perfilTemp = new Perfil_65RD();
+                foreach (TreeNode n in tvPermisosAsignados.Nodes)
+                    if (n.Tag is ComponentePermiso_65RD c)
+                        perfilTemp.PermisosAsignados.Add(c);
 
-                tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(permiso));
+                try
+                {
+                    _perfilBLL.ValidarAsignacionSinRepetidos(perfilTemp, permiso);
+                    tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(permiso));
+                    tvPermisosAsignados.ExpandAll();
+                }
+                catch (Exception ex)
+                {
+                    MostrarMensajePerfil($"❌ {ex.Message}", ColorDanger);
+                }
             }
 
             tvPermisosAsignados.ExpandAll();
@@ -268,7 +244,10 @@ namespace Proyecto_IS
                         }
                     }
 
-                    _perfilBLL.CrearPerfil(nuevoPerfil);
+                    _perfilBLL.CrearPerfil(nuevoPerfil);  // inserta en Perfiles y setea nuevoPerfil.Id
+
+                    if (nuevoPerfil.PermisosAsignados.Count > 0)
+                        _perfilBLL.GuardarAsignacionPermisos(nuevoPerfil);
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Alta", 2, $"Creación del rol '{nombre}'.");
                     MessageBox.Show($"✔ El perfil '{nombre}' fue creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -433,11 +412,8 @@ namespace Proyecto_IS
             // Etiquetas de textos (Labels)
             label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombrePerfil");
             label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDescripcion");
-            lbPermisosDisponiblesTab2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPermisosDisponibles"); 
-            lbPerfiles.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPerfilesExistentes");   
 
-           
-           
+          
             btnEliminarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnEliminarPerfil");
             btnAsignarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAsignarPermiso");
             btnQuitarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnQuitarPermiso");

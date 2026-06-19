@@ -74,9 +74,12 @@ namespace BLL
         public bool GuardarFamilia(Familia_65RD familia)
         {
             if (string.IsNullOrWhiteSpace(familia.Nombre))
-            {
                 throw new ArgumentException("El nombre de la familia no puede estar vacío.");
-            }
+
+            // Validar nombre duplicado
+            var existentes = _permisoDAL.ObtenerTodasLasFamilias(); // ver nota abajo
+            if (existentes.Any(f => f.Nombre.Equals(familia.Nombre.Trim(), StringComparison.OrdinalIgnoreCase)))
+                throw new ArgumentException($"Ya existe una familia con el nombre '{familia.Nombre}'.");
 
             return _permisoDAL.GuardarFamilia(familia);
         }
@@ -129,7 +132,10 @@ namespace BLL
                 }
             }
         }
-
+        public List<Familia_65RD> ObtenerTodasLasFamilias()
+        {
+            return _permisoDAL.ObtenerTodasLasFamilias();
+        }
         // 🛠 CORREGIDO: Cambiamos 'familia.Hijos' por 'familia.ObtenerHijos()' para mantener tu diseño
         private List<int> ObtenerTodasLasPatentesDeFormaRecursiva(ComponentePermiso_65RD componente)
         {

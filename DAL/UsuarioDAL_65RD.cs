@@ -100,19 +100,20 @@ namespace DAL_65RD
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                
-                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, PerfilId, Activo, Email,Idioma) " +
-                               "VALUES (@nombre, @apellido, @dni, @contraseña, @perfilId, @activo, @email,@idioma)";
+
+                string query = "INSERT INTO Usuarios (Nombre, Apellido, DNI, Contraseña, PerfilId, Activo, Email, Idioma, PrimerLogin) " +
+               "VALUES (@nombre, @apellido, @dni, @contraseña, @perfilId, @activo, @email, @idioma, @primerLogin)";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.Parameters.AddWithValue("@nombre", (object)nuevoUsuario.Nombre ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@apellido", nuevoUsuario.Apellido);
                     cmd.Parameters.AddWithValue("@dni", nuevoUsuario.DNI);
-                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña); 
-                    cmd.Parameters.AddWithValue("@perfilId", nuevoUsuario.Perfil.Id); 
+                    cmd.Parameters.AddWithValue("@contraseña", nuevoUsuario.Contraseña);
+                    cmd.Parameters.AddWithValue("@perfilId", nuevoUsuario.Perfil.Id);
                     cmd.Parameters.AddWithValue("@activo", nuevoUsuario.Activo);
                     cmd.Parameters.AddWithValue("@email", (object)nuevoUsuario.Email ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@idioma", !string.IsNullOrEmpty(nuevoUsuario.Idioma) ? nuevoUsuario.Idioma : "es");
+                    cmd.Parameters.AddWithValue("@primerLogin", nuevoUsuario.PrimerLogin ? 1 : 0);
                     con.Open();
                     return cmd.ExecuteNonQuery() > 0;
                 }

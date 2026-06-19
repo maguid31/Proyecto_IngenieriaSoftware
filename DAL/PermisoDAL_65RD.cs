@@ -14,6 +14,7 @@ namespace DAL_65RD
         private string connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
 
         // 1. Carga los componentes iniciales asignados a un Perfil
+        // 1. Carga los componentes iniciales asignados a un Perfil
         public List<ComponentePermiso_65RD> ObtenerPermisosPorPerfil(int perfilId)
         {
             List<ComponentePermiso_65RD> lista = new List<ComponentePermiso_65RD>();
@@ -21,10 +22,10 @@ namespace DAL_65RD
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 string queryPatentes = @"
-                    SELECT p.Id, p.Nombre, p.Descripcion 
-                    FROM Permisos p
-                    INNER JOIN Perfil_Permiso pp ON p.Id = pp.IdPermiso
-                    WHERE pp.IdPerfil = @perfilId";
+            SELECT p.Id, p.Nombre, p.Descripcion 
+            FROM Permisos p
+            INNER JOIN Perfil_Permiso pp ON p.Id = pp.IdPermiso
+            WHERE pp.IdPerfil = @perfilId";
                 con.Open();
 
                 using (SqlCommand cmd = new SqlCommand(queryPatentes, con))
@@ -34,22 +35,21 @@ namespace DAL_65RD
                     {
                         while (reader.Read())
                         {
-                            var patente = new Patente_65RD
+                            lista.Add(new Patente_65RD
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
                                 Nombre = reader["Nombre"].ToString(),
                                 Descripcion = reader["Descripcion"].ToString()
-                            };
-                            lista.Add(patente);
+                            });
                         }
                     }
                 }
 
                 string queryFamilias = @"
-                    SELECT f.Id, f.Nombre, f.Descripcion 
-                    FROM Familia f
-                    INNER JOIN Perfil_Familia pf ON f.Id = pf.IdFamilia
-                    WHERE pf.IdPerfil = @perfilId";
+            SELECT f.Id, f.Nombre, f.Descripcion 
+            FROM Familia f
+            INNER JOIN Perfil_Familia pf ON f.Id = pf.IdFamilia
+            WHERE pf.IdPerfil = @perfilId";
 
                 using (SqlCommand cmd = new SqlCommand(queryFamilias, con))
                 {
@@ -58,13 +58,12 @@ namespace DAL_65RD
                     {
                         while (reader.Read())
                         {
-                            var familia = new Familia_65RD
+                            lista.Add(new Familia_65RD
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
                                 Nombre = reader["Nombre"].ToString(),
                                 Descripcion = reader["Descripcion"].ToString()
-                            };
-                            lista.Add(familia);
+                            });
                         }
                     }
                 }
@@ -149,28 +148,52 @@ namespace DAL_65RD
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // Como los hijos en Familia_Permiso mapean directamente a Patentes de la tabla Permisos
-                string query = @"
-                    SELECT p.Id, p.Nombre, p.Descripcion 
-                    FROM Permisos p
-                    INNER JOIN Familia_Permiso fp ON p.Id = fp.IdHijo
-                    WHERE fp.IdPadre = @padreId";
+                con.Open();
 
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                // Hijos que son Patentes (Familia_Permiso)
+                string queryPatentes = @"
+            SELECT p.Id, p.Nombre, p.Descripcion 
+            FROM Permisos p
+            INNER JOIN Familia_Permiso fp ON p.Id = fp.IdHijo
+            WHERE fp.IdPadre = @padreId";
+
+                using (SqlCommand cmd = new SqlCommand(queryPatentes, con))
                 {
                     cmd.Parameters.AddWithValue("@padreId", familiaPadreId);
-                    con.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            var patenteHijo = new Patente_65RD
+                            hijos.Add(new Patente_65RD
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
                                 Nombre = reader["Nombre"].ToString(),
                                 Descripcion = reader["Descripcion"].ToString()
-                            };
-                            hijos.Add(patenteHijo);
+                            });
+                        }
+                    }
+                }
+
+                // Hijos que son Familias (Familia_Familia) ← ESTO FALTABA
+                string queryFamilias = @"
+            SELECT f.Id, f.Nombre, f.Descripcion 
+            FROM Familia f
+            INNER JOIN Familia_Familia ff ON f.Id = ff.IdFamiliaHijo
+            WHERE ff.IdFamiliaPadre = @padreId";
+
+                using (SqlCommand cmd = new SqlCommand(queryFamilias, con))
+                {
+                    cmd.Parameters.AddWithValue("@padreId", familiaPadreId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            hijos.Add(new Familia_65RD
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Nombre = reader["Nombre"].ToString(),
+                                Descripcion = reader["Descripcion"].ToString()
+                            });
                         }
                     }
                 }
@@ -186,35 +209,35 @@ namespace DAL_65RD
             {
                 con.Open();
 
-                // Traemos las Familias
-                using (SqlCommand cmd = new SqlCommand("SELECT Id, Nombre, Descripcion FROM Familia", con))
+                // Solo familias que NO son hijas de otra familia
+                string qFamilias = @"
+            SELECT Id, Nombre, Descripcion FROM Familia
+            WHERE Id NOT IN (SELECT IdFamiliaHijo FROM Familia_Familia)";
+
+                using (SqlCommand cmd = new SqlCommand(qFamilias, con))
                 using (SqlDataReader r = cmd.ExecuteReader())
-                {
                     while (r.Read())
-                    {
                         lista.Add(new Familia_65RD
                         {
                             Id = Convert.ToInt32(r["Id"]),
                             Nombre = r["Nombre"].ToString(),
                             Descripcion = r["Descripcion"].ToString()
                         });
-                    }
-                }
 
-                // Traemos las Patentes
-                using (SqlCommand cmd = new SqlCommand("SELECT Id, Nombre, Descripcion FROM Permisos", con))
+                // Solo patentes que NO son hijas de ninguna familia
+                string qPatentes = @"
+            SELECT Id, Nombre, Descripcion FROM Permisos
+            WHERE Id NOT IN (SELECT IdHijo FROM Familia_Permiso)";
+
+                using (SqlCommand cmd = new SqlCommand(qPatentes, con))
                 using (SqlDataReader r = cmd.ExecuteReader())
-                {
                     while (r.Read())
-                    {
                         lista.Add(new Patente_65RD
                         {
                             Id = Convert.ToInt32(r["Id"]),
                             Nombre = r["Nombre"].ToString(),
                             Descripcion = r["Descripcion"].ToString()
                         });
-                    }
-                }
             }
             return lista;
         }
@@ -246,6 +269,27 @@ namespace DAL_65RD
             return lista;
         }
 
+        public List<Familia_65RD> ObtenerTodasLasFamilias()
+        {
+            var lista = new List<Familia_65RD>();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT Id, Nombre, Descripcion FROM Familia", con))
+                {
+                    con.Open();
+                    using (SqlDataReader r = cmd.ExecuteReader())
+                        while (r.Read())
+                            lista.Add(new Familia_65RD
+                            {
+                                Id = Convert.ToInt32(r["Id"]),
+                                Nombre = r["Nombre"].ToString(),
+                                Descripcion = r["Descripcion"].ToString()
+                            });
+                }
+            }
+            return lista;
+        }
+
         // 6. ¡COMPLETO!: Ahora sí guarda de verdad en la base de datos relacional
         public bool GuardarFamilia(ComponentePermiso_65RD familia)
         {
@@ -266,18 +310,30 @@ namespace DAL_65RD
                         }
 
                         // B. Insertamos las relaciones de los componentes hijos en Familia_Permiso
-                        string queryHijos = "INSERT INTO Familia_Permiso (IdPadre, IdHijo) VALUES (@idPadre, @idHijo)";
                         foreach (var hijo in familia.ObtenerHijos())
                         {
-                            using (SqlCommand cmd = new SqlCommand(queryHijos, con, tx))
+                            if (hijo is Familia_65RD)
                             {
-                                cmd.Parameters.AddWithValue("@idPadre", familia.Id);
-                                cmd.Parameters.AddWithValue("@idHijo", hijo.Id);
-                                cmd.ExecuteNonQuery();
+                                string querySubFam = "INSERT INTO Familia_Familia (IdFamiliaPadre, IdFamiliaHijo) VALUES (@padre, @hijo)";
+                                using (SqlCommand cmd = new SqlCommand(querySubFam, con, tx))
+                                {
+                                    cmd.Parameters.AddWithValue("@padre", familia.Id);
+                                    cmd.Parameters.AddWithValue("@hijo", hijo.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+                            else // Patente_65RD
+                            {
+                                string queryPatente = "INSERT INTO Familia_Permiso (IdPadre, IdHijo) VALUES (@padre, @hijo)";
+                                using (SqlCommand cmd = new SqlCommand(queryPatente, con, tx))
+                                {
+                                    cmd.Parameters.AddWithValue("@padre", familia.Id);
+                                    cmd.Parameters.AddWithValue("@hijo", hijo.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
                         }
-
-                        tx.Commit();
+                        tx.Commit();  
                         return true;
                     }
                     catch
@@ -314,22 +370,41 @@ namespace DAL_65RD
                             cmd.Parameters.AddWithValue("@id", familia.Id);
                             cmd.ExecuteNonQuery();
                         }
-
+                        // Después del DELETE de Familia_Permiso, agregá:
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM Familia_Familia WHERE IdFamiliaPadre = @id", con, tx))
+                        {
+                            cmd.Parameters.AddWithValue("@id", familia.Id);
+                            cmd.ExecuteNonQuery();
+                        }
                         // C. Re-insertamos los componentes hijos actuales
-                        string queryHijos = "INSERT INTO Familia_Permiso (IdPadre, IdHijo) VALUES (@idPadre, @idHijo)";
                         foreach (var hijo in familia.ObtenerHijos())
                         {
-                            using (SqlCommand cmd = new SqlCommand(queryHijos, con, tx))
+                            if (hijo is Familia_65RD)
                             {
-                                cmd.Parameters.AddWithValue("@idPadre", familia.Id);
-                                cmd.Parameters.AddWithValue("@idHijo", hijo.Id);
-                                cmd.ExecuteNonQuery();
+                                string querySubFam = "INSERT INTO Familia_Familia (IdFamiliaPadre, IdFamiliaHijo) VALUES (@padre, @hijo)";
+                                using (SqlCommand cmd = new SqlCommand(querySubFam, con, tx))
+                                {
+                                    cmd.Parameters.AddWithValue("@padre", familia.Id);
+                                    cmd.Parameters.AddWithValue("@hijo", hijo.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
                             }
-                        }
+                            else // Patente_65RD
+                            {
+                                string queryPatente = "INSERT INTO Familia_Permiso (IdPadre, IdHijo) VALUES (@padre, @hijo)";
+                                using (SqlCommand cmd = new SqlCommand(queryPatente, con, tx))
+                                {
+                                    cmd.Parameters.AddWithValue("@padre", familia.Id);
+                                    cmd.Parameters.AddWithValue("@hijo", hijo.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
 
+                           
+                        }
                         tx.Commit();
                         return true;
-                    }
+                    }   
                     catch
                     {
                         tx.Rollback();
@@ -357,6 +432,12 @@ namespace DAL_65RD
 
                         // 2. Borramos relaciones de perfiles asociados a la familia
                         using (SqlCommand cmd = new SqlCommand("DELETE FROM Perfil_Familia WHERE IdFamilia = @id", con, tran))
+                        {
+                            cmd.Parameters.AddWithValue("@id", idPermiso);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        using (SqlCommand cmd = new SqlCommand("DELETE FROM Familia_Familia WHERE IdFamiliaPadre = @id OR IdFamiliaHijo = @id", con, tran))
                         {
                             cmd.Parameters.AddWithValue("@id", idPermiso);
                             cmd.ExecuteNonQuery();

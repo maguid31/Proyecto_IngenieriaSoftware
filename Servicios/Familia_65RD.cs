@@ -20,6 +20,11 @@ namespace Servicios
             }
         }
 
+        public override void EliminarHijo(ComponentePermiso_65RD c)
+        {
+            _hijos.Remove(c);
+        }
+
         public override void VaciarHijos()
         {
             _hijos.Clear();
