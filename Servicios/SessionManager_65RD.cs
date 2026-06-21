@@ -43,13 +43,12 @@ namespace Servicios_65RD
         }
         public bool TienePermiso(string nombrePermiso)
         {
-            // Si no hay usuario o el usuario no tiene perfil asignado, no tiene permisos
+
             if (UsuarioLogueado == null || UsuarioLogueado.Perfil == null)
             {
                 return false;
             }
 
-            // Le delegamos la responsabilidad al Perfil del usuario
             return UsuarioLogueado.Perfil.TienePermiso(nombrePermiso);
         }
         public void CerrarSesion()

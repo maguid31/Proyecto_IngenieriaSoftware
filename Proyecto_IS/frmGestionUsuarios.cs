@@ -52,7 +52,7 @@ namespace Proyecto_IS
         private void CargarUsuarios(bool soloActivos = false)
         {
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
-            var listaUsuarios = gestorUsuario.ObtenerUsuarios(); // trae todos
+            var listaUsuarios = gestorUsuario.ObtenerUsuarios(); 
 
             if (soloActivos)
                 listaUsuarios = listaUsuarios.Where(u => u.Activo).ToList();
@@ -65,11 +65,11 @@ namespace Proyecto_IS
         private void RefrescarComboRoles()
         {
             UsuarioBLL_65RD gestor = new UsuarioBLL_65RD();
-            cmbRol.DataSource = null; // Limpiamos el origen viejo
-            cmbRol.DataSource = gestor.ObtenerPerfiles(); // Recargamos de la Base de Datos
+            cmbRol.DataSource = null; 
+            cmbRol.DataSource = gestor.ObtenerPerfiles(); 
             cmbRol.DisplayMember = "Nombre";
             cmbRol.ValueMember = "Id";
-            cmbRol.SelectedIndex = -1; // Que arranque vacío sin selección
+            cmbRol.SelectedIndex = -1;
         }
 
         private void frmGestionUsuarios_Load(object sender, EventArgs e)
@@ -109,7 +109,6 @@ namespace Proyecto_IS
                 return;
             }
 
-            // Validar que el DNI no exista antes de crear
             if (usuarioSeleccionadoId == -1)
             {
                 var usuariosExistentes = gestorUsuario.ObtenerUsuarios();
@@ -142,7 +141,6 @@ namespace Proyecto_IS
                 bool registrado = gestorUsuario.RegistrarUsuario(nuevoUsuario);
                 if (registrado)
                 {
-                    //  REGISTRO DE LA BITÁCORA 
                     int idAdminLogueado = SessionManager_65RD.Instancia.UsuarioLogueado.Id;
                     BitacoraBLL_65RD bitacora = new BitacoraBLL_65RD();
                     bitacora.RegistrarEvento(idAdminLogueado, "Usuarios", "Alta Usuario", 3, $"Se registró un nuevo usuario: {nuevoUsuario.Apellido}{nuevoUsuario.DNI}");
@@ -150,7 +148,7 @@ namespace Proyecto_IS
                     
                 }
             }
-            else // MODIFICAR
+            else 
             {
                
                 Usuario_65RD usuarioModificado = new Usuario_65RD
@@ -210,11 +208,8 @@ namespace Proyecto_IS
                 return;
             }
 
-            // Solo habilitar email y rol
             txtemail.Enabled = true;
             cmbRol.Enabled = true;
-
-            // Bloquear lo demás
             txtnombre.Enabled = false;
             txtApellido.Enabled = false;
             txtDNI.Enabled = false;
@@ -362,39 +357,29 @@ namespace Proyecto_IS
 
         public void UpdateIdioma(string idioma)
         {
-            // Título real de la ventana flotante de Windows
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
 
-            // Botones de la columna derecha y acciones (Mapeados según tu diseño y código)
             if (btnModificar != null) btnModificar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnModificar");
             if (btnHabilitar != null) btnHabilitar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnHabilitar");
-            if (btnNuevo != null) btnNuevo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCrear"); // Es el botón "NUEVO"
-            if (btnDeshabilitar != null) btnDeshabilitar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "deshabilitar"); // Es el botón "DESHABILITAR"
+            if (btnNuevo != null) btnNuevo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCrear"); 
+            if (btnDeshabilitar != null) btnDeshabilitar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "deshabilitar"); 
             if (btnDesbloquear != null) btnDesbloquear.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnDesbloquear");
+            if (btnAplicar != null) btnAplicar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnaplicar"); 
+            if (btnCancelar != null) btnCancelar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCancelar"); 
+            if (btnCerrarSesion != null) btnCerrarSesion.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCerrarSesion"); 
 
-            // Botones del centro
-            if (btnAplicar != null) btnAplicar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnaplicar"); // Es el botón "APLICAR"
-            if (btnCancelar != null) btnCancelar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCancelar"); // Asegurate de que se llame btnCancelar en el diseño
-
-            // Botón inferior derecho
-            if (btnCerrarSesion != null) btnCerrarSesion.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCerrarSesion"); // Es el botón "CERRAR"
-
-            // Checkboxes de Filtros
             if (cbtodos != null) cbtodos.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "cbtodos");
             if (cbactivos != null) cbactivos.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "cbactivos");
 
-            // Labels del formulario (Mapealos según el número de control que tengan en tu propiedad Name)
-            // El título grande violeta de arriba: "GESTION USUARIOS"
             if (lblGestionUsuarios != null) lblGestionUsuarios.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
 
-            // Las etiquetas de los campos de texto
-            if (label2 != null) label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDni");       // "DNI"
-            if (label3 != null) label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblApellido");  // "Apellido"
-            if (label4 != null) label4.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombre");    // "Nombre"
-            if (label5 != null) label5.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRol");       // "Rol"
-            if (label8 != null) label8.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEmail"); // "Email"
+            if (label2 != null) label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDni");       
+            if (label3 != null) label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblApellido");  
+            if (label4 != null) label4.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombre");   
+            if (label5 != null) label5.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRol");       
+            if (label8 != null) label8.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEmail"); 
 
-            if (dgvUsuarios.Columns.Count >= 8) // Validación por seguridad
+            if (dgvUsuarios.Columns.Count >= 8) 
             {
                 dgvUsuarios.Columns[0].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColNombreUsuario");
                 dgvUsuarios.Columns[1].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "dgvColNombre");

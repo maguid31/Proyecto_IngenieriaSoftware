@@ -129,24 +129,16 @@ namespace Proyecto_IS
 
         public void UpdateIdioma(string idioma)
         {
-            // Título de la barra de título de la ventana
+      
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
 
-            // El título principal que está arriba en violeta grande (según tu código, puede ser label6)
             if (lblConfirmarContraseña != null) lblConfirmarContraseña.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
-
-            // Etiquetas de campos fijos
             if (lblUsuario != null) lblUsuario.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblUsuario");
             if (lblContraseñaActual != null) lblContraseñaActual.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblContraseñaActual");
             if (lblConfirmarContraseña != null) lblConfirmarContraseña.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblConfirmarContraseña");
-
-            // Para la etiqueta de "Contraseña nueva" (verificá si se llama label1 u otro en las propiedades del Diseñador)
             if (label1 != null) label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblContraseñaNueva");
 
-            // Checkbox para visualizar los caracteres
             if (cbShowPassword != null) cbShowPassword.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "cbShowPassword");
-
-            // Botón de confirmación (btnRegistrar)
             if (btnRegistrar != null) btnRegistrar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnRegistrar");
         }
         private void label6_Click(object sender, EventArgs e)

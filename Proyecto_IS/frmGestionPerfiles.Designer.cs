@@ -55,7 +55,7 @@
             this.btnLimpiarPerfil.Name = "btnLimpiarPerfil";
             this.btnLimpiarPerfil.Size = new System.Drawing.Size(229, 43);
             this.btnLimpiarPerfil.TabIndex = 49;
-            this.btnLimpiarPerfil.Text = "LIMPIAR PERFIL";
+            this.btnLimpiarPerfil.Text = " LIMPIAR PERFIL";
             this.btnLimpiarPerfil.UseVisualStyleBackColor = false;
             this.btnLimpiarPerfil.Click += new System.EventHandler(this.btnLimpiarPerfil_Click);
             // 
@@ -87,9 +87,9 @@
             this.label1.Location = new System.Drawing.Point(1004, 174);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 32);
+            this.label1.Size = new System.Drawing.Size(156, 32);
             this.label1.TabIndex = 46;
-            this.label1.Text = "Descripcion";
+            this.label1.Text = " Descripcion";
             // 
             // txtDescripcion
             // 
@@ -115,9 +115,9 @@
             this.label3.Location = new System.Drawing.Point(978, 130);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(175, 32);
+            this.label3.Size = new System.Drawing.Size(182, 32);
             this.label3.TabIndex = 43;
-            this.label3.Text = "Nombre Perfil";
+            this.label3.Text = " Nombre Perfil";
             // 
             // btnGuardarPerfil
             // 
@@ -129,7 +129,7 @@
             this.btnGuardarPerfil.Name = "btnGuardarPerfil";
             this.btnGuardarPerfil.Size = new System.Drawing.Size(229, 39);
             this.btnGuardarPerfil.TabIndex = 20;
-            this.btnGuardarPerfil.Text = "GUARDAR PERFIL";
+            this.btnGuardarPerfil.Text = " GUARDAR PERFIL";
             this.btnGuardarPerfil.UseVisualStyleBackColor = false;
             this.btnGuardarPerfil.Click += new System.EventHandler(this.btnGuardarPerfil_Click);
             // 
@@ -153,7 +153,7 @@
             this.btnQuitarPermiso.Name = "btnQuitarPermiso";
             this.btnQuitarPermiso.Size = new System.Drawing.Size(229, 43);
             this.btnQuitarPermiso.TabIndex = 18;
-            this.btnQuitarPermiso.Text = "QUITAR PERMISO";
+            this.btnQuitarPermiso.Text = " QUITAR PERMISO";
             this.btnQuitarPermiso.UseVisualStyleBackColor = false;
             this.btnQuitarPermiso.Click += new System.EventHandler(this.btnQuitarPermiso_Click);
             // 
@@ -181,7 +181,7 @@
             this.btnEliminarPerfil.Name = "btnEliminarPerfil";
             this.btnEliminarPerfil.Size = new System.Drawing.Size(229, 43);
             this.btnEliminarPerfil.TabIndex = 16;
-            this.btnEliminarPerfil.Text = "ELIMINAR PERFIL";
+            this.btnEliminarPerfil.Text = " ELIMINAR PERFIL";
             this.btnEliminarPerfil.UseVisualStyleBackColor = false;
             this.btnEliminarPerfil.Click += new System.EventHandler(this.btnEliminarPerfil_Click);
             // 
@@ -212,11 +212,11 @@
             this.lbPermisosDisponiblesTab2.Size = new System.Drawing.Size(282, 404);
             this.lbPermisosDisponiblesTab2.TabIndex = 11;
             // 
-            // frmGestionRoles
+            // frmGestionPerfiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1677, 695);
+            this.ClientSize = new System.Drawing.Size(1528, 695);
             this.Controls.Add(this.tvPermisosAsignados);
             this.Controls.Add(this.lbPerfiles);
             this.Controls.Add(this.btnLimpiarPerfil);
@@ -233,7 +233,7 @@
             this.Controls.Add(this.lblEstadoPerfil);
             this.Controls.Add(this.txtNuevoPerfil);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "frmGestionRoles";
+            this.Name = "frmGestionPerfiles";
             this.Text = "frmGestionRoles";
             this.Load += new System.EventHandler(this.frmGestionRoles_Load);
             this.ResumeLayout(false);

@@ -16,8 +16,8 @@ namespace Proyecto_IS
 {
     public partial class frmGestionPerfiles : Form, IidiomaObserver
     {
-        // ── CAPAS BLL
         private readonly PermisoBLL_65RD _permisoBLL = new PermisoBLL_65RD();
+        private readonly FamiliaBLL_65RD _familiaBLL = new FamiliaBLL_65RD();
         private readonly PerfilBLL_65RD _perfilBLL = new PerfilBLL_65RD();
         private readonly BitacoraBLL_65RD _bitacoraBLL = new BitacoraBLL_65RD();
 
@@ -57,7 +57,6 @@ namespace Proyecto_IS
             lbPerfiles.Items.Clear();
             string filtro = txtBuscarPerfil.Text.Trim().ToLower();
 
-            // Filtramos la lista en memoria usando LINQ
             var perfilesFiltrados = _perfilesCompletos
                 .Where(p => string.IsNullOrEmpty(filtro) || p.Nombre.ToLower().Contains(filtro));
 
@@ -77,9 +76,13 @@ namespace Proyecto_IS
         {
             lbPermisosDisponiblesTab2.Items.Clear();
 
-            var familias = _permisoBLL.ObtenerTodasLasFamilias();
+            var familias = _familiaBLL.ObtenerTodasLasFamilias();
             foreach (var f in familias)
-                lbPermisosDisponiblesTab2.Items.Add(new ListBoxItemPermiso(f));
+            {
+                var familiaCompleta = (Familia_65RD)_permisoBLL.ObtenerFamiliaOPatente(f.Id);
+                if (familiaCompleta != null)
+                    lbPermisosDisponiblesTab2.Items.Add(new ListBoxItemPermiso(familiaCompleta));
+            }
 
             var patentes = _permisoBLL.ObtenerTodasLasPatentes();
             foreach (var p in patentes)
@@ -103,6 +106,7 @@ namespace Proyecto_IS
                 return;
             }
 
+
             var res = MessageBox.Show($"¿Eliminar perfil '{_perfilSeleccionado.Nombre}'?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res != DialogResult.Yes) return;
 
@@ -121,6 +125,7 @@ namespace Proyecto_IS
             {
                 MessageBox.Show(error, "Error Operación Denegada", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void btnAsignarPermiso_Click(object sender, EventArgs e)
@@ -227,7 +232,6 @@ namespace Proyecto_IS
             {
                 int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
 
-                // 2. MODO CREACIÓN (Alta)
                 if (_perfilSeleccionado == null)
                 {
                     var nuevoPerfil = new Perfil_65RD
@@ -244,20 +248,18 @@ namespace Proyecto_IS
                         }
                     }
 
-                    _perfilBLL.CrearPerfil(nuevoPerfil);  // inserta en Perfiles y setea nuevoPerfil.Id
+                    _perfilBLL.CrearPerfil(nuevoPerfil);  
 
                     if (nuevoPerfil.PermisosAsignados.Count > 0)
                         _perfilBLL.GuardarAsignacionPermisos(nuevoPerfil);
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Alta", 2, $"Creación del rol '{nombre}'.");
                     MessageBox.Show($"✔ El perfil '{nombre}' fue creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                // 3. MODO EDICIÓN (Modificación)
                 else
                 {
                     _perfilSeleccionado.Nombre = nombre;
                     _perfilSeleccionado.Descripcion = descripcion;
 
-                    // Sincronización: Limpiamos y recargamos los permisos desde el TreeView
                     _perfilSeleccionado.PermisosAsignados.Clear();
 
                     foreach (TreeNode nodo in tvPermisosAsignados.Nodes)
@@ -276,8 +278,6 @@ namespace Proyecto_IS
                         MessageBox.Show($"✔ Cambios guardados exitosamente en el perfil '{nombre}'.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-
-                // 4. Limpieza final
                 LimpiarPantallaCompleta();
             }
             catch (Exception ex)
@@ -371,18 +371,11 @@ namespace Proyecto_IS
                 return;
             }
 
-            // 1. Obtenemos solo el ID del perfil seleccionado
             var perfilBase = ((ListBoxItemPerfil)lbPerfiles.SelectedItem).Perfil;
+            _perfilSeleccionado = _perfilBLL.ObtenerTodosLosPerfiles().FirstOrDefault(p => p.Id == perfilBase.Id);
 
-            // 2. 🌟 ¡IGUAL QUE EN FAMILIAS!: Pedimos a la BLL el perfil completo y actualizado
-            // Usamos el ID para asegurar que traemos los permisos actuales de la BD
-            _perfilSeleccionado = _perfilBLL.ObtenerTodosLosPerfiles()
-                                            .FirstOrDefault(p => p.Id == perfilBase.Id);
-
-            // Si por alguna razón no lo encuentra, nos quedamos con el base
             if (_perfilSeleccionado == null) _perfilSeleccionado = perfilBase;
 
-            // 3. Cargamos los datos visuales
             txtNuevoPerfil.Text = _perfilSeleccionado.Nombre;
             txtDescripcion.Text = _perfilSeleccionado.Descripcion;
 
@@ -391,7 +384,6 @@ namespace Proyecto_IS
             else
                 lblDescripcionPerfil.Text = "📝 Sin descripción disponible.";
 
-            // 4. Dibujamos los nodos (aquí es donde ya deberías ver los permisos frescos)
             if (_perfilSeleccionado.PermisosAsignados != null)
             {
                 foreach (var perm in _perfilSeleccionado.PermisosAsignados)
@@ -408,12 +400,8 @@ namespace Proyecto_IS
             
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
 
-
-            // Etiquetas de textos (Labels)
             label3.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombrePerfil");
             label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDescripcion");
-
-          
             btnEliminarPerfil.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnEliminarPerfil");
             btnAsignarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAsignarPermiso");
             btnQuitarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnQuitarPermiso");

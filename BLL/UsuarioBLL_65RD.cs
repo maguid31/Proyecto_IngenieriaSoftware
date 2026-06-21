@@ -49,7 +49,7 @@ namespace BLL_65RD
 
             if (usuarioEncontrado.Contraseña == hashIngresado)
             {
-                // LOGIN EXITOSO 
+
                 SessionManager_65RD.Instancia.IniciarSesion(usuarioEncontrado);
                 _bitacoraBLL.RegistrarEvento(usuarioEncontrado.Id, "Usuarios", "Login", 1, "Usuario inició sesión");
 

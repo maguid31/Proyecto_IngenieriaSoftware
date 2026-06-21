@@ -35,7 +35,6 @@ namespace DAL
             }
 
         }
-        // Método para llenar la grilla aplicando filtros
         public List<Bitacora_65RD> ObtenerEventos(DateTime fechaDesde, DateTime fechaHasta, string modulo, string evento, int criticidad)
         {
             List<Bitacora_65RD> lista = new List<Bitacora_65RD>();

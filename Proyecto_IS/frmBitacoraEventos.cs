@@ -40,20 +40,15 @@ namespace Proyecto_IS
 
         private void CargarCombos()
         {
-            // Módulos
+   
             cmbModulo.Items.Clear();
             cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios Básicos", "Administradores" });
             cmbModulo.SelectedIndex = 0;
-
-            // Inicializar eventos según módulo seleccionado
             ActualizarEventosPorModulo();
-
-            // Criticidad
             cmbCriticidad.Items.Clear();
             cmbCriticidad.Items.AddRange(new string[] { "0", "1", "2", "3", "4", "5" });
             cmbCriticidad.SelectedIndex = 0;
 
-            // Suscribirse al cambio de módulo
             cmbModulo.SelectedIndexChanged += (s, e) => ActualizarEventosPorModulo();
         }
 
@@ -89,7 +84,7 @@ namespace Proyecto_IS
               "Desbloquear Usuario"});
 
             }
-            else // Todos
+            else 
             {
                 cmbEvento.Items.AddRange(new string[] {
               "Todos",
@@ -182,7 +177,6 @@ namespace Proyecto_IS
                         catch (IOException)
                         {
                             errorArchivo = true;
-                            // TRADUCCIÓN: Error de archivo abierto
                             string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgArchivoAbiertoCuerpo");
                             string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo");
                             MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -219,7 +213,6 @@ namespace Proyecto_IS
                                 PdfWriter.GetInstance(pdfDoc, stream);
                                 pdfDoc.Open();
 
-                                // TRADUCCIÓN: Título dentro del PDF
                                 string tituloPdfTexto = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloReportePdf");
                                 Paragraph titulo = new Paragraph(tituloPdfTexto + "\n\n");
                                 titulo.Alignment = Element.ALIGN_CENTER;
@@ -230,14 +223,12 @@ namespace Proyecto_IS
                                 stream.Close();
                             }
 
-                            // TRADUCCIÓN: Éxito al generar
                             string msgExitoCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgPdfExitoCuerpo");
                             string msgExitoTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo");
                             MessageBox.Show(msgExitoCuerpo, msgExitoTitulo, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch (Exception ex)
                         {
-                            // TRADUCCIÓN: Error de excepción general
                             string msgErrorGenerar = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorGenerarPdfCuerpo");
                             string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo");
                             MessageBox.Show(msgErrorGenerar + " " + ex.Message, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -247,7 +238,6 @@ namespace Proyecto_IS
             }
             else
             {
-                // TRADUCCIÓN: Advertencia de grilla vacía
                 string msgAdvertenciaCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSinEventosExportarCuerpo");
                 string msgAdvertenciaTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo");
                 MessageBox.Show(msgAdvertenciaCuerpo, msgAdvertenciaTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -264,25 +254,19 @@ namespace Proyecto_IS
 
         public void UpdateIdioma(string idioma)
         {
-            // Título de la barra de control superior de Windows
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
 
-            // Título principal violeta del Form (Verificá en las propiedades si es label1 u otro index)
             if (label6 != null) label6.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloPantalla");
-
-            // Traducir las etiquetas de los filtros superiores (Colocá los nombres de objeto que tengan en tus propiedades)
             if (lblModulo != null) lblModulo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblModulo");
             if (lblEvento != null) lblEvento.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblEvento");
             if (lblCriticidad != null) lblCriticidad.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblCriticidad");
             if (lblInicio != null) lblInicio.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblInicio");
             if (lblFin != null) lblFin.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblFin");
 
-            // Traducir los botones inferiores
             if (btnAplicar != null) btnAplicar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAplicar");
             if (btnLimpiar != null) btnLimpiar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLimpiar");
             if (btnImprimir != null) btnImprimir.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnImprimir");
 
-            // Traducir dinámicamente los headers de las columnas del DataGridView si ya fue instanciado
             if (dgvBitacora != null && dgvBitacora.Columns.Count > 0)
             {
                 if (dgvBitacora.Columns.Contains("colUsuario")) dgvBitacora.Columns["colUsuario"].HeaderText = IdiomaManager.GetInstance().GetTexto(this.Name, "colUsuario");

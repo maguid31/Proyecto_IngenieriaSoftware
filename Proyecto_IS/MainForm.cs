@@ -75,8 +75,6 @@ namespace Proyecto_IS
         }
 
         
-        //  CONSTRUCCIÓN DEL MENÚ LATERAL (Control de Roles)
-        
         private void ConstruirMenu()
         {
             panelMenu.Controls.Clear();
@@ -333,7 +331,6 @@ namespace Proyecto_IS
             this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
             if (lblAppNombre != null) lblAppNombre.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblMenuHeader");
 
-            // Traducimos las etiquetas del panel central que se muestran por defecto
             if (lblContenidoTitulo != null) lblContenidoTitulo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPanelInicioTitulo");
             if (lblContenidoDetalle != null) lblContenidoDetalle.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblPanelInicioDetalle");
 
@@ -349,7 +346,6 @@ namespace Proyecto_IS
 
         private void AbrirGestionFamilias(object sender, EventArgs e)
         {
-            // Abre el nuevo formulario que creamos exclusivamente para armar los árboles de Familias
             frmGestionFamilias frm = new frmGestionFamilias();
             frm.ShowDialog();
         }

@@ -11,8 +11,6 @@ namespace Servicios
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-
-        // lista que contendrá las familias y patentes asignadas a este rol
         public List<Servicios_65RD.ComponentePermiso_65RD> PermisosAsignados { get; set; }
 
         public Perfil_65RD()
@@ -25,13 +23,11 @@ namespace Servicios
 
             foreach (var componente in PermisosAsignados)
             {
-                // Si el componente actual (sea Patente o Familia) coincide con el nombre, da true
                 if (componente.Nombre.Equals(nombrePermiso, StringComparison.OrdinalIgnoreCase))
                 {
                     return true;
                 }
 
-                // Si es una Familia, el Composite delega la búsqueda de manera recursiva hacia adentro
                 if (componente.TienePermiso(nombrePermiso))
                 {
                     return true;

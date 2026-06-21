@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Servicios_65RD
 {
-    //Genera un resumen(hash) irreversible del texto utilizando el algoritmo SHA-256.
-    //Es irreversible: se usa para verificar integridad o comparar credenciales sin almacenar el texto original.
+  
     public static class Seguridad_65RD
     {
         public static string Encriptar(string texto)

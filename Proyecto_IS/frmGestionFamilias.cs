@@ -15,18 +15,16 @@ namespace Proyecto_IS
 {
     public partial class frmGestionFamilias : Form, IidiomaObserver
     {
-
+        private readonly FamiliaBLL_65RD _familiaBLL = new FamiliaBLL_65RD();
         private readonly PermisoBLL_65RD _permisoBLL = new PermisoBLL_65RD();
         private readonly BitacoraBLL_65RD _bitacoraBLL = new BitacoraBLL_65RD();
 
-        // ── VARIABLES DE CONTROL DE ESTADO
         private Familia_65RD _familiaSeleccionada;
         private List<Familia_65RD> _familiasCompletas = new List<Familia_65RD>();
 
         private Familia_65RD _familiaEnEdicion = new Familia_65RD();
         private bool _editandoFamiliaExistente = false;
 
-        // ── PALETA DE COLORES PARA MENSAJES
         private static readonly Color ColorDanger = Color.FromArgb(220, 53, 69);
         private static readonly Color ColorSuccess = Color.SeaGreen;
         private static readonly Color ColorWarning = Color.Orange;
@@ -45,17 +43,14 @@ namespace Proyecto_IS
             UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
         }
 
-        // ── 1. MÉTODOS DE CARGA Y FILTRADO
         private void CargarPermisosDisponibles()
         {
             lbFuentePermisos.Items.Clear();
 
-            // Traemos TODAS las familias (sin importar si son hijas de otra)
-            var familias = _permisoBLL.ObtenerTodasLasFamilias();
+            var familias = _familiaBLL.ObtenerTodasLasFamilias();
             foreach (var f in familias)
                 lbFuentePermisos.Items.Add(new ListBoxItemPermiso(f));
 
-            // Traemos TODAS las patentes (sin importar si ya están en alguna familia)
             var patentes = _permisoBLL.ObtenerTodasLasPatentes();
             foreach (var p in patentes)
                 lbFuentePermisos.Items.Add(new ListBoxItemPermiso(p));
@@ -63,7 +58,7 @@ namespace Proyecto_IS
 
         private void CargarFamilias()
         {
-            _familiasCompletas = _permisoBLL.ObtenerTodasLasFamilias();
+            _familiasCompletas = _familiaBLL.ObtenerTodasLasFamilias();
             FiltrarYMostrarFamilias();
         }
 
@@ -71,13 +66,10 @@ namespace Proyecto_IS
         {
             lbFamilias.Items.Clear();
 
-            // Si por alguna razón la lista está nula, salimos para evitar errores
             if (_familiasCompletas == null) return;
 
-            // Tomamos el filtro eliminando espacios extras
             string filtro = txtBuscarFamilia != null ? txtBuscarFamilia.Text.Trim().ToLower() : string.Empty;
 
-            // Filtramos de forma segura asegurando que el nombre no sea nulo
             var filtradas = _familiasCompletas
                 .Where(f => f != null && (string.IsNullOrEmpty(filtro) || (f.Nombre != null && f.Nombre.ToLower().Contains(filtro))));
 
@@ -86,10 +78,8 @@ namespace Proyecto_IS
                 lbFamilias.Items.Add(new ListBoxItemFamilia(fam));
             }
 
-            // 🌟 PRUEBA DE CONTROL: Si sigue vacía, tiramos un aviso interno rápido
             if (lbFamilias.Items.Count == 0 && string.IsNullOrEmpty(filtro))
             {
-                // Esto te va a avisar si la BLL realmente devolvió familias o vino vacío desde la base de datos
                 System.Diagnostics.Debug.WriteLine("⚠️ Control: _familiasCompletas no tiene elementos tipo Familia_65RD.");
             }
         }
@@ -99,7 +89,6 @@ namespace Proyecto_IS
             FiltrarYMostrarFamilias();
         }
 
-        // ── 2. SELECCIÓN DE FAMILIA (AL HACER CLIC SE MUESTRAN LOS PERMISOS EN EL TREEVIEW)
         private void lbFamilias_SelectedIndexChanged(object sender, EventArgs e)
         {
             tvFamiliaEdicion.Nodes.Clear();
@@ -111,16 +100,13 @@ namespace Proyecto_IS
                 return;
             }
 
-            // Rescatamos la familia de la ListBox de forma segura
             _familiaSeleccionada = ((ListBoxItemFamilia)lbFamilias.SelectedItem).Familia;
 
-            // La cargamos completa desde la BLL con sus hijos reales
             var familiaCompletada = (Familia_65RD)_permisoBLL.ObtenerFamiliaOPatente(_familiaSeleccionada.Id);
 
             _familiaEnEdicion = familiaCompletada;
             _editandoFamiliaExistente = true;
 
-            // Llenamos los cuadros de texto
             txtNombreFamilia.Text = _familiaEnEdicion.Nombre;
             txtDescFamilia.Text = _familiaEnEdicion.Descripcion;
 
@@ -129,7 +115,6 @@ namespace Proyecto_IS
             else
                 lblDescripcionFamilia.Text = "📝 Sin descripción disponible.";
 
-            // Dibujamos los hijos en el TreeView
             foreach (var hijo in _familiaEnEdicion.ObtenerHijos())
             {
                 tvFamiliaEdicion.Nodes.Add(CrearNodoPermiso(hijo));
@@ -139,7 +124,6 @@ namespace Proyecto_IS
             MostrarMensajeFamilia($"✔ Familia '{_familiaEnEdicion.Nombre}' cargada.", ColorSuccess);
         }
 
-        // ── 3. BOTÓN AGREGAR FAMILIA (METE EL PERMISO SELECCIONADO EN EL ARBOL)
         private void btnAgregarFamilia_Click(object sender, EventArgs e)
         {
             if(lbFuentePermisos.SelectedItem == null)
@@ -149,7 +133,6 @@ namespace Proyecto_IS
                 return;
             }
 
-            // Garantizamos que haya una familia en edición antes de cualquier validación
             if (_familiaEnEdicion == null)
                 _familiaEnEdicion = new Familia_65RD();
 
@@ -164,7 +147,7 @@ namespace Proyecto_IS
 
             try
             {
-                _permisoBLL.ValidarAsignacionSinRepetidos(_familiaEnEdicion, permisoSeleccionado);
+                _familiaBLL.ValidarAsignacionSinRepetidos(_familiaEnEdicion, permisoSeleccionado);
                 _familiaEnEdicion.AgregarHijo(permisoSeleccionado);
                 tvFamiliaEdicion.Nodes.Add(CrearNodoPermiso(permisoSeleccionado));
                 tvFamiliaEdicion.ExpandAll();
@@ -176,7 +159,6 @@ namespace Proyecto_IS
             }
         }
 
-        // ── 4. BOTÓN GUARDAR CAMBIOS / NUEVA FAMILIA
         private void btnGuardarFamilia_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombreFamilia.Text))
@@ -199,17 +181,17 @@ namespace Proyecto_IS
 
                 if (_editandoFamiliaExistente)
                 {
-                    _permisoBLL.ModificarFamilia(_familiaEnEdicion);
+                    _familiaBLL.ModificarFamilia(_familiaEnEdicion);
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Modificación", 2, $"Se modificó la familia '{_familiaEnEdicion.Nombre}'.");
                 }
                 else
                 {
-                    _permisoBLL.GuardarFamilia(_familiaEnEdicion);
+                    _familiaBLL.GuardarFamilia(_familiaEnEdicion);
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Alta", 2, $"Creación de familia '{_familiaEnEdicion.Nombre}'.");
                 }
 
                 MessageBox.Show("✔ Familia guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                btnLimpiarFamilia_Click(null, null); // Forzamos la limpieza
+                btnLimpiarFamilia_Click(null, null); 
 
                 CargarPermisosDisponibles();
                 CargarFamilias();
@@ -220,7 +202,6 @@ namespace Proyecto_IS
             }
         }
 
-        // ── 5. BOTÓN ELIMINAR FAMILIA
         private void btnEliminarFamilia_Click(object sender, EventArgs e)
         {
             if (_familiaEnEdicion == null || !_editandoFamiliaExistente)
@@ -234,13 +215,14 @@ namespace Proyecto_IS
 
             try
             {
-                _permisoBLL.EliminarFamiliaBLL(_familiaEnEdicion.Id);
+                _familiaBLL.EliminarFamilia(_familiaEnEdicion.Id);
 
                 int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
                 _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Baja", 2, $"Se eliminó la familia '{_familiaEnEdicion.Nombre}'.");
 
                 btnLimpiarFamilia_Click(null, null);
                 CargarFamilias();
+                CargarPermisosDisponibles();
 
                 MessageBox.Show("Familia eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -250,7 +232,6 @@ namespace Proyecto_IS
             }
         }
 
-        // ── 6. BOTÓN LIMPIAR / RESET TOTAL
         private void btnLimpiarFamilia_Click(object sender, EventArgs e)
         {
             _familiaEnEdicion = new Familia_65RD();
@@ -265,7 +246,6 @@ namespace Proyecto_IS
             lblDescripcionFamilia.Text = "📝 Modo Creación: Nueva Familia";
         }
 
-        // ── MÉTODOS RECURSIVOS AUXILIARES PARA EL TREEVIEW
         private TreeNode CrearNodoPermiso(ComponentePermiso_65RD perm)
         {
             var nodo = new TreeNode($"{(perm is Familia_65RD ? "📁" : "🔑")} {perm.Nombre}") { Tag = perm };
@@ -287,7 +267,7 @@ namespace Proyecto_IS
 
         private void MostrarMensajeFamilia(string msj, Color color)
         {
-            // Opcional para pintar estados en la UI
+           
         }
 
         private void frmGestionFamilias_FormClosed(object sender, FormClosedEventArgs e)
@@ -295,9 +275,6 @@ namespace Proyecto_IS
             IdiomaManager.GetInstance().RemoveObserver(this);
         }
 
-       
-
-        // WRAPPERS INTERNOS DE SOPORTE PARA LAS LISTBOX
         private class ListBoxItemPermiso
         {
             public ComponentePermiso_65RD Permiso { get; }
@@ -342,7 +319,6 @@ namespace Proyecto_IS
                 return;
             }
 
-            // Solo permitimos quitar nodos raíz del árbol (hijos directos de la familia)
             if (tvFamiliaEdicion.SelectedNode.Parent != null)
             {
                 MessageBox.Show("Solo podés quitar elementos del primer nivel. " +

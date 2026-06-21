@@ -41,8 +41,8 @@ namespace Proyecto_IS
                     Nombre = "Admin",
                     Apellido = "Sistema",
                     DNI = "1234",
-                    Contraseña = Seguridad_65RD.Encriptar("1234"), // Hash 
-                    Perfil = new Perfil_65RD { Id = 1, Nombre = "Administrador" }, // El ID 2 es Admin en SQL
+                    Contraseña = Seguridad_65RD.Encriptar("1234"), 
+                    Perfil = new Perfil_65RD { Id = 1, Nombre = "Administrador" }, 
                     Activo = true,
                     PrimerLogin = false 
                 };
@@ -70,14 +70,14 @@ namespace Proyecto_IS
 
                     if (Application.OpenForms.OfType<MainForm>().Any() &&
                     SessionManager_65RD.Instancia.UsuarioLogueado != null &&
-                    SessionManager_65RD.Instancia.UsuarioLogueado.NombreUsuario == txtUsuario.Text && this.EsReLogin) // 🚨 solo bloquea si es relogin
+                    SessionManager_65RD.Instancia.UsuarioLogueado.NombreUsuario == txtUsuario.Text && this.EsReLogin) 
                     {
                         MessageBox.Show("Este usuario ya tiene una sesión activa. No puede iniciar sesión nuevamente.",
                                         "Sesión activa",
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Warning);
 
-                        // Mantener frmLogin abierto y MainForm detrás
+                       
                         this.BringToFront();
                         return;
                     }
@@ -92,7 +92,6 @@ namespace Proyecto_IS
                         menuPrincipal.Show();
                         this.Hide();
 
-                        // solo cerramos login junto con MainForm si es login inicial
                         if (!this.EsReLogin)
                             menuPrincipal.FormClosed += (s, args) => this.Close();
                     }
@@ -150,12 +149,10 @@ namespace Proyecto_IS
 
             if (!this.EsReLogin)
             {
-                // 🚨 Solo cerrar la aplicación si era el login inicial
                 Application.Exit();
             }
             else
             {
-                // 🚨 Si era relogin, simplemente mostrar el MainForm que ya estaba abierto
                 var main = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
                 if (main != null)
                 {

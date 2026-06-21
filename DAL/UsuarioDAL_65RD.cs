@@ -1,4 +1,5 @@
-﻿using Servicios;
+﻿using DAL;
+using Servicios;
 using Servicios_65RD;
 using System;
 using System.Collections.Generic;
@@ -63,26 +64,25 @@ namespace DAL_65RD
             if (usuarioEncontrado != null && usuarioEncontrado.Perfil != null)
             {
                 PermisoDAL_65RD permisoDAL = new PermisoDAL_65RD();
+                FamiliaDAL_65RD familiaDAL = new FamiliaDAL_65RD();         
 
-                // Buscamos los permisos iniciales de su rol
+        
                 var componentesRaiz = permisoDAL.ObtenerPermisosPorPerfil(usuarioEncontrado.Perfil.Id);
 
                 foreach (var comp in componentesRaiz)
                 {
-                    // Si el permiso es una familia, llamamos a la función mágica para que busque sus hijos
                     if (comp is Familia_65RD)
                     {
-                        CargarHijosRecursivos(comp, permisoDAL);
+                        CargarHijosRecursivos(comp, familiaDAL);
                     }
 
-                    // Agregamos el permiso completo con sus hijos al usuario logueado
                     usuarioEncontrado.Perfil.PermisosAsignados.Add(comp);
                 }
             }
             return usuarioEncontrado;
         }
 
-        private void CargarHijosRecursivos(ComponentePermiso_65RD padre, PermisoDAL_65RD dal)
+        private void CargarHijosRecursivos(ComponentePermiso_65RD padre, FamiliaDAL_65RD dal)
         {
            
             var hijos = dal.ObtenerHijosDeFamilia(padre.Id);

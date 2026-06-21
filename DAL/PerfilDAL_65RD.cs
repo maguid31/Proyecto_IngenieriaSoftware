@@ -13,10 +13,7 @@ namespace DAL
     public class PerfilDAL_65RD
     {
         private string connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
-
-        // ──────────────────────────────────────────────
-        //  MÉTODOS EXISTENTES
-        // ──────────────────────────────────────────────
+        private FamiliaDAL_65RD _familiaDAL = new FamiliaDAL_65RD();
 
         public int ContarUsuariosPorPerfil(int idPerfil)
         {
@@ -88,7 +85,6 @@ namespace DAL
                 }
             }
 
-            // Cargamos los permisos asignados a cada perfil
             foreach (var perfil in lista)
                 perfil.PermisosAsignados = ObtenerPermisosDePerfil(perfil.Id);
 
@@ -128,7 +124,7 @@ namespace DAL
                 {
                     try
                     {
-                        // 1. Borramos asignaciones anteriores en ambas tablas intermedias
+  
                         using (SqlCommand cmd = new SqlCommand("DELETE FROM Perfil_Permiso WHERE IdPerfil = @id", con, tx))
                         {
                             cmd.Parameters.AddWithValue("@id", perfil.Id);
@@ -140,7 +136,6 @@ namespace DAL
                             cmd.ExecuteNonQuery();
                         }
 
-                        // 2. Recorremos e insertamos discriminando el tipo de componente en la tabla correcta
                         foreach (var permiso in perfil.PermisosAsignados)
                         {
                             if (permiso is Familia_65RD)
@@ -153,7 +148,7 @@ namespace DAL
                                     cmd.ExecuteNonQuery();
                                 }
                             }
-                            else // Es Patente_65RD
+                            else 
                             {
                                 string queryInsPat = "INSERT INTO Perfil_Permiso (IdPerfil, IdPermiso) VALUES (@idPerfil, @idPermiso)";
                                 using (SqlCommand cmd = new SqlCommand(queryInsPat, con, tx))
@@ -177,7 +172,6 @@ namespace DAL
             }
         }
 
-        /// Recupera los permisos (Patentes o Familias) asignados a un perfil usando la recursividad de PermisoDAL.
         private List<ComponentePermiso_65RD> ObtenerPermisosDePerfil(int idPerfil)
         {
             var lista = new List<ComponentePermiso_65RD>();
@@ -187,7 +181,6 @@ namespace DAL
             {
                 con.Open();
 
-                // Patentes directas del perfil
                 string queryPatentes = @"
             SELECT p.Id, p.Nombre, p.Descripcion
             FROM Permisos p
@@ -211,7 +204,6 @@ namespace DAL
                     }
                 }
 
-                // Familias directas del perfil, cargadas recursivamente
                 string queryFamilias = @"
             SELECT f.Id, f.Nombre, f.Descripcion
             FROM Familia f
@@ -231,14 +223,25 @@ namespace DAL
                                 Nombre = r["Nombre"].ToString(),
                                 Descripcion = r["Descripcion"].ToString()
                             };
-                            // Cargamos sus hijos recursivamente
-                            lista.Add(permDAL.ObtenerPermisoRecursivo(familia));
+                            CargarHijosRecursivos(familia); // carga los hijos en memoria
+                            lista.Add(familia);
                         }
                     }
                 }
             }
 
             return lista;
+        }
+
+        private void CargarHijosRecursivos(ComponentePermiso_65RD padre)
+        {
+            var hijos = _familiaDAL.ObtenerHijosDeFamilia(padre.Id);
+            foreach (var hijo in hijos)
+            {
+                padre.AgregarHijo(hijo);
+                if (hijo is Familia_65RD)
+                    CargarHijosRecursivos(hijo);
+            }
         }
     }
 }

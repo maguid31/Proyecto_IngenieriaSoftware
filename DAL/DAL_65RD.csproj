@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitacoraDAL_65RD.cs" />
+    <Compile Include="FamiliaDAL_65RD.cs" />
     <Compile Include="PerfilDAL_65RD.cs" />
     <Compile Include="PermisoDAL_65RD.cs" />
     <Compile Include="UsuarioDAL_65RD.cs" />
