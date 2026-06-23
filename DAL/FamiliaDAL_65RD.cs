@@ -272,9 +272,5 @@ namespace DAL
                 }
             }
         }
-
-
-
-
     }
 }

@@ -19,6 +19,7 @@ namespace Proyecto_IS
     public partial class frmBitacoraEventos : Form, IidiomaObserver
     {
         private BitacoraBLL_65RD _bitacoraBLL;
+
         public frmBitacoraEventos()
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace Proyecto_IS
         {
             CargarCombos();
             ConfigurarGrilla();
-            dtpFechaIni.Value = DateTime.Now.AddDays(-3); 
+            dtpFechaIni.Value = DateTime.Now.AddDays(-3);
             dtpFechaFin.Value = DateTime.Now;
 
             BuscarEventos();
@@ -40,69 +41,74 @@ namespace Proyecto_IS
 
         private void CargarCombos()
         {
-   
+            // ── MÓDULOS ────────────────────────────────────────────────────
+            // Antes: "Usuarios Básicos" / "Administradores" filtraban por el
+            //        perfil del usuario, no por el módulo grabado en la bitácora.
+            // Ahora: coinciden exactamente con lo que se graba en b.Modulo:
+            //        "Usuarios", "Perfiles", "Familias".
+            // ──────────────────────────────────────────────────────────────
             cmbModulo.Items.Clear();
-            cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios Básicos", "Administradores" });
+            cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios", "Perfiles", "Familias" });
             cmbModulo.SelectedIndex = 0;
-            ActualizarEventosPorModulo();
+
             cmbCriticidad.Items.Clear();
             cmbCriticidad.Items.AddRange(new string[] { "0", "1", "2", "3", "4", "5" });
             cmbCriticidad.SelectedIndex = 0;
 
-            cmbModulo.SelectedIndexChanged += (s, e) => ActualizarEventosPorModulo();
+            cmbModulo.SelectedIndexChanged += (s, ev) => ActualizarEventosPorModulo();
+            ActualizarEventosPorModulo();
         }
 
         private void ActualizarEventosPorModulo()
         {
             cmbEvento.Items.Clear();
+            string modulo = cmbModulo.SelectedItem?.ToString();
 
-            string moduloSeleccionado = cmbModulo.SelectedItem.ToString();
-
-            if (moduloSeleccionado == "Usuarios Básicos")
+            switch (modulo)
             {
-                cmbEvento.Items.AddRange(new string[] {
-              "Todos",
-              "Login",
-              "Login Fallido",
-              "Logout",
-              "Bloqueo por Intentos",
-              "Cambio Contraseña"});
+                case "Usuarios":
+                    cmbEvento.Items.AddRange(new string[]
+                    {
+                        "Todos",
+                        "Login",
+                        "Login Fallido",
+                        "Logout",
+                        "Bloqueo por Intentos",
+                        "Cambio Contraseña",
+                        "Alta Usuario",
+                        "Modificar Usuario",
+                        "Bloquear Usuario",
+                        "Desbloquear Usuario"
+                    });
+                    break;
 
-            }
-            else if (moduloSeleccionado == "Administradores")
-            {
-                cmbEvento.Items.AddRange(new string[] {
-              "Todos",
-              "Login",
-              "Login Fallido",
-              "Logout",
-              "Bloqueo por Intentos",
-              "Cambio Contraseña",
-              "Alta Usuario",
-              "Modificar Usuario",
-              "Bloquear Usuario",
-              "Desbloquear Usuario"});
+                case "Perfiles":
+                    cmbEvento.Items.AddRange(new string[]
+                    {
+                        "Todos",
+                        "Crear Perfil",
+                        "Modificar Perfil",
+                        "Eliminar Perfil"
+                    });
+                    break;
 
-            }
-            else 
-            {
-                cmbEvento.Items.AddRange(new string[] {
-              "Todos",
-              "Login",
-              "Login Fallido",
-              "Logout",
-              "Bloqueo por Intentos",
-              "Cambio Contraseña",
-              "Alta Usuario",
-              "Modificar Usuario",
-              "Bloquear Usuario",
-              "Desbloquear Usuario"});
+                case "Familias":
+                    cmbEvento.Items.AddRange(new string[]
+                    {
+                        "Todos",
+                        "Crear Familia",
+                        "Modificar Familia",
+                        "Eliminar Familia"
+                    });
+                    break;
 
+                default: // "Todos"
+                    cmbEvento.Items.Add("Todos");
+                    break;
             }
 
             cmbEvento.SelectedIndex = 0;
         }
-
 
         private void ConfigurarGrilla()
         {
@@ -126,13 +132,16 @@ namespace Proyecto_IS
         {
             try
             {
-                DateTime desde = dtpFechaIni.Value;
-                DateTime hasta = dtpFechaFin.Value;
-                string modulo = cmbModulo.SelectedItem.ToString();
-                string evento = cmbEvento.SelectedItem.ToString();
+                // "Todos" se convierte en "" → la DAL lo interpreta como sin filtro
+                string modulo = cmbModulo.SelectedItem.ToString() == "Todos" ? "" : cmbModulo.SelectedItem.ToString();
+                string evento = cmbEvento.SelectedItem.ToString() == "Todos" ? "" : cmbEvento.SelectedItem.ToString();
                 int criticidad = int.Parse(cmbCriticidad.SelectedItem.ToString());
 
-                List<Bitacora_65RD> eventos = _bitacoraBLL.ConsultarBitacora(desde, hasta, modulo, evento, criticidad);
+                List<Bitacora_65RD> eventos = _bitacoraBLL.ConsultarBitacora(
+                    dtpFechaIni.Value, dtpFechaFin.Value,
+                    modulo, evento, criticidad
+                );
+
                 dgvBitacora.DataSource = eventos;
             }
             catch (Exception ex)
@@ -141,10 +150,7 @@ namespace Proyecto_IS
             }
         }
 
-        private void btnAplicar_Click(object sender, EventArgs e)
-        {
-            BuscarEventos();
-        }
+        private void btnAplicar_Click(object sender, EventArgs e) => BuscarEventos();
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
@@ -158,99 +164,87 @@ namespace Proyecto_IS
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            if (dgvBitacora.Rows.Count > 0)
+            if (dgvBitacora.Rows.Count == 0)
             {
-                SaveFileDialog guardar = new SaveFileDialog();
-                guardar.Filter = "Archivo PDF (*.pdf)|*.pdf";
-                guardar.FileName = "Reporte_Bitacora.pdf";
+                string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSinEventosExportarCuerpo");
+                string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo");
+                MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (guardar.ShowDialog() == DialogResult.OK)
+            SaveFileDialog guardar = new SaveFileDialog
+            {
+                Filter = "Archivo PDF (*.pdf)|*.pdf",
+                FileName = "Reporte_Bitacora.pdf"
+            };
+
+            if (guardar.ShowDialog() != DialogResult.OK) return;
+
+            if (File.Exists(guardar.FileName))
+            {
+                try { File.Delete(guardar.FileName); }
+                catch (IOException)
                 {
-                    bool errorArchivo = false;
-
-                    if (File.Exists(guardar.FileName))
-                    {
-                        try
-                        {
-                            File.Delete(guardar.FileName);
-                        }
-                        catch (IOException)
-                        {
-                            errorArchivo = true;
-                            string msgCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgArchivoAbiertoCuerpo");
-                            string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo");
-                            MessageBox.Show(msgCuerpo, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-
-                    if (!errorArchivo)
-                    {
-                        try
-                        {
-                            PdfPTable tablaPdf = new PdfPTable(dgvBitacora.Columns.Count);
-                            tablaPdf.DefaultCell.Padding = 3;
-                            tablaPdf.WidthPercentage = 100;
-                            tablaPdf.HorizontalAlignment = Element.ALIGN_LEFT;
-
-                            foreach (DataGridViewColumn columna in dgvBitacora.Columns)
-                            {
-                                PdfPCell celda = new PdfPCell(new Phrase(columna.HeaderText));
-                                celda.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
-                                tablaPdf.AddCell(celda);
-                            }
-
-                            foreach (DataGridViewRow fila in dgvBitacora.Rows)
-                            {
-                                foreach (DataGridViewCell celda in fila.Cells)
-                                {
-                                    tablaPdf.AddCell(celda.Value?.ToString() ?? "");
-                                }
-                            }
-
-                            using (FileStream stream = new FileStream(guardar.FileName, FileMode.Create))
-                            {
-                                Document pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
-                                PdfWriter.GetInstance(pdfDoc, stream);
-                                pdfDoc.Open();
-
-                                string tituloPdfTexto = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloReportePdf");
-                                Paragraph titulo = new Paragraph(tituloPdfTexto + "\n\n");
-                                titulo.Alignment = Element.ALIGN_CENTER;
-                                pdfDoc.Add(titulo);
-
-                                pdfDoc.Add(tablaPdf);
-                                pdfDoc.Close();
-                                stream.Close();
-                            }
-
-                            string msgExitoCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgPdfExitoCuerpo");
-                            string msgExitoTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo");
-                            MessageBox.Show(msgExitoCuerpo, msgExitoTitulo, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        catch (Exception ex)
-                        {
-                            string msgErrorGenerar = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorGenerarPdfCuerpo");
-                            string msgTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo");
-                            MessageBox.Show(msgErrorGenerar + " " + ex.Message, msgTitulo, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
+                    MessageBox.Show(
+                        IdiomaManager.GetInstance().GetTexto(this.Name, "msgArchivoAbiertoCuerpo"),
+                        IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
-            else
+
+            try
             {
-                string msgAdvertenciaCuerpo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgSinEventosExportarCuerpo");
-                string msgAdvertenciaTitulo = IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo");
-                MessageBox.Show(msgAdvertenciaCuerpo, msgAdvertenciaTitulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                PdfPTable tablaPdf = new PdfPTable(dgvBitacora.Columns.Count)
+                {
+                    DefaultCell = { Padding = 3 },
+                    WidthPercentage = 100,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+
+                foreach (DataGridViewColumn col in dgvBitacora.Columns)
+                {
+                    PdfPCell celda = new PdfPCell(new Phrase(col.HeaderText))
+                    {
+                        BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240)
+                    };
+                    tablaPdf.AddCell(celda);
+                }
+
+                foreach (DataGridViewRow fila in dgvBitacora.Rows)
+                    foreach (DataGridViewCell celda in fila.Cells)
+                        tablaPdf.AddCell(celda.Value?.ToString() ?? "");
+
+                using (FileStream stream = new FileStream(guardar.FileName, FileMode.Create))
+                {
+                    Document pdfDoc = new Document(PageSize.A4.Rotate(), 10f, 10f, 10f, 0f);
+                    PdfWriter.GetInstance(pdfDoc, stream);
+                    pdfDoc.Open();
+
+                    string tituloPdf = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloReportePdf");
+                    pdfDoc.Add(new Paragraph(tituloPdf + "\n\n") { Alignment = Element.ALIGN_CENTER });
+                    pdfDoc.Add(tablaPdf);
+                    pdfDoc.Close();
+                }
+
+                MessageBox.Show(
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgPdfExitoCuerpo"),
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorGenerarPdfCuerpo") + " " + ex.Message,
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private void frmBitacoraEventos_FormClosed(object sender, FormClosedEventArgs e)
         {
             IdiomaManager.GetInstance().RemoveObserver(this);
         }
-
-        
 
         public void UpdateIdioma(string idioma)
         {
@@ -262,7 +256,6 @@ namespace Proyecto_IS
             if (lblCriticidad != null) lblCriticidad.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblCriticidad");
             if (lblInicio != null) lblInicio.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblInicio");
             if (lblFin != null) lblFin.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblFin");
-
             if (btnAplicar != null) btnAplicar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnAplicar");
             if (btnLimpiar != null) btnLimpiar.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLimpiar");
             if (btnImprimir != null) btnImprimir.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnImprimir");
