@@ -115,7 +115,7 @@ namespace BLL
 
         public bool EliminarFamiliaBLL(int idFamilia)
         {
-            // Guardamos el nombre antes de eliminar para loguearlo con sentido
+            // Guardamos el nombre antes de eliminar 
             string nombreFamilia = (_permisoDAL.ObtenerPermisoRecursivo(idFamilia) as Familia_65RD)?.Nombre
                                    ?? $"ID {idFamilia}";
 
@@ -133,9 +133,6 @@ namespace BLL
             return resultado;
         }
 
-        // ──────────────────────────────────────────────
-        //  VALIDACIÓN ANTI-REPETICIÓN EN FAMILIAS
-        // ──────────────────────────────────────────────
 
         public void ValidarAsignacionSinRepetidos(ComponentePermiso_65RD contenedorPadre, ComponentePermiso_65RD elementoAAgregar)
         {

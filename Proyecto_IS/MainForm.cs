@@ -33,7 +33,7 @@ namespace Proyecto_IS
         private readonly string _nombre;
         private readonly int _usuarioId;
 
-        // ── Colores del tema (Blanco y Violeta) 
+         
         private static readonly Color ColorHeader = Color.FromArgb(255, 255, 255);      
         private static readonly Color ColorMenu = Color.FromArgb(248, 249, 250);        
         private static readonly Color ColorFondoContenido = Color.FromArgb(235, 238, 245); 

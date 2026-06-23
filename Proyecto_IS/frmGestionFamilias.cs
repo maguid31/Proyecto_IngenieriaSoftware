@@ -111,9 +111,9 @@ namespace Proyecto_IS
             txtDescFamilia.Text = _familiaEnEdicion.Descripcion;
 
             if (!string.IsNullOrWhiteSpace(_familiaEnEdicion.Descripcion))
-                lblDescripcionFamilia.Text = $"📝 Descripción: {_familiaEnEdicion.Descripcion}";
+                lblDescripcionFamilia.Text = $" Descripción: {_familiaEnEdicion.Descripcion}";
             else
-                lblDescripcionFamilia.Text = "📝 Sin descripción disponible.";
+                lblDescripcionFamilia.Text = " Sin descripción disponible.";
 
             foreach (var hijo in _familiaEnEdicion.ObtenerHijos())
             {
@@ -156,7 +156,7 @@ namespace Proyecto_IS
             {
                 string mensajeMostrar = ex.Message;
 
-                // Si el error es el de la patente repetida, extraemos el ID o usamos el formato traducido
+                
                 if (ex.Message.Contains("contiene la patente con ID"))
                 {
                     // Buscamos el ID del permiso seleccionado para pasárselo al traductor

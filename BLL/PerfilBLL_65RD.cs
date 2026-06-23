@@ -14,9 +14,6 @@ namespace BLL
         private PerfilDAL_65RD _perfilDAL = new PerfilDAL_65RD();
         private BitacoraBLL_65RD _bitacoraBLL = new BitacoraBLL_65RD();
 
-        // ──────────────────────────────────────────────
-        //  ELIMINACIÓN
-        // ──────────────────────────────────────────────
 
         public bool IntentarEliminarPerfil(int idPerfil, out string mensajeError)
         {
