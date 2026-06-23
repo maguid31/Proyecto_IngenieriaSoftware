@@ -41,16 +41,14 @@ namespace BLL
                     SessionManager_65RD.Instancia.UsuarioLogueado.Id,
                     "Perfiles",
                     "Eliminar Perfil",
-                    3,
+                    4,
                     $"Se eliminó el perfil '{nombrePerfil}'"
                 );
 
             return resultado;
         }
 
-        // ──────────────────────────────────────────────
-        //  VALIDACIÓN ANTI-REPETICIÓN (sin cambios)
-        // ──────────────────────────────────────────────
+
 
         public void ValidarAsignacionSinRepetidos(Perfil_65RD rolActual, ComponentePermiso_65RD nuevoPermiso)
         {
@@ -74,9 +72,8 @@ namespace BLL
             }
         }
 
-        // ──────────────────────────────────────────────
-        //  MÉTODOS AUXILIARES PRIVADOS (sin cambios)
-        // ──────────────────────────────────────────────
+ 
+
 
         private bool ExisteElementoRec(ComponentePermiso_65RD nodo, int idBuscar)
         {
@@ -106,9 +103,7 @@ namespace BLL
             return ids;
         }
 
-        // ──────────────────────────────────────────────
-        //  CRUD CON BITÁCORA
-        // ──────────────────────────────────────────────
+
 
         public List<Perfil_65RD> ObtenerTodosLosPerfiles()
         {
@@ -147,7 +142,7 @@ namespace BLL
                     SessionManager_65RD.Instancia.UsuarioLogueado.Id,
                     "Perfiles",
                     "Modificar Perfil",
-                    2,
+                    3,
                     $"Se actualizaron los permisos del perfil '{perfil.Nombre}'"
                 );
 

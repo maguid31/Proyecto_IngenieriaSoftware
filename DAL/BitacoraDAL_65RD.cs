@@ -39,13 +39,7 @@ namespace DAL
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                // ── CORRECCIÓN PRINCIPAL ──────────────────────────────────────
-                // Antes: filtraba por p.Nombre (perfil del usuario que generó el evento),
-                //        lo cual hacía que "Usuarios Básicos" / "Administradores" no
-                //        encontraran nada porque en BD el campo Modulo dice "Usuarios",
-                //        "Perfiles" o "Familias".
-                // Ahora: filtra directamente por b.Modulo, que es lo que se grabó.
-                // ─────────────────────────────────────────────────────────────
+
                 string query = @"
                     SELECT b.Id, b.UsuarioId,
                            CONCAT(u.Apellido, u.DNI) AS LoginUsuario,
@@ -62,11 +56,7 @@ namespace DAL
                       AND (@criticidad = 0  OR b.Criticidad = @criticidad)
                     ORDER BY b.FechaHora DESC";
 
-                // ── VENTAJA DE ESTE ENFOQUE ───────────────────────────────────
-                // Todos los parámetros siempre se pasan (no se construye SQL dinámico
-                // con concatenación de strings), lo que es más seguro y legible.
-                // El valor "" para modulo/evento y 0 para criticidad actúa como "sin filtro".
-                // ─────────────────────────────────────────────────────────────
+
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {

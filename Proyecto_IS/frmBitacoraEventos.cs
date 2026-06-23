@@ -41,12 +41,7 @@ namespace Proyecto_IS
 
         private void CargarCombos()
         {
-            // ── MÓDULOS ────────────────────────────────────────────────────
-            // Antes: "Usuarios Básicos" / "Administradores" filtraban por el
-            //        perfil del usuario, no por el módulo grabado en la bitácora.
-            // Ahora: coinciden exactamente con lo que se graba en b.Modulo:
-            //        "Usuarios", "Perfiles", "Familias".
-            // ──────────────────────────────────────────────────────────────
+
             cmbModulo.Items.Clear();
             cmbModulo.Items.AddRange(new string[] { "Todos", "Usuarios", "Perfiles", "Familias" });
             cmbModulo.SelectedIndex = 0;
@@ -132,7 +127,7 @@ namespace Proyecto_IS
         {
             try
             {
-                // "Todos" se convierte en "" → la DAL lo interpreta como sin filtro
+                // "Todos" se convierte en "" y la DAL lo interpreta como sin filtro
                 string modulo = cmbModulo.SelectedItem.ToString() == "Todos" ? "" : cmbModulo.SelectedItem.ToString();
                 string evento = cmbEvento.SelectedItem.ToString() == "Todos" ? "" : cmbEvento.SelectedItem.ToString();
                 int criticidad = int.Parse(cmbCriticidad.SelectedItem.ToString());

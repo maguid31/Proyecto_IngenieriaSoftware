@@ -51,9 +51,7 @@ namespace BLL
             return true;
         }
 
-        // ──────────────────────────────────────────────
-        //  CONSULTAS (usan PermisoDAL, sin cambios)
-        // ──────────────────────────────────────────────
+
 
         public ComponentePermiso_65RD ObtenerFamiliaOPatente(int idPermiso)
         {
@@ -75,9 +73,7 @@ namespace BLL
             return _familiaDAL.ObtenerTodasLasFamilias();
         }
 
-        // ──────────────────────────────────────────────
-        //  CRUD FAMILIAS CON BITÁCORA (usan FamiliaDAL)
-        // ──────────────────────────────────────────────
+
 
         public bool GuardarFamilia(Familia_65RD familia)
         {
@@ -110,7 +106,7 @@ namespace BLL
                     SessionManager_65RD.Instancia.UsuarioLogueado.Id,
                     "Familias",
                     "Modificar Familia",
-                    2,
+                    3,
                     $"Se modificó la familia '{familia.Nombre.Trim()}'"
                 );
 
@@ -130,7 +126,7 @@ namespace BLL
                     SessionManager_65RD.Instancia.UsuarioLogueado.Id,
                     "Familias",
                     "Eliminar Familia",
-                    3,
+                    4,
                     $"Se eliminó la familia '{nombreFamilia}'"
                 );
 
