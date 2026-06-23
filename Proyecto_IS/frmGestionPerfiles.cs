@@ -113,8 +113,6 @@ namespace Proyecto_IS
             bool ok = _perfilBLL.IntentarEliminarPerfil(_perfilSeleccionado.Id, out string error);
             if (ok)
             {
-                int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
-                _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Baja", 2, $"Eliminación del rol '{_perfilSeleccionado.Nombre}'.");
 
                 lblEstadoPerfil.Text = string.Empty;
                 tvPermisosAsignados.Nodes.Clear();
@@ -252,7 +250,7 @@ namespace Proyecto_IS
 
                     if (nuevoPerfil.PermisosAsignados.Count > 0)
                         _perfilBLL.GuardarAsignacionPermisos(nuevoPerfil);
-                    _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Alta", 2, $"Creación del rol '{nombre}'.");
+                    
                     MessageBox.Show($"✔ El perfil '{nombre}' fue creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -274,8 +272,7 @@ namespace Proyecto_IS
 
                     if (ok)
                     {
-                        _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Modificación", 2, $"Actualización de permisos del rol '{_perfilSeleccionado.Nombre}'.");
-                        MessageBox.Show($"✔ Cambios guardados exitosamente en el perfil '{nombre}'.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       MessageBox.Show($"✔ Cambios guardados exitosamente en el perfil '{nombre}'.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 LimpiarPantallaCompleta();

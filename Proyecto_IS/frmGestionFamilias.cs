@@ -181,12 +181,12 @@ namespace Proyecto_IS
 
                 if (_editandoFamiliaExistente)
                 {
-                    _familiaBLL.ModificarFamilia(_familiaEnEdicion);
+                    _permisoBLL.ModificarFamilia(_familiaEnEdicion);
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Modificación", 2, $"Se modificó la familia '{_familiaEnEdicion.Nombre}'.");
                 }
                 else
                 {
-                    _familiaBLL.GuardarFamilia(_familiaEnEdicion);
+                    _permisoBLL.GuardarFamilia(_familiaEnEdicion);
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Alta", 2, $"Creación de familia '{_familiaEnEdicion.Nombre}'.");
                 }
 
@@ -215,7 +215,7 @@ namespace Proyecto_IS
 
             try
             {
-                _familiaBLL.EliminarFamilia(_familiaEnEdicion.Id);
+                _permisoBLL.EliminarFamiliaBLL(_familiaEnEdicion.Id);
 
                 int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
                 _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Baja", 2, $"Se eliminó la familia '{_familiaEnEdicion.Nombre}'.");
