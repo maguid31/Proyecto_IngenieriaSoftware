@@ -154,7 +154,7 @@ namespace Proyecto_IS
             cmbModulo.SelectedIndex = 0;
             cmbEvento.SelectedIndex = 0;
             cmbCriticidad.SelectedIndex = 0;
-            dgvBitacora.DataSource = null;
+            BuscarEventos();
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)

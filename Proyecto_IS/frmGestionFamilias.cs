@@ -128,8 +128,7 @@ namespace Proyecto_IS
         {
             if(lbFuentePermisos.SelectedItem == null)
     {
-                MessageBox.Show("Por favor, seleccioná un permiso de la lista de la izquierda para agregar.",
-                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarPermiso"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -140,8 +139,9 @@ namespace Proyecto_IS
 
             if (_editandoFamiliaExistente && _familiaEnEdicion.Id == permisoSeleccionado.Id)
             {
-                MessageBox.Show("❌ No podés agregar una familia a sí misma.",
-                    "Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgAutoAgregarError"),
+    IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -154,7 +154,19 @@ namespace Proyecto_IS
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"❌ {ex.Message}", "Validación de Estructura",
+                string mensajeMostrar = ex.Message;
+
+                // Si el error es el de la patente repetida, extraemos el ID o usamos el formato traducido
+                if (ex.Message.Contains("contiene la patente con ID"))
+                {
+                    // Buscamos el ID del permiso seleccionado para pasárselo al traductor
+                    int idPermiso = permisoSeleccionado.Id;
+
+                    string plantilla = IdiomaManager.GetInstance().GetTexto(this.Name, "msgValidacionPatenteDinamico");
+                    mensajeMostrar = string.Format(plantilla, idPermiso);
+                }
+
+                MessageBox.Show(mensajeMostrar,IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), // O "Validación de Estructura" si lo agregás al JSON
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
@@ -163,12 +175,16 @@ namespace Proyecto_IS
         {
             if (string.IsNullOrWhiteSpace(txtNombreFamilia.Text))
             {
-                MessageBox.Show("❌ El nombre de la familia es obligatorio.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgNombreObligatorio"),
+    IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Error); 
                 return;
             }
             if (tvFamiliaEdicion.Nodes.Count == 0)
             {
-                MessageBox.Show("❌ La familia debe tener al menos un permiso.", "Error de Validación", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgFamiliaVacia"),
+     IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Error); 
                 return;
             }
 
@@ -190,7 +206,9 @@ namespace Proyecto_IS
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Alta", 2, $"Creación de familia '{_familiaEnEdicion.Nombre}'.");
                 }
 
-                MessageBox.Show("✔ Familia guardada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoGuardar"),
+     IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnLimpiarFamilia_Click(null, null); 
 
                 CargarPermisosDisponibles();
@@ -198,7 +216,9 @@ namespace Proyecto_IS
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"❌ Error al guardar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorGuardar"), ex.Message),
+     IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -206,11 +226,16 @@ namespace Proyecto_IS
         {
             if (_familiaEnEdicion == null || !_editandoFamiliaExistente)
             {
-                MessageBox.Show("Por favor, selecciona primero una familia existente de la lista para eliminar.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarEliminar"),
+    IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var res = MessageBox.Show($"¿Confirmas que querés eliminar permanentemente la familia '{_familiaEnEdicion.Nombre}'?", "Confirmar Baja", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var res = MessageBox.Show(
+    string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgConfirmarBaja"), _familiaEnEdicion.Nombre),
+    IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
+    MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res != DialogResult.Yes) return;
 
             try
@@ -224,11 +249,15 @@ namespace Proyecto_IS
                 CargarFamilias();
                 CargarPermisosDisponibles();
 
-                MessageBox.Show("Familia eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoEliminar"),
+    IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al eliminar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorEliminar"), ex.Message),
+     IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -299,8 +328,9 @@ namespace Proyecto_IS
             btnGuardarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnGuardarFamilia");
             btnEliminarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnEliminarFamilia");
             btnLimpiarFamilia.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnLimpiarFamilia");
+            btnQuitarPermiso.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnQuitarPermiso");
 
-            
+
             label2.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblNombreFamilia");
             label1.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblDescFamilia");
         }
@@ -314,22 +344,28 @@ namespace Proyecto_IS
         {
             if (tvFamiliaEdicion.SelectedNode == null)
             {
-                MessageBox.Show("Seleccioná un elemento del árbol para quitar.",
-                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgQuitarPermisoArbol"),
+    IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
+    MessageBoxButtons.OK, MessageBoxIcon.Information);  
                 return;
             }
 
             if (tvFamiliaEdicion.SelectedNode.Parent != null)
             {
-                MessageBox.Show("Solo podés quitar elementos del primer nivel. " +
-                    "Para quitar un sub-elemento, editá la familia que lo contiene.",
-                    "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgQuitarSoloPrimerNivel"),
+     IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
+     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             var componente = (ComponentePermiso_65RD)tvFamiliaEdicion.SelectedNode.Tag;
             _familiaEnEdicion.EliminarHijo(componente);
             tvFamiliaEdicion.Nodes.Remove(tvFamiliaEdicion.SelectedNode);
+        }
+
+        private void lblDescripcionFamilia_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

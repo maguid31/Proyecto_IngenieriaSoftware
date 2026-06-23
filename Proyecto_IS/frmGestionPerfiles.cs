@@ -38,6 +38,7 @@ namespace Proyecto_IS
 
         private void frmGestionRoles_Load(object sender, EventArgs e)
         {
+            if (this.DesignMode) return;
             IdiomaManager.GetInstance().RegisterObserver(this);
 
             CargarPerfiles();
@@ -102,26 +103,27 @@ namespace Proyecto_IS
              
             if (_perfilSeleccionado == null)
             {
-                MessageBox.Show("Por favor, seleccioná primero un perfil de la lista para poder eliminarlo.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionePerfilCuerpo"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information); 
                 return;
             }
 
 
-            var res = MessageBox.Show($"¿Eliminar perfil '{_perfilSeleccionado.Nombre}'?", "Atención", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (res != DialogResult.Yes) return;
+            var res = MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgConfirmarEliminar"), _perfilSeleccionado.Nombre), IdiomaManager.GetInstance().GetTexto(this.Name, "msgConfirmarBajaTitulo"),MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (res != DialogResult.Yes) 
+                return;
 
             bool ok = _perfilBLL.IntentarEliminarPerfil(_perfilSeleccionado.Id, out string error);
             if (ok)
             {
 
-                lblEstadoPerfil.Text = string.Empty;
+                
                 tvPermisosAsignados.Nodes.Clear();
                 _perfilSeleccionado = null;
                 CargarPerfiles();
             }
             else
             {
-                MessageBox.Show(error, "Error Operación Denegada", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorEliminar"), error), IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -138,8 +140,7 @@ namespace Proyecto_IS
                 
                 if (_perfilSeleccionado.PermisosAsignados.Any(p => p.Id == permiso.Id))
                 {
-                    MostrarMensajePerfil($"❌ El permiso o familia '{permiso.Nombre}' ya está asignado a este perfil.", ColorDanger);
-                    return;
+                    MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarPermiso"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information); return;
                 }
 
                 try
@@ -149,9 +150,8 @@ namespace Proyecto_IS
 
                    
                     _perfilSeleccionado.PermisosAsignados.Add(permiso);
-                    MostrarMensajePerfil($"✔ '{permiso.Nombre}' asignado (pendiente de guardar).", ColorSuccess);
+                    MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgPermisoAsignado"), permiso.Nombre), IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    
                     tvPermisosAsignados.Nodes.Clear();
                     foreach (var perm in _perfilSeleccionado.PermisosAsignados)
                     {
@@ -164,7 +164,7 @@ namespace Proyecto_IS
 
                     _bitacoraBLL.RegistrarEvento(idUsuario, "Perfiles", "Bloqueo Asignación", 2, $"Colisión de patentes al intentar asignar a rol '{_perfilSeleccionado.Nombre}'. Detalle: {ex.Message}");
 
-                    MostrarMensajePerfil($"❌ Colisión: {ex.Message}", ColorDanger);
+                    MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgColisionPatentes"),IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -173,8 +173,7 @@ namespace Proyecto_IS
 
                 var perfilTemp = new Perfil_65RD();
                 foreach (TreeNode n in tvPermisosAsignados.Nodes)
-                    if (n.Tag is ComponentePermiso_65RD c)
-                        perfilTemp.PermisosAsignados.Add(c);
+                    if (n.Tag is ComponentePermiso_65RD c) perfilTemp.PermisosAsignados.Add(c);
 
                 try
                 {
@@ -182,9 +181,9 @@ namespace Proyecto_IS
                     tvPermisosAsignados.Nodes.Add(CrearNodoPermiso(permiso));
                     tvPermisosAsignados.ExpandAll();
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
-                    MostrarMensajePerfil($"❌ {ex.Message}", ColorDanger);
+                    MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgColisionPatentes"),IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -198,14 +197,14 @@ namespace Proyecto_IS
             var nodo = tvPermisosAsignados.SelectedNode;
             if (nodo.Parent != null)
             {
-                MostrarMensajePerfil("⚠ Solo podés quitar permisos raíz del perfil.", ColorWarning);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgQuitarSoloPrimerNivel"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),  MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             var permiso = (ComponentePermiso_65RD)nodo.Tag;
             _perfilSeleccionado.PermisosAsignados.Remove(permiso);
             nodo.Remove();
-            MostrarMensajePerfil($"✔ '{permiso.Nombre}' quitado (pendiente de guardar).", ColorSuccess);
+            
         }
 
         private void btnGuardarPerfil_Click(object sender, EventArgs e)
@@ -216,13 +215,12 @@ namespace Proyecto_IS
             // 1. Validaciones
             if (string.IsNullOrWhiteSpace(nombre))
             {
-                MessageBox.Show("Por favor, ingrese un nombre para el perfil.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgNombreVacio"),IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),  MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
             }
 
             if (tvPermisosAsignados.Nodes.Count == 0)
             {
-                MessageBox.Show("No podés guardar un perfil vacío. Primero asignale al menos un permiso.", "Operación Denegada", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgPerfilVacio"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -250,8 +248,8 @@ namespace Proyecto_IS
 
                     if (nuevoPerfil.PermisosAsignados.Count > 0)
                         _perfilBLL.GuardarAsignacionPermisos(nuevoPerfil);
-                    
-                    MessageBox.Show($"✔ El perfil '{nombre}' fue creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoCrear"), nombre), IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -272,14 +270,16 @@ namespace Proyecto_IS
 
                     if (ok)
                     {
-                       MessageBox.Show($"✔ Cambios guardados exitosamente en el perfil '{nombre}'.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoGuardar"),
+                            IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"),
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 LimpiarPantallaCompleta();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"❌ Error al procesar la operación: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorGuardar"), ex.Message),IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -290,8 +290,6 @@ namespace Proyecto_IS
             txtNuevoPerfil.Clear();
             txtDescripcion.Clear();
             tvPermisosAsignados.Nodes.Clear();
-            lblEstadoPerfil.Text = string.Empty;
-            lblDescripcionPerfil.Text = string.Empty;
             CargarPerfiles();
         }
 
@@ -314,11 +312,7 @@ namespace Proyecto_IS
             }
         }
 
-        private void MostrarMensajePerfil(string msj, Color color)
-        {
-            lblEstadoPerfil.ForeColor = color;
-            lblEstadoPerfil.Text = msj;
-        }
+        
 
         private void frmGestionRoles_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -359,8 +353,7 @@ namespace Proyecto_IS
         private void lbPerfiles_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             tvPermisosAsignados.Nodes.Clear();
-            lblEstadoPerfil.Text = string.Empty;
-            lblDescripcionPerfil.Text = string.Empty;
+
 
             if (lbPerfiles.SelectedItem == null)
             {
@@ -376,10 +369,8 @@ namespace Proyecto_IS
             txtNuevoPerfil.Text = _perfilSeleccionado.Nombre;
             txtDescripcion.Text = _perfilSeleccionado.Descripcion;
 
-            if (!string.IsNullOrWhiteSpace(_perfilSeleccionado.Descripcion))
-                lblDescripcionPerfil.Text = $"📝 Descripción: {_perfilSeleccionado.Descripcion}";
-            else
-                lblDescripcionPerfil.Text = "📝 Sin descripción disponible.";
+            MessageBox.Show(string.Format(IdiomaManager.GetInstance().GetTexto(this.Name, "lblPerfilCargado"), _perfilSeleccionado.Descripcion),
+            IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (_perfilSeleccionado.PermisosAsignados != null)
             {
@@ -409,7 +400,7 @@ namespace Proyecto_IS
         private void btnLimpiarPerfil_Click(object sender, EventArgs e)
         {
             LimpiarPantallaCompleta();
-            MostrarMensajePerfil("✔ Formulario listo para crear un nuevo perfil.", ColorSuccess);
+            MessageBox.Show( IdiomaManager.GetInstance().GetTexto(this.Name, "lblModoCreacion"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgExitoTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void tvPermisosAsignados_AfterSelect(object sender, TreeViewEventArgs e)

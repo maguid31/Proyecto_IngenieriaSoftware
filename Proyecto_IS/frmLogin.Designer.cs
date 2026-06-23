@@ -34,7 +34,7 @@
             this.lblContraseña = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.lblUsuario = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTituloVentana = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -102,15 +102,15 @@
             this.lblUsuario.TabIndex = 22;
             this.lblUsuario.Text = "Usuario";
             // 
-            // label1
+            // lblTituloVentana
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.MediumSlateBlue;
-            this.label1.Location = new System.Drawing.Point(100, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 23);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "INICIAR SESIÓN";
+            this.lblTituloVentana.AutoSize = true;
+            this.lblTituloVentana.ForeColor = System.Drawing.Color.MediumSlateBlue;
+            this.lblTituloVentana.Location = new System.Drawing.Point(100, 46);
+            this.lblTituloVentana.Name = "lblTituloVentana";
+            this.lblTituloVentana.Size = new System.Drawing.Size(137, 23);
+            this.lblTituloVentana.TabIndex = 21;
+            this.lblTituloVentana.Text = "INICIAR SESIÓN";
             // 
             // frmLogin
             // 
@@ -124,7 +124,7 @@
             this.Controls.Add(this.lblContraseña);
             this.Controls.Add(this.txtUsuario);
             this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTituloVentana);
             this.Font = new System.Drawing.Font("Nirmala UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -146,7 +146,7 @@
         private System.Windows.Forms.Label lblContraseña;
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.Label lblUsuario;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTituloVentana;
     }
 }
 

@@ -163,7 +163,7 @@ namespace Proyecto_IS
 
         public void UpdateIdioma(string idioma)
         {
-
+            
             if (lblUsuario != null) lblUsuario.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblUsuario");
             if (lblContraseña != null) lblContraseña.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblContraseña");
 

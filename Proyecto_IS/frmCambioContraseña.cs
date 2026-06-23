@@ -18,6 +18,10 @@ namespace Proyecto_IS
         public frmCambioContraseña()
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.ControlBox = true;
+            this.MinimizeBox = true;  
+            this.MaximizeBox = false;
         }
 
         private void frmCambioContraseña_Load(object sender, EventArgs e)

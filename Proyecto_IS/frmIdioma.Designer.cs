@@ -74,9 +74,9 @@
             this.lblSeleccionarIdioma.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblSeleccionarIdioma.Location = new System.Drawing.Point(36, 89);
             this.lblSeleccionarIdioma.Name = "lblSeleccionarIdioma";
-            this.lblSeleccionarIdioma.Size = new System.Drawing.Size(144, 32);
+            this.lblSeleccionarIdioma.Size = new System.Drawing.Size(151, 32);
             this.lblSeleccionarIdioma.TabIndex = 55;
-            this.lblSeleccionarIdioma.Text = "Seleccionar";
+            this.lblSeleccionarIdioma.Text = " Seleccionar";
             // 
             // frmIdioma
             // 

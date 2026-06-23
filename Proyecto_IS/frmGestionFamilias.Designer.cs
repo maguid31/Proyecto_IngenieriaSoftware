@@ -158,6 +158,7 @@
             this.lblDescripcionFamilia.Size = new System.Drawing.Size(44, 16);
             this.lblDescripcionFamilia.TabIndex = 58;
             this.lblDescripcionFamilia.Text = "label1";
+            this.lblDescripcionFamilia.Click += new System.EventHandler(this.lblDescripcionFamilia_Click);
             // 
             // btnEliminarFamilia
             // 

@@ -29,14 +29,12 @@
         private void InitializeComponent()
         {
             this.btnLimpiarPerfil = new System.Windows.Forms.Button();
-            this.lblDescripcionPerfil = new System.Windows.Forms.Label();
             this.lbPerfiles = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtDescripcion = new System.Windows.Forms.TextBox();
             this.txtBuscarPerfil = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnGuardarPerfil = new System.Windows.Forms.Button();
-            this.lblEstadoPerfil = new System.Windows.Forms.Label();
             this.btnQuitarPermiso = new System.Windows.Forms.Button();
             this.btnAsignarPermiso = new System.Windows.Forms.Button();
             this.btnEliminarPerfil = new System.Windows.Forms.Button();
@@ -58,16 +56,6 @@
             this.btnLimpiarPerfil.Text = " LIMPIAR PERFIL";
             this.btnLimpiarPerfil.UseVisualStyleBackColor = false;
             this.btnLimpiarPerfil.Click += new System.EventHandler(this.btnLimpiarPerfil_Click);
-            // 
-            // lblDescripcionPerfil
-            // 
-            this.lblDescripcionPerfil.AutoSize = true;
-            this.lblDescripcionPerfil.Location = new System.Drawing.Point(707, 617);
-            this.lblDescripcionPerfil.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDescripcionPerfil.Name = "lblDescripcionPerfil";
-            this.lblDescripcionPerfil.Size = new System.Drawing.Size(44, 16);
-            this.lblDescripcionPerfil.TabIndex = 48;
-            this.lblDescripcionPerfil.Text = "label1";
             // 
             // lbPerfiles
             // 
@@ -132,16 +120,6 @@
             this.btnGuardarPerfil.Text = " GUARDAR PERFIL";
             this.btnGuardarPerfil.UseVisualStyleBackColor = false;
             this.btnGuardarPerfil.Click += new System.EventHandler(this.btnGuardarPerfil_Click);
-            // 
-            // lblEstadoPerfil
-            // 
-            this.lblEstadoPerfil.AutoSize = true;
-            this.lblEstadoPerfil.Location = new System.Drawing.Point(34, 617);
-            this.lblEstadoPerfil.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblEstadoPerfil.Name = "lblEstadoPerfil";
-            this.lblEstadoPerfil.Size = new System.Drawing.Size(44, 16);
-            this.lblEstadoPerfil.TabIndex = 19;
-            this.lblEstadoPerfil.Text = "label1";
             // 
             // btnQuitarPermiso
             // 
@@ -222,7 +200,6 @@
             this.Controls.Add(this.btnLimpiarPerfil);
             this.Controls.Add(this.btnGuardarPerfil);
             this.Controls.Add(this.btnEliminarPerfil);
-            this.Controls.Add(this.lblDescripcionPerfil);
             this.Controls.Add(this.txtDescripcion);
             this.Controls.Add(this.btnQuitarPermiso);
             this.Controls.Add(this.label1);
@@ -230,7 +207,6 @@
             this.Controls.Add(this.lbPermisosDisponiblesTab2);
             this.Controls.Add(this.txtBuscarPerfil);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblEstadoPerfil);
             this.Controls.Add(this.txtNuevoPerfil);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmGestionPerfiles";
@@ -244,7 +220,6 @@
         #endregion
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnGuardarPerfil;
-        private System.Windows.Forms.Label lblEstadoPerfil;
         private System.Windows.Forms.Button btnQuitarPermiso;
         private System.Windows.Forms.Button btnAsignarPermiso;
         private System.Windows.Forms.Button btnEliminarPerfil;
@@ -255,7 +230,6 @@
         private System.Windows.Forms.ListBox lbPerfiles;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtDescripcion;
-        private System.Windows.Forms.Label lblDescripcionPerfil;
         private System.Windows.Forms.Button btnLimpiarPerfil;
     }
 }
