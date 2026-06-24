@@ -150,7 +150,17 @@
     "msgAdvertenciaTitulo": "Atención",
     "msgErrorTitulo": "Error",
     "msgExitoTitulo": "Éxito",
-    "msgColisionPatentes": "Conflicto de permisos: la asignación no se puede completar."
+    "msgColisionPatentes": "Conflicto de permisos: la asignación no se puede completar.",
+    "lblPerfilCargado": "📝 Descripción: {0}",
+    "lblSinDescripcion": "📝 Sin descripción disponible.",
+    "lblModoCreacion": "✔ Formulario listo para crear un nuevo perfil.",
+    "msgSeleccionarPermiso": "Por favor, seleccione un permiso de la lista izquierda para asignar.",
+    "msgQuitarPermisoArbol": "Por favor, seleccione un elemento del árbol para quitar.",
+    "msgQuitarSoloPrimerNivel": "Solo puede quitar elementos de primer nivel. Para quitar un sub-elemento, edite la familia que lo contiene.",
+    "msgErrorGuardar": "❌ Error al guardar: {0}",
+    "msgErrorEliminar": "Error al eliminar: {0}",
+    "msgConfirmarBajaTitulo": "Confirmar Eliminación",
+    "msgPermisoAsignado": "✔ '{0}' asignado (pendiente de guardar)."
   },
 
   "frmGestionFamilias": {

@@ -145,6 +145,32 @@ namespace Proyecto_IS
                 return;
             }
 
+            foreach (TreeNode nodoExistente in tvFamiliaEdicion.Nodes)
+            {
+                ComponentePermiso_65RD permisoEnPantalla = (ComponentePermiso_65RD)nodoExistente.Tag;
+
+               
+                if (permisoEnPantalla.Id == permisoSeleccionado.Id && permisoEnPantalla.GetType() == permisoSeleccionado.GetType())
+                {
+                    string plantilla = IdiomaManager.GetInstance().GetTexto(this.Name, "msgPermisoDuplicado");
+                    MessageBox.Show(string.Format(plantilla, permisoSeleccionado.Nombre), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (permisoSeleccionado is Familia_65RD familiaNueva)
+                {
+                    foreach (var hijoNuevo in familiaNueva.ObtenerHijos())
+                    {
+                        if (permisoEnPantalla.Id == hijoNuevo.Id && permisoEnPantalla.GetType() == hijoNuevo.GetType())
+                        {
+                            string plantilla = IdiomaManager.GetInstance().GetTexto(this.Name, "msgValidacionPatenteDinamico");
+                            MessageBox.Show(string.Format(plantilla, hijoNuevo.Id), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+            }
+
             try
             {
                 _familiaBLL.ValidarAsignacionSinRepetidos(_familiaEnEdicion, permisoSeleccionado);

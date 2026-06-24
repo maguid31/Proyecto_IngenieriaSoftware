@@ -137,10 +137,13 @@ namespace Proyecto_IS
 
             if (_perfilSeleccionado != null)
             {
-                
-                if (_perfilSeleccionado.PermisosAsignados.Any(p => p.Id == permiso.Id))
+
+                if (_perfilSeleccionado.PermisosAsignados.Any(p => p.Id == permiso.Id && p.GetType() == permiso.GetType()))
                 {
-                    MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarPermiso"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Information); return;
+                    MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarPermiso"),
+                        IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
 
                 try
