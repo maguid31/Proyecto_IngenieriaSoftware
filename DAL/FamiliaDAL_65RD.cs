@@ -259,6 +259,20 @@ namespace DAL
                 }
             }
         }
+
+        public int ContarFamiliasQueContienenEstaFamilia(int idFamilia)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(*) FROM Familia_Familia WHERE IdFamiliaHijo = @id";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@id", idFamilia);
+                    con.Open();
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
         public int ContarPerfilesQueUsanFamilia(int idFamilia)
         {
             using (SqlConnection con = new SqlConnection(connectionString))

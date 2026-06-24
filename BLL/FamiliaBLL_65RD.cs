@@ -41,8 +41,12 @@ namespace BLL
             int perfilesQueUsan = _familiaDAL.ContarPerfilesQueUsanFamilia(idFamilia);
             if (perfilesQueUsan > 0)
                 throw new Exception($"No se puede eliminar la familia porque está asignada a {perfilesQueUsan} perfil(es). Quitala de los perfiles primero.");
+            int familiasQueLaContienen = _familiaDAL.ContarFamiliasQueContienenEstaFamilia(idFamilia);
+            if (familiasQueLaContienen > 0)
+                throw new Exception($"No se puede eliminar la familia porque está dentro de {familiasQueLaContienen} familia(s). Quitala primero.");
 
             return _familiaDAL.EliminarFamilia(idFamilia);
+            
         }
 
         public List<Familia_65RD> ObtenerTodasLasFamilias()
@@ -52,18 +56,34 @@ namespace BLL
 
         public void ValidarAsignacionSinRepetidos(ComponentePermiso_65RD contenedorPadre, ComponentePermiso_65RD elementoAAgregar)
         {
-            
-            List<int> patentesActuales = ObtenerTodasLasPatentesDeFormaRecursiva(contenedorPadre);
-            List<int> patentesNuevas = ObtenerTodasLasPatentesDeFormaRecursiva(elementoAAgregar);
 
-            
-            foreach (int idPatente in patentesNuevas)
+            List<int> idsActuales = ObtenerTodosLosIdsRecursivo(contenedorPadre);
+            List<int> idsNuevos = ObtenerTodosLosIdsRecursivo(elementoAAgregar);
+
+            if (idsActuales.Contains(elementoAAgregar.Id))
+                throw new Exception($"'{elementoAAgregar.Nombre}' ya forma parte de este elemento.");
+
+            foreach (int id in idsNuevos)
             {
-                if (patentesActuales.Contains(idPatente))
+                if (idsActuales.Contains(id))
+                    throw new Exception($"El permiso o sub-familia contiene un elemento con ID {id} que ya forma parte de este elemento.");
+            }
+        }
+
+        private List<int> ObtenerTodosLosIdsRecursivo(ComponentePermiso_65RD componente)
+        {
+            List<int> ids = new List<int>();
+            ids.Add(componente.Id); 
+
+            if (componente is Familia_65RD familia)
+            {
+                foreach (var hijo in familia.ObtenerHijos())
                 {
-                    throw new Exception($"El permiso o sub-familia contiene la patente con ID {idPatente}, la cual ya forma parte de este elemento.");
+                    ids.AddRange(ObtenerTodosLosIdsRecursivo(hijo));
                 }
             }
+
+            return ids.Distinct().ToList();
         }
 
         private List<int> ObtenerTodasLasPatentesDeFormaRecursiva(ComponentePermiso_65RD componente)

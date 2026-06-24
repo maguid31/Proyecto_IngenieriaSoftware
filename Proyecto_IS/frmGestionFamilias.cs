@@ -46,10 +46,13 @@ namespace Proyecto_IS
         private void CargarPermisosDisponibles()
         {
             lbFuentePermisos.Items.Clear();
-
             var familias = _familiaBLL.ObtenerTodasLasFamilias();
             foreach (var f in familias)
-                lbFuentePermisos.Items.Add(new ListBoxItemPermiso(f));
+            {
+                var familiaCompleta = (Familia_65RD)_permisoBLL.ObtenerFamiliaOPatente(f.Id);
+                if (familiaCompleta != null)
+                    lbFuentePermisos.Items.Add(new ListBoxItemPermiso(familiaCompleta));
+            }
 
             var patentes = _permisoBLL.ObtenerTodasLasPatentes();
             foreach (var p in patentes)
@@ -126,9 +129,11 @@ namespace Proyecto_IS
 
         private void btnAgregarFamilia_Click(object sender, EventArgs e)
         {
-            if(lbFuentePermisos.SelectedItem == null)
-    {
-                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarPermiso"), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (lbFuentePermisos.SelectedItem == null)
+            {
+                MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgSeleccionarPermiso"),
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -140,35 +145,9 @@ namespace Proyecto_IS
             if (_editandoFamiliaExistente && _familiaEnEdicion.Id == permisoSeleccionado.Id)
             {
                 MessageBox.Show(IdiomaManager.GetInstance().GetTexto(this.Name, "msgAutoAgregarError"),
-    IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
-    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgErrorTitulo"),
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
-
-            foreach (TreeNode nodoExistente in tvFamiliaEdicion.Nodes)
-            {
-                ComponentePermiso_65RD permisoEnPantalla = (ComponentePermiso_65RD)nodoExistente.Tag;
-
-               
-                if (permisoEnPantalla.Id == permisoSeleccionado.Id && permisoEnPantalla.GetType() == permisoSeleccionado.GetType())
-                {
-                    string plantilla = IdiomaManager.GetInstance().GetTexto(this.Name, "msgPermisoDuplicado");
-                    MessageBox.Show(string.Format(plantilla, permisoSeleccionado.Nombre), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (permisoSeleccionado is Familia_65RD familiaNueva)
-                {
-                    foreach (var hijoNuevo in familiaNueva.ObtenerHijos())
-                    {
-                        if (permisoEnPantalla.Id == hijoNuevo.Id && permisoEnPantalla.GetType() == hijoNuevo.GetType())
-                        {
-                            string plantilla = IdiomaManager.GetInstance().GetTexto(this.Name, "msgValidacionPatenteDinamico");
-                            MessageBox.Show(string.Format(plantilla, hijoNuevo.Id), IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
-                }
             }
 
             try
@@ -182,17 +161,15 @@ namespace Proyecto_IS
             {
                 string mensajeMostrar = ex.Message;
 
-                
                 if (ex.Message.Contains("contiene la patente con ID"))
                 {
-                    // Buscamos el ID del permiso seleccionado para pasárselo al traductor
                     int idPermiso = permisoSeleccionado.Id;
-
                     string plantilla = IdiomaManager.GetInstance().GetTexto(this.Name, "msgValidacionPatenteDinamico");
                     mensajeMostrar = string.Format(plantilla, idPermiso);
                 }
 
-                MessageBox.Show(mensajeMostrar,IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"), // O "Validación de Estructura" si lo agregás al JSON
+                MessageBox.Show(mensajeMostrar,
+                    IdiomaManager.GetInstance().GetTexto(this.Name, "msgAdvertenciaTitulo"),
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
