@@ -240,7 +240,7 @@ namespace Proyecto_IS
 
             try
             {
-                _permisoBLL.EliminarFamiliaBLL(_familiaEnEdicion.Id);
+                _familiaBLL.EliminarFamilia(_familiaEnEdicion.Id);
 
                 int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
                 _bitacoraBLL.RegistrarEvento(idUsuario, "Permisos", "Baja", 2, $"Se eliminó la familia '{_familiaEnEdicion.Nombre}'.");
