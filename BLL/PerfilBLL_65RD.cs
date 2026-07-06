@@ -42,6 +42,10 @@ namespace BLL
                     $"Se eliminó el perfil '{nombrePerfil}'"
                 );
 
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfiles");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Permiso");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Familia");
+
             return resultado;
         }
 
@@ -126,7 +130,7 @@ namespace BLL
                     2,
                     $"Se creó el perfil '{perfil.Nombre.Trim()}'"
                 );
-
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfiles");
             return resultado;
         }
 
@@ -142,6 +146,9 @@ namespace BLL
                     3,
                     $"Se actualizaron los permisos del perfil '{perfil.Nombre}'"
                 );
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfiles");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Permiso");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Familia");
 
             return resultado;
 

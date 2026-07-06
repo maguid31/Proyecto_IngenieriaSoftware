@@ -97,6 +97,12 @@
     <Compile Include="frmGestionUsuarios.Designer.cs">
       <DependentUpon>frmGestionUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmReparacionDV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReparacionDV.Designer.cs">
+      <DependentUpon>frmReparacionDV.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmGestionUsuarios.resx">
       <DependentUpon>frmGestionUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReparacionDV.resx">
+      <DependentUpon>frmReparacionDV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

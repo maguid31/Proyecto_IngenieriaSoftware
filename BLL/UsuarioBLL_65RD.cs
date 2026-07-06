@@ -79,13 +79,20 @@ namespace BLL_65RD
 
         public bool RegistrarUsuario(Usuario_65RD nuevoUsuario)
         {
-            return _usuarioDAL.RegistrarUsuario(nuevoUsuario);
+            bool resultado = _usuarioDAL.RegistrarUsuario(nuevoUsuario);
+            if (resultado)
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios"); // ← agregar
+            return resultado;
+
         }
 
         public bool ActualizarUsuario(Usuario_65RD usuario)
         {
-            return _usuarioDAL.ActualizarUsuario(usuario);
-            
+            bool resultado = _usuarioDAL.ActualizarUsuario(usuario);
+            if (resultado)
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios"); // ← agregar
+            return resultado;
+
         }
         public void DeshabilitarUsuario(int id)
         {
@@ -94,22 +101,25 @@ namespace BLL_65RD
         public void ActualizarEstado(int id, bool activo)
         {
             _usuarioDAL.ActualizarEstado(id, activo);
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios");
         }
 
         public void ActualizarBloqueo(int id, bool bloqueado)
         {
             _usuarioDAL.ActualizarBloqueo(id, bloqueado);
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios");
         }
 
         public bool CambiarContraseña(int usuarioId, string nuevaContraseña)
         {
-            string nuevaContraseñaHash = Seguridad_65RD.Encriptar(nuevaContraseña);
-            bool resultado = _usuarioDAL.ActualizarContraseña(usuarioId, nuevaContraseñaHash);
+            string hash = Seguridad_65RD.Encriptar(nuevaContraseña);
+            bool resultado = _usuarioDAL.ActualizarContraseña(usuarioId, hash);
 
             if (resultado)
             {
                 
                 new BitacoraBLL_65RD().RegistrarEvento(usuarioId, "Usuarios", "Cambio Contraseña", 2, "El usuario cambió su contraseña");
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios");
             }
 
             return resultado;
@@ -132,6 +142,20 @@ namespace BLL_65RD
         {
             UsuarioDAL_65RD usuarioDAL = new UsuarioDAL_65RD();
             return usuarioDAL.ActualizarIdiomaUsuario(idUsuario, nuevoIdioma);
+        }
+
+        public bool EsAdministrador(string nombreUsuarioIngresado)
+        {
+            try
+            {
+                Usuario_65RD usuario = _usuarioDAL.ObtenerUsuarioPorLogin(nombreUsuarioIngresado);
+                return usuario?.Perfil?.Nombre?.Equals("Administrador",
+                    StringComparison.OrdinalIgnoreCase) ?? false;
+            }
+            catch
+            {
+                return false; // si hay error, tratar como usuario normal (más seguro)
+            }
         }
     }
 }

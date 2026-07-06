@@ -25,7 +25,9 @@ namespace BLL
             if (existentes.Any(f => f.Nombre.Equals(familia.Nombre.Trim(), StringComparison.OrdinalIgnoreCase)))
                 throw new ArgumentException($"Ya existe una familia con el nombre '{familia.Nombre}'.");
 
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
             return _familiaDAL.GuardarFamilia(familia);
+
         }
 
         public bool ModificarFamilia(Familia_65RD familia)
@@ -33,6 +35,9 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(familia.Nombre))
                 throw new ArgumentException("El nombre de la familia no puede estar vacío.");
 
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Permiso");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Familia");
             return _familiaDAL.ActualizarFamilia(familia);
         }
 
@@ -45,6 +50,10 @@ namespace BLL
             if (familiasQueLaContienen > 0)
                 throw new Exception($"No se puede eliminar la familia porque está dentro de {familiasQueLaContienen} familia(s). Quitala primero.");
 
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Permiso");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Familia");
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Familia");
             return _familiaDAL.EliminarFamilia(idFamilia);
             
         }

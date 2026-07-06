@@ -1,4 +1,5 @@
-﻿using BLL_65RD;
+﻿using BLL;
+using BLL_65RD;
 using Servicios;
 using Servicios_65RD;
 using System;
@@ -58,6 +59,56 @@ namespace Proyecto_IS
             {
                 MessageBox.Show("Por favor, ingrese sus datos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            DigitoVerificadorBLL_65RD dvBLL = new DigitoVerificadorBLL_65RD();
+            List<TablaInconsistente> tablasConError;
+            ResultadoRevisionDV resultadoDV = dvBLL.RevisarConsistencia(out tablasConError);
+
+            if (resultadoDV == ResultadoRevisionDV.Inconsistente)
+            {
+                // Averiguamos si el usuario que intenta loguearse es Administrador
+                // ANTES de validar la contraseña (para decidir qué mensaje mostrar)
+                UsuarioBLL_65RD gestorTemporal = new UsuarioBLL_65RD();
+                bool esAdmin = gestorTemporal.EsAdministrador(txtUsuario.Text);
+
+                if (esAdmin)
+                {
+                    // ADMINISTRADOR: activa el "extend del login" — muestra el asistente
+                    // El profesor: "se activa un extend del login que habilita la Dimensión 3"
+                    using (var frmReparacion = new frmReparacionDV(tablasConError))
+                    {
+                        frmReparacion.ShowDialog();
+
+                        switch (frmReparacion.AccionElegida)
+                        {
+                            case frmReparacionDV.AccionReparacion.Recalculado:
+                            case frmReparacionDV.AccionReparacion.Restaurado:
+                                // Se recalculó o restauró → cerramos para re-logueo limpio
+                                Application.Exit();
+                                return;
+
+                            case frmReparacionDV.AccionReparacion.Salio:
+                                // No resolvió → simplemente no permite continuar
+                                return;
+                        }
+                    }
+                }
+                else
+                {
+                    // USUARIO NORMAL: mensaje genérico, no revela el problema real
+                    // El profesor: "sistema no está disponible en este momento"
+                    MessageBox.Show(
+                        "El sistema no se encuentra disponible en este momento.\n" +
+                        "Por favor, comuníquese con el administrador.",
+                        "Sistema no disponible",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    txtContraseña.Text = string.Empty;
+                    return; // truncar el login
+                }
+                return; // en todos los casos de inconsistencia, no continuar el login normal
             }
 
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
