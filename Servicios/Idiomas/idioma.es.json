@@ -31,7 +31,8 @@
     "lblPanelInicioTitulo": "Panel de Inicio",
     "lblPanelInicioDetalle": "Seleccione una opción del menú lateral para comenzar.",
     "msgSesionActivaTitulo": "Sesión activa detectada",
-    "msgSesionActivaCuerpo": "Ya existe un usuario con la sesión iniciada. ¿Desea cerrar la sesión actual e ingresar con otra cuenta?"
+    "msgSesionActivaCuerpo": "Ya existe un usuario con la sesión iniciada. ¿Desea cerrar la sesión actual e ingresar con otra cuenta?",
+    "btnMenuRespaldo": "Gestión de Respaldo"
   },
 
   "frmGestionUsuarios": {
@@ -197,5 +198,16 @@
     "msgQuitarSoloPrimerNivel": "Solo podés quitar elementos del primer nivel. Para quitar un sub-elementos, editá la familia que lo contiene.",
     "msgValidacionPatente": "Error de validación: El permiso o su familia ya contiene esta patente.",
     "msgValidacionPatenteDinamico": "❌ El permiso o sub-familia contiene la patente con ID {0}, la cual ya forma parte de este elemento."
+  },
+
+  "frmGestionRespaldo": {
+    "btnMenuRespaldo": "Gestión de Respaldo",
+    "lblTituloVentana": "Gestión de Respaldo",
+    "lblRespaldo": "Respaldo",
+    "lblBackup": "Ruta de Backup:",
+    "lblRestore": "Archivo de Restore:",
+    "btnBackup": "REALIZAR BACKUP",
+    "btnRestore": "RESTAURAR",
+    "btnVolver": "Volver al menú"
   }
 }

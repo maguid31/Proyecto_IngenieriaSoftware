@@ -29,115 +29,166 @@
             this.btnSeleccionarArchivoRestore = new System.Windows.Forms.Button();
             this.btnRestore = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
-            this.lblTitulo = new System.Windows.Forms.Label();
+            this.lblRespaldo = new System.Windows.Forms.Label();
             this.lblBackup = new System.Windows.Forms.Label();
             this.lblRestore = new System.Windows.Forms.Label();
             this.SuspendLayout();
-
-            this.txtRutaBackup.Location = new System.Drawing.Point(20, 100);
-            this.txtRutaBackup.Size = new System.Drawing.Size(370, 25);
-            this.txtRutaBackup.ReadOnly = true;
+            // 
+            // txtRutaBackup
+            // 
             this.txtRutaBackup.BackColor = System.Drawing.Color.White;
+            this.txtRutaBackup.Location = new System.Drawing.Point(27, 123);
+            this.txtRutaBackup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtRutaBackup.Name = "txtRutaBackup";
-
-            this.txtRutaRestore.Location = new System.Drawing.Point(20, 230);
-            this.txtRutaRestore.Size = new System.Drawing.Size(370, 25);
-            this.txtRutaRestore.ReadOnly = true;
+            this.txtRutaBackup.ReadOnly = true;
+            this.txtRutaBackup.Size = new System.Drawing.Size(492, 22);
+            this.txtRutaBackup.TabIndex = 2;
+            // 
+            // txtRutaRestore
+            // 
             this.txtRutaRestore.BackColor = System.Drawing.Color.White;
+            this.txtRutaRestore.Location = new System.Drawing.Point(27, 283);
+            this.txtRutaRestore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtRutaRestore.Name = "txtRutaRestore";
-
-            this.btnSeleccionarRutaBackup.Text = "📁";
-            this.btnSeleccionarRutaBackup.Location = new System.Drawing.Point(400, 98);
-            this.btnSeleccionarRutaBackup.Size = new System.Drawing.Size(80, 28);
-            this.btnSeleccionarRutaBackup.BackColor = System.Drawing.Color.FromArgb(123, 97, 255);
-            this.btnSeleccionarRutaBackup.ForeColor = System.Drawing.Color.White;
-            this.btnSeleccionarRutaBackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.txtRutaRestore.ReadOnly = true;
+            this.txtRutaRestore.Size = new System.Drawing.Size(492, 22);
+            this.txtRutaRestore.TabIndex = 6;
+            // 
+            // btnSeleccionarRutaBackup
+            // 
+            this.btnSeleccionarRutaBackup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
             this.btnSeleccionarRutaBackup.FlatAppearance.BorderSize = 0;
+            this.btnSeleccionarRutaBackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSeleccionarRutaBackup.ForeColor = System.Drawing.Color.White;
+            this.btnSeleccionarRutaBackup.Location = new System.Drawing.Point(533, 121);
+            this.btnSeleccionarRutaBackup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSeleccionarRutaBackup.Name = "btnSeleccionarRutaBackup";
+            this.btnSeleccionarRutaBackup.Size = new System.Drawing.Size(107, 34);
+            this.btnSeleccionarRutaBackup.TabIndex = 3;
+            this.btnSeleccionarRutaBackup.Text = "📁";
+            this.btnSeleccionarRutaBackup.UseVisualStyleBackColor = false;
             this.btnSeleccionarRutaBackup.Click += new System.EventHandler(this.btnSeleccionarRutaBackup_Click);
-
-            this.btnBackup.Text = "Back Up";
-            this.btnBackup.Location = new System.Drawing.Point(20, 135);
-            this.btnBackup.Size = new System.Drawing.Size(120, 32);
-            this.btnBackup.BackColor = System.Drawing.Color.FromArgb(123, 97, 255);
-            this.btnBackup.ForeColor = System.Drawing.Color.White;
-            this.btnBackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            // 
+            // btnBackup
+            // 
+            this.btnBackup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
             this.btnBackup.FlatAppearance.BorderSize = 0;
-            this.btnBackup.Font = new System.Drawing.Font("Segoe UI", 10f, System.Drawing.FontStyle.Bold);
+            this.btnBackup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBackup.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnBackup.ForeColor = System.Drawing.Color.White;
+            this.btnBackup.Location = new System.Drawing.Point(27, 166);
+            this.btnBackup.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Size = new System.Drawing.Size(160, 39);
+            this.btnBackup.TabIndex = 4;
+            this.btnBackup.Text = "Back Up";
+            this.btnBackup.UseVisualStyleBackColor = false;
             this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
-
-            this.btnSeleccionarArchivoRestore.Text = "📁";
-            this.btnSeleccionarArchivoRestore.Location = new System.Drawing.Point(400, 228);
-            this.btnSeleccionarArchivoRestore.Size = new System.Drawing.Size(80, 28);
-            this.btnSeleccionarArchivoRestore.BackColor = System.Drawing.Color.FromArgb(123, 97, 255);
-            this.btnSeleccionarArchivoRestore.ForeColor = System.Drawing.Color.White;
-            this.btnSeleccionarArchivoRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            // 
+            // btnSeleccionarArchivoRestore
+            // 
+            this.btnSeleccionarArchivoRestore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
             this.btnSeleccionarArchivoRestore.FlatAppearance.BorderSize = 0;
+            this.btnSeleccionarArchivoRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSeleccionarArchivoRestore.ForeColor = System.Drawing.Color.White;
+            this.btnSeleccionarArchivoRestore.Location = new System.Drawing.Point(533, 281);
+            this.btnSeleccionarArchivoRestore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSeleccionarArchivoRestore.Name = "btnSeleccionarArchivoRestore";
+            this.btnSeleccionarArchivoRestore.Size = new System.Drawing.Size(107, 34);
+            this.btnSeleccionarArchivoRestore.TabIndex = 7;
+            this.btnSeleccionarArchivoRestore.Text = "📁";
+            this.btnSeleccionarArchivoRestore.UseVisualStyleBackColor = false;
             this.btnSeleccionarArchivoRestore.Click += new System.EventHandler(this.btnSeleccionarArchivoRestore_Click);
-
-            this.btnRestore.Text = "Restore";
-            this.btnRestore.Location = new System.Drawing.Point(20, 265);
-            this.btnRestore.Size = new System.Drawing.Size(120, 32);
-            this.btnRestore.BackColor = System.Drawing.Color.FromArgb(123, 97, 255);
-            this.btnRestore.ForeColor = System.Drawing.Color.White;
-            this.btnRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
             this.btnRestore.FlatAppearance.BorderSize = 0;
-            this.btnRestore.Font = new System.Drawing.Font("Segoe UI", 10f, System.Drawing.FontStyle.Bold);
+            this.btnRestore.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRestore.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnRestore.ForeColor = System.Drawing.Color.White;
+            this.btnRestore.Location = new System.Drawing.Point(27, 326);
+            this.btnRestore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Size = new System.Drawing.Size(160, 39);
+            this.btnRestore.TabIndex = 8;
+            this.btnRestore.Text = "Restore";
+            this.btnRestore.UseVisualStyleBackColor = false;
             this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
-
-            this.btnVolver.Text = "Volver al menú";
-            this.btnVolver.Location = new System.Drawing.Point(330, 300);
-            this.btnVolver.Size = new System.Drawing.Size(150, 32);
-            this.btnVolver.BackColor = System.Drawing.Color.FromArgb(123, 97, 255);
-            this.btnVolver.ForeColor = System.Drawing.Color.White;
-            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            // 
+            // btnVolver
+            // 
+            this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
             this.btnVolver.FlatAppearance.BorderSize = 0;
-            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 10f, System.Drawing.FontStyle.Bold);
+            this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnVolver.ForeColor = System.Drawing.Color.White;
+            this.btnVolver.Location = new System.Drawing.Point(440, 369);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(200, 39);
+            this.btnVolver.TabIndex = 9;
+            this.btnVolver.Text = "Volver al menú";
+            this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
-
-            this.lblTitulo.Text = "Respaldo";
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 16f, System.Drawing.FontStyle.Bold);
-            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(123, 97, 255);
-            this.lblTitulo.Location = new System.Drawing.Point(180, 20);
-            this.lblTitulo.Size = new System.Drawing.Size(200, 35);
-            this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblTitulo.Name = "lblTitulo";
-
-            this.lblBackup.Text = "Ruta de Backup:";
-            this.lblBackup.Location = new System.Drawing.Point(20, 75);
-            this.lblBackup.Size = new System.Drawing.Size(120, 20);
+            // 
+            // lblRespaldo
+            // 
+            this.lblRespaldo.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblRespaldo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(97)))), ((int)(((byte)(255)))));
+            this.lblRespaldo.Location = new System.Drawing.Point(240, 25);
+            this.lblRespaldo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRespaldo.Name = "lblRespaldo";
+            this.lblRespaldo.Size = new System.Drawing.Size(267, 43);
+            this.lblRespaldo.TabIndex = 0;
+            this.lblRespaldo.Text = "Respaldo";
+            this.lblRespaldo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblBackup
+            // 
+            this.lblBackup.Location = new System.Drawing.Point(27, 92);
+            this.lblBackup.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBackup.Name = "lblBackup";
-
-            this.lblRestore.Text = "Archivo de Restore (.bak):";
-            this.lblRestore.Location = new System.Drawing.Point(20, 205);
-            this.lblRestore.Size = new System.Drawing.Size(200, 20);
+            this.lblBackup.Size = new System.Drawing.Size(160, 25);
+            this.lblBackup.TabIndex = 1;
+            this.lblBackup.Text = "Ruta de Backup:";
+            // 
+            // lblRestore
+            // 
+            this.lblRestore.Location = new System.Drawing.Point(27, 252);
+            this.lblRestore.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblRestore.Name = "lblRestore";
-
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.lblRestore.Size = new System.Drawing.Size(267, 25);
+            this.lblRestore.TabIndex = 5;
+            this.lblRestore.Text = "Archivo de Restore (.bak):";
+            // 
+            // frmGestionRespaldo
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(520, 360);
             this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(693, 443);
+            this.Controls.Add(this.lblRespaldo);
+            this.Controls.Add(this.lblBackup);
+            this.Controls.Add(this.txtRutaBackup);
+            this.Controls.Add(this.btnSeleccionarRutaBackup);
+            this.Controls.Add(this.btnBackup);
+            this.Controls.Add(this.lblRestore);
+            this.Controls.Add(this.txtRutaRestore);
+            this.Controls.Add(this.btnSeleccionarArchivoRestore);
+            this.Controls.Add(this.btnRestore);
+            this.Controls.Add(this.btnVolver);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "frmGestionRespaldo";
-            this.Text = "Gestión de Respaldo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Gestión de Respaldo";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGestionRespaldo_FormClosed);
             this.Load += new System.EventHandler(this.frmGestionRespaldo_Load);
-
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
-                this.lblTitulo,
-                this.lblBackup, this.txtRutaBackup, this.btnSeleccionarRutaBackup, this.btnBackup,
-                this.lblRestore, this.txtRutaRestore, this.btnSeleccionarArchivoRestore, this.btnRestore,
-                this.btnVolver
-
-            });
-
             this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private System.Windows.Forms.TextBox txtRutaBackup;
@@ -147,7 +198,7 @@
         private System.Windows.Forms.Button btnSeleccionarArchivoRestore;
         private System.Windows.Forms.Button btnRestore;
         private System.Windows.Forms.Button btnVolver;
-        private System.Windows.Forms.Label lblTitulo;
+        private System.Windows.Forms.Label lblRespaldo;
         private System.Windows.Forms.Label lblBackup;
         private System.Windows.Forms.Label lblRestore;
     

@@ -17,8 +17,7 @@ namespace Proyecto_IS
 {
     public partial class frmGestionRespaldo : Form, IidiomaObserver
     {
-        private readonly string _connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
-        private readonly DigitoVerificadorBLL_65RD _dvBLL = new DigitoVerificadorBLL_65RD();
+        private readonly BackUpRestoreBLL_65RD _backUpRestoreBLL = new BackUpRestoreBLL_65RD();
 
         public frmGestionRespaldo()
         {
@@ -56,30 +55,8 @@ namespace Proyecto_IS
 
             try
             {
-                // Usamos una conexión a master para poder ejecutar el BACKUP
-                string connMaster = _connectionString.Replace(
-                    "Initial Catalog=proyecto_ingenieria",
-                    "Initial Catalog=master");
-
-                string query = $@"
-                    BACKUP DATABASE [proyecto_ingenieria] 
-                    TO DISK = N'{txtRutaBackup.Text}' 
-                    WITH FORMAT, MEDIANAME = 'ProyectoBackup', 
-                    NAME = 'Backup completo proyecto_ingenieria'";
-
-                using (var con = new SqlConnection(connMaster))
-                using (var cmd = new SqlCommand(query, con))
-                {
-                    cmd.CommandTimeout = 300; // 5 minutos máximo
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-
-                // Registrar en bitácora
                 int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
-                new BitacoraBLL_65RD().RegistrarEvento(
-                    idUsuario, "Respaldo", "Backup", 3,
-                    $"Se realizó un backup en: {txtRutaBackup.Text}");
+                _backUpRestoreBLL.RealizarBackup(txtRutaBackup.Text, idUsuario);
 
                 MessageBox.Show(
                     $"✔ Backup realizado exitosamente.\n\nArchivo guardado en:\n{txtRutaBackup.Text}",
@@ -90,11 +67,9 @@ namespace Proyecto_IS
                 MessageBox.Show($"❌ Error al realizar el backup:\n{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
-        // ─────────────────────────────────────────────────────────────
-        //  RESTORE — El admin elige un .bak y el sistema restaura la BD
-        // ─────────────────────────────────────────────────────────────
         private void btnSeleccionarArchivoRestore_Click(object sender, EventArgs e)
         {
             using (var dialog = new OpenFileDialog())
@@ -124,52 +99,19 @@ namespace Proyecto_IS
             }
 
             var confirmacion = MessageBox.Show(
-                "⚠ ATENCIÓN: El Restore reemplazará TODA la base de datos actual.\n\n" +
-                "Se perderán todos los datos ingresados desde el último backup.\n\n" +
-                "¿Confirmar el Restore?",
-                "Confirmar Restore",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
+                 "⚠ ATENCIÓN: El Restore reemplazará TODA la base de datos actual.\n\n" +
+                 "Se perderán todos los datos ingresados desde el último backup.\n\n" +
+                 "¿Confirmar el Restore?",
+                 "Confirmar Restore",
+                 MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Warning);
 
             if (confirmacion != DialogResult.Yes) return;
 
             try
             {
-                // Conectamos a master para poder restaurar proyecto_ingenieria
-                string connMaster = _connectionString.Replace(
-                    "Initial Catalog=proyecto_ingenieria",
-                    "Initial Catalog=master");
-
-                // Primero ponemos la BD en modo single user para forzar desconexión
-                string querySingleUser = @"
-                    ALTER DATABASE [proyecto_ingenieria] 
-                    SET SINGLE_USER WITH ROLLBACK IMMEDIATE";
-
-                string queryRestore = $@"
-                    RESTORE DATABASE [proyecto_ingenieria] 
-                    FROM DISK = N'{txtRutaRestore.Text}' 
-                    WITH REPLACE, RECOVERY";
-
-                string queryMultiUser = @"
-                    ALTER DATABASE [proyecto_ingenieria] 
-                    SET MULTI_USER";
-
-                using (var con = new SqlConnection(connMaster))
-                {
-                    con.Open();
-                    cmd_ejecutar(querySingleUser, con);
-                    cmd_ejecutar(queryRestore, con);
-                    cmd_ejecutar(queryMultiUser, con);
-                }
-
-                // Después del restore, recalculamos el DV con los datos restaurados
-                _dvBLL.Recalcular();
-
-                // Registrar en bitácora
                 int idUsuario = SessionManager_65RD.Instancia.UsuarioLogueado?.Id ?? 0;
-                new BitacoraBLL_65RD().RegistrarEvento(
-                    idUsuario, "Respaldo", "Restore", 4,
-                    $"Se realizó un restore desde: {txtRutaRestore.Text}");
+                _backUpRestoreBLL.RealizarRestore(txtRutaRestore.Text, idUsuario);
 
                 MessageBox.Show(
                     "✔ Restore realizado exitosamente.\n\n" +
@@ -177,7 +119,6 @@ namespace Proyecto_IS
                     "El sistema se cerrará para que vuelva a iniciar sesión.",
                     "Restore exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Cerrar sesión y volver al login
                 SessionManager_65RD.Instancia.CerrarSesion();
                 Application.Restart();
             }
@@ -188,14 +129,6 @@ namespace Proyecto_IS
             }
         }
 
-        private void cmd_ejecutar(string query, SqlConnection con)
-        {
-            using (var cmd = new SqlCommand(query, con))
-            {
-                cmd.CommandTimeout = 300;
-                cmd.ExecuteNonQuery();
-            }
-        }
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
@@ -209,10 +142,20 @@ namespace Proyecto_IS
 
         public void UpdateIdioma(string idioma)
         {
-            this.Text = "Gestión de Respaldo";
+          
+            this.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblTituloVentana");
+
+            if (lblRespaldo != null) lblRespaldo.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRespaldo");
+            if (lblBackup != null) lblBackup.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblBackup");
+            if (lblRestore != null) lblRestore.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "lblRestore");
+
+            if (btnBackup != null) btnBackup.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnBackup");
+            if (btnRestore != null) btnRestore.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnRestore");
+            if (btnVolver != null) btnVolver.Text = IdiomaManager.GetInstance().GetTexto(this.Name, "btnVolver");
         }
+    }
 
         
-    }
+    
 }
 

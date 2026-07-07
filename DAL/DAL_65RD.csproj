@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackUpRestoreDAL_65RD.cs" />
     <Compile Include="BitacoraDAL_65RD.cs" />
     <Compile Include="DigitoVerificadorDAL_65RD.cs" />
     <Compile Include="FamiliaDAL_65RD.cs" />

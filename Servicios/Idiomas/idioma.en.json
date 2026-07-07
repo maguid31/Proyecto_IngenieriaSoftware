@@ -32,7 +32,8 @@
     "lblPanelInicioTitulo": "Home Panel",
     "lblPanelInicioDetalle": "Select an option from the side menu to begin.",
     "msgSesionActivaTitulo": "Active session detected",
-    "msgSesionActivaCuerpo": "A user is already logged in. Do you want to log out and switch accounts?"
+    "msgSesionActivaCuerpo": "A user is already logged in. Do you want to log out and switch accounts?",
+    "btnMenuRespaldo": "Backup Management"
   },
 
   "frmGestionUsuarios": {
@@ -121,7 +122,7 @@
 
   "frmIdioma": {
     "lblTituloPantalla": "Change System Language",
-    "lblSeleccionar": "Select an available language:",
+    "lblSeleccionarIdioma": "Select an available language:",
     "btnGuardarIdioma": "APPLY CHANGE",
     "msgExitoTitulo": "Language Updated",
     "msgExitoCuerpo": "The application language has been successfully changed."
@@ -199,5 +200,16 @@
     "msgQuitarSoloPrimerNivel": "You can only remove elements from the first level. To remove a sub-element, edit the family that contains it.",
     "msgValidacionPatente": "Validation Error: The permission or its family already contains this patent.",
     "msgValidacionPatenteDinamico": "❌ The permission or sub-family contains the patent with ID {0}, which is already part of this element."
+  },
+
+  "frmGestionRespaldo": {
+    "btnMenuRespaldo": "Backup Management",
+    "lblTituloVentana": "Backup Management",
+    "lblRespaldo": "Backup",
+    "lblBackup": "Backup Path:",
+    "lblRestore": "Restore File:",
+    "btnBackup": "PERFORM BACKUP",
+    "btnRestore": "RESTORE",
+    "btnVolver": "Back to menu"
   }
 }

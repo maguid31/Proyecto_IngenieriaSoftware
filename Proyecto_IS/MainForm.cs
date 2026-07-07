@@ -124,11 +124,11 @@ namespace Proyecto_IS
                 AgregarBoton("📁  " + btnFamilias, ref y, AbrirGestionFamilias);
             }
 
-            
+
             if (canRespaldo)
             {
-                string btnRespaldo = "💾  Gestión de Respaldo";
-                AgregarBoton(btnRespaldo, ref y, AbrirGestionRespaldo);
+                string btnMenuRespaldo = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuRespaldo");
+                AgregarBoton("📁" + btnMenuRespaldo, ref y, AbrirGestionRespaldo);
             }
 
             string segConfig = IdiomaManager.GetInstance().GetTexto(this.Name, "segConfiguracion");
@@ -136,8 +136,10 @@ namespace Proyecto_IS
             string btnContrasena = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarContrasena");
             string btnPerfiles = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuPerfiles");
             string btnGestionFamilia = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuFamilias");
-             
-             
+            string btnRespaldo = IdiomaManager.GetInstance().GetTexto(this.Name, "btnMenuRespaldo");
+
+
+
             AgregarSeparador(segConfig, ref y);
             AgregarBoton("🌐  " + btnIdioma, ref y, AbrirCambiarIdioma);
             AgregarBoton("🔑 " + btnContrasena, ref y,  AbrirCambiarContraseña);
