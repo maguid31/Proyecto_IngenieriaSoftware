@@ -91,8 +91,9 @@ namespace Proyecto_IS
             bool canBitacora = SessionManager_65RD.Instancia.TienePermiso("Ver Bitácora");
             bool canGestionRoles = SessionManager_65RD.Instancia.TienePermiso("Gestión de Perfiles");
             bool canGestionFamilias = SessionManager_65RD.Instancia.TienePermiso("Gestión de Familias");
+            bool canRespaldo = SessionManager_65RD.Instancia.TienePermiso("Gestión de Respaldo");
 
-            
+
             if (canGestionUsuarios || canBitacora || canGestionRoles || canGestionFamilias)
             {
                 AgregarSeparador(segAdmin, ref y);
@@ -123,7 +124,12 @@ namespace Proyecto_IS
                 AgregarBoton("📁  " + btnFamilias, ref y, AbrirGestionFamilias);
             }
 
-
+            
+            if (canRespaldo)
+            {
+                string btnRespaldo = "💾  Gestión de Respaldo";
+                AgregarBoton(btnRespaldo, ref y, AbrirGestionRespaldo);
+            }
 
             string segConfig = IdiomaManager.GetInstance().GetTexto(this.Name, "segConfiguracion");
             string btnIdioma = IdiomaManager.GetInstance().GetTexto(this.Name, "btnCambiarIdioma");
@@ -146,8 +152,15 @@ namespace Proyecto_IS
             AgregarBoton(btnLogOut, ref y, CerrarSesion, esLogout: true);
             AgregarBoton("🔄  " + btnReLog, ref y, ReLogin);
 
+            
+
         }
 
+        private void AbrirGestionRespaldo(object sender, EventArgs e)
+        {
+            frmGestionRespaldo frm = new frmGestionRespaldo();
+            frm.ShowDialog();
+        }
 
         private void ReLogin(object sender, EventArgs e)
         {

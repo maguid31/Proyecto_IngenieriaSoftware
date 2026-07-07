@@ -79,6 +79,12 @@
     <Compile Include="frmGestionPerfiles.Designer.cs">
       <DependentUpon>frmGestionPerfiles.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmGestionRespaldo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmGestionRespaldo.Designer.cs">
+      <DependentUpon>frmGestionRespaldo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmIdioma.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmGestionPerfiles.resx">
       <DependentUpon>frmGestionPerfiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGestionRespaldo.resx">
+      <DependentUpon>frmGestionRespaldo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmIdioma.resx">
       <DependentUpon>frmIdioma.cs</DependentUpon>
