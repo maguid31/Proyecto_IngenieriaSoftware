@@ -91,7 +91,7 @@ namespace Proyecto_IS
             // Mostramos cada tabla inconsistente con su detalle
             foreach (var t in _tablasConError)
             {
-                lstTablas.Items.Add($"  ✗  {t.NombreTabla}");
+                lstTablas.Items.Add($"  ✗  {t.NombreTabla} — {t.DVFinalCalculado}");
             }
 
             // --- Separador ---
