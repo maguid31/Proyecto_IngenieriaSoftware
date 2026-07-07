@@ -97,6 +97,7 @@ namespace BLL_65RD
         public void DeshabilitarUsuario(int id)
         {
             _usuarioDAL.ActualizarEstado(id, false);
+            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios");
         }
         public void ActualizarEstado(int id, bool activo)
         {
@@ -141,7 +142,10 @@ namespace BLL_65RD
         public bool ActualizarIdiomaUsuario(int idUsuario, string nuevoIdioma)
         {
             UsuarioDAL_65RD usuarioDAL = new UsuarioDAL_65RD();
-            return usuarioDAL.ActualizarIdiomaUsuario(idUsuario, nuevoIdioma);
+            bool resultado = usuarioDAL.ActualizarIdiomaUsuario(idUsuario, nuevoIdioma);
+            if (resultado)
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Usuarios"); // ← agregar
+            return resultado;
         }
 
         public bool EsAdministrador(string nombreUsuarioIngresado)
@@ -149,8 +153,7 @@ namespace BLL_65RD
             try
             {
                 Usuario_65RD usuario = _usuarioDAL.ObtenerUsuarioPorLogin(nombreUsuarioIngresado);
-                return usuario?.Perfil?.Nombre?.Equals("Administrador",
-                    StringComparison.OrdinalIgnoreCase) ?? false;
+                return usuario.Perfil?.TienePermiso("Gestión de Usuarios") ?? false;
             }
             catch
             {

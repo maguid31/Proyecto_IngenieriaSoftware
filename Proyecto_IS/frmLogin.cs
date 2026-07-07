@@ -67,15 +67,13 @@ namespace Proyecto_IS
 
             if (resultadoDV == ResultadoRevisionDV.Inconsistente)
             {
-                // Averiguamos si el usuario que intenta loguearse es Administrador
-                // ANTES de validar la contraseña (para decidir qué mensaje mostrar)
+
                 UsuarioBLL_65RD gestorTemporal = new UsuarioBLL_65RD();
                 bool esAdmin = gestorTemporal.EsAdministrador(txtUsuario.Text);
 
                 if (esAdmin)
                 {
-                    // ADMINISTRADOR: activa el "extend del login" — muestra el asistente
-                    // El profesor: "se activa un extend del login que habilita la Dimensión 3"
+
                     using (var frmReparacion = new frmReparacionDV(tablasConError))
                     {
                         frmReparacion.ShowDialog();
@@ -84,9 +82,11 @@ namespace Proyecto_IS
                         {
                             case frmReparacionDV.AccionReparacion.Recalculado:
                             case frmReparacionDV.AccionReparacion.Restaurado:
-                                // Se recalculó o restauró → cerramos para re-logueo limpio
-                                Application.Exit();
+                                txtUsuario.Text = string.Empty;
+                                txtContraseña.Text = string.Empty;
+                                txtUsuario.Focus();
                                 return;
+                               
 
                             case frmReparacionDV.AccionReparacion.Salio:
                                 // No resolvió → simplemente no permite continuar

@@ -53,7 +53,6 @@
     <Compile Include="Bitacora_65RD.cs" />
     <Compile Include="CalculadorDV_65RD.cs" />
     <Compile Include="ComponentePermiso_65RD.cs" />
-    <Compile Include="DigitoVerificador_65RD.cs" />
     <Compile Include="Familia_65RD.cs" />
     <Compile Include="IdiomaManager.cs" />
     <Compile Include="IidiomaObserver.cs" />

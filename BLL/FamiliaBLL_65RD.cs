@@ -25,9 +25,10 @@ namespace BLL
             if (existentes.Any(f => f.Nombre.Equals(familia.Nombre.Trim(), StringComparison.OrdinalIgnoreCase)))
                 throw new ArgumentException($"Ya existe una familia con el nombre '{familia.Nombre}'.");
 
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
-            return _familiaDAL.GuardarFamilia(familia);
-
+            bool resultado = _familiaDAL.GuardarFamilia(familia);
+            if (resultado)
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
+            return resultado;
         }
 
         public bool ModificarFamilia(Familia_65RD familia)
@@ -35,10 +36,14 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(familia.Nombre))
                 throw new ArgumentException("El nombre de la familia no puede estar vacío.");
 
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Permiso");
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Familia");
-            return _familiaDAL.ActualizarFamilia(familia);
+            bool resultado = _familiaDAL.ActualizarFamilia(familia);
+            if (resultado)
+            {
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Permiso");
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Familia");
+            }
+            return resultado;
         }
 
         public bool EliminarFamilia(int idFamilia)
@@ -46,16 +51,21 @@ namespace BLL
             int perfilesQueUsan = _familiaDAL.ContarPerfilesQueUsanFamilia(idFamilia);
             if (perfilesQueUsan > 0)
                 throw new Exception($"No se puede eliminar la familia porque está asignada a {perfilesQueUsan} perfil(es). Quitala de los perfiles primero.");
+
             int familiasQueLaContienen = _familiaDAL.ContarFamiliasQueContienenEstaFamilia(idFamilia);
             if (familiasQueLaContienen > 0)
                 throw new Exception($"No se puede eliminar la familia porque está dentro de {familiasQueLaContienen} familia(s). Quitala primero.");
 
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Permiso");
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Familia");
-            new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Familia");
-            return _familiaDAL.EliminarFamilia(idFamilia);
-            
+            bool resultado = _familiaDAL.EliminarFamilia(idFamilia);
+            if (resultado)
+            {
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia");
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Permiso");
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Familia_Familia");
+                new DigitoVerificadorBLL_65RD().GenerarYGuardarDV("Perfil_Familia");
+            }
+            return resultado;
+
         }
 
         public List<Familia_65RD> ObtenerTodasLasFamilias()
