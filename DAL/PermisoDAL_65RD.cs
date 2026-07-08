@@ -12,7 +12,7 @@ namespace DAL_65RD
 {
     public class PermisoDAL_65RD
     {
-        private string connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string connectionString => ConfiguracionApp_65RD.ObtenerConnectionString();
         private FamiliaDAL_65RD _familiaDAL = new FamiliaDAL_65RD();
 
         public List<ComponentePermiso_65RD> ObtenerPermisosPorPerfil(int perfilId)

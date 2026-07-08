@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Servicios;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace DAL
 {
     public class BackUpRestoreDAL_65RD
     {
-        private readonly string _connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string connectionString => ConfiguracionApp_65RD.ObtenerConnectionString();
 
         public void EjecutarBackup(string rutaCompleta)
         {
-            string connMaster = _connectionString.Replace(
+            string connMaster = connectionString.Replace(
                 "Initial Catalog=proyecto_ingenieria",
                 "Initial Catalog=master");
 
@@ -34,7 +35,7 @@ namespace DAL
 
         public void EjecutarRestore(string rutaCompleta)
         {
-            string connMaster = _connectionString.Replace(
+            string connMaster = connectionString.Replace(
                 "Initial Catalog=proyecto_ingenieria",
                 "Initial Catalog=master");
 

@@ -10,7 +10,7 @@ namespace DAL
 {
     public class DigitoVerificadorDAL_65RD
     {
-        private readonly string _connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string connectionString => ConfiguracionApp_65RD.ObtenerConnectionString();
 
 
         public IList<IList<string>> ObtenerDatosTablaUsuarios()
@@ -101,7 +101,7 @@ namespace DAL
         {
             var resultado = new List<IList<string>>();
 
-            using (var con = new SqlConnection(_connectionString))
+            using (var con = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(query, con))
             {
                 con.Open();
@@ -137,7 +137,7 @@ namespace DAL
                     INSERT (NombreTabla, DVH, DVV, DVFinal, UltimaActualizacion)
                     VALUES (@tabla, @dvh, @dvv, @dvFinal, GETDATE());";
 
-            using (var con = new SqlConnection(_connectionString))
+            using (var con = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.AddWithValue("@tabla", resultado.NombreTabla);
@@ -158,7 +158,7 @@ namespace DAL
                 SELECT NombreTabla, DVH, DVV, DVFinal
                 FROM DigitoVerificador";
 
-            using (var con = new SqlConnection(_connectionString))
+            using (var con = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(query, con))
             {
                 con.Open();
@@ -198,7 +198,7 @@ namespace DAL
                     )
                 END";
 
-            using (var con = new SqlConnection(_connectionString))
+            using (var con = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(query, con))
             {
                 con.Open();

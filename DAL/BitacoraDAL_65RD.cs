@@ -1,4 +1,5 @@
-﻿using Servicios_65RD;
+﻿using Servicios;
+using Servicios_65RD;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,11 +11,11 @@ namespace DAL
 {
     public class BitacoraDAL_65RD
     {
-        private string _connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string connectionString => ConfiguracionApp_65RD.ObtenerConnectionString();
 
         public void RegistrarEvento(int usuarioId, string modulo, string accion, int criticidad, string descripcion)
         {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string query = @"INSERT INTO Bitacora (UsuarioId, FechaHora, Modulo, Accion, Criticidad, Descripcion) 
                                  VALUES (@usuarioId, GETDATE(), @modulo, @accion, @criticidad, @descripcion)";
@@ -37,7 +38,7 @@ namespace DAL
         {
             List<Bitacora_65RD> lista = new List<Bitacora_65RD>();
 
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
 
                 string query = @"
@@ -95,7 +96,7 @@ namespace DAL
         public int ContarIntentosFallidos(int usuarioId)
         {
             int cantidad = 0;
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string query = @"
                     SELECT COUNT(*) 

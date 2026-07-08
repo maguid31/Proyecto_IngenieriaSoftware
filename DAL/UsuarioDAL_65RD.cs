@@ -12,7 +12,7 @@ namespace DAL_65RD
 {
     public class UsuarioDAL_65RD
     {
-        private string connectionString = @"Data Source=.;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
+        private string connectionString => ConfiguracionApp_65RD.ObtenerConnectionString();
         //@"Data Source=DESKTOP-UOCRKUM;Initial Catalog=proyecto_ingenieria;Integrated Security=True";
 
         public Usuario_65RD ObtenerUsuarioPorLogin(string usuarioConcatenado)

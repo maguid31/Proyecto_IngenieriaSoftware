@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Proyecto_IS
 {
@@ -28,13 +29,47 @@ namespace Proyecto_IS
         {
 
             IdiomaManager.GetInstance().RegisterObserver(this);
-
             UpdateIdioma(IdiomaManager.GetInstance().IdiomaActual);
 
+            if (!ConfiguracionApp_65RD.ExisteConfiguracion())
+            {
+                this.Hide();
+
+                var instancias = InstaladorBD_65RD.ObtenerInstanciasSQL();
+
+                if (instancias.Count == 0)
+                {
+                    MessageBox.Show("No se detectó ninguna instancia de SQL Server en esta máquina.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
+                }
+
+                string instancia = instancias[0];
+
+                try
+                {
+                    if (!InstaladorBD_65RD.ExisteBaseDeDatos(instancia))
+                    {
+                        string rutaScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "script_bd.sql");
+                        InstaladorBD_65RD.CrearBaseDeDatos(instancia, rutaScript);
+                    }
+
+                    ConfiguracionApp_65RD.GuardarInstancia(instancia);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al configurar la base de datos: {ex.Message}",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                    return;
+                }
+
+                this.Show();
+            }
 
             UsuarioBLL_65RD gestorUsuario = new UsuarioBLL_65RD();
 
-            
             if (gestorUsuario.ObtenerUsuarios().Count == 0)
             {
                 Usuario_65RD adminInicial = new Usuario_65RD
@@ -42,10 +77,10 @@ namespace Proyecto_IS
                     Nombre = "Admin",
                     Apellido = "Sistema",
                     DNI = "1234",
-                    Contraseña = Seguridad_65RD.Encriptar("1234"), 
-                    Perfil = new Perfil_65RD { Id = 1, Nombre = "Administrador" }, 
+                    Contraseña = Seguridad_65RD.Encriptar("1234"),
+                    Perfil = new Perfil_65RD { Id = 1, Nombre = "Administrador" },
                     Activo = true,
-                    PrimerLogin = false 
+                    PrimerLogin = false
                 };
 
                 gestorUsuario.RegistrarUsuario(adminInicial);
