@@ -153,11 +153,12 @@ namespace BLL_65RD
             try
             {
                 Usuario_65RD usuario = _usuarioDAL.ObtenerUsuarioPorLogin(nombreUsuarioIngresado);
-                return usuario.Perfil?.TienePermiso("Gestión de Usuarios") ?? false;
+                return usuario?.Perfil?.Nombre?.Equals("Administrador",
+                    StringComparison.OrdinalIgnoreCase) ?? false;
             }
             catch
             {
-                return false; // si hay error, tratar como usuario normal (más seguro)
+                return false;
             }
         }
     }
